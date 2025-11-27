@@ -1,0 +1,86 @@
+export const dummyTeams = [
+  // Osaka Boys
+  {
+    id: "1",
+    name: "大阪北ボーイズ",
+    prefecture: "osaka",
+    league: "boys",
+    description: "全国大会常連の強豪。プロ野球選手も多数輩出。",
+    url: "https://example.com",
+  },
+  {
+    id: "2",
+    name: "大阪南ボーイズ",
+    prefecture: "osaka",
+    league: "boys",
+    description: "「全力疾走」をスローガンに、人間形成を重視。",
+    url: "https://example.com",
+  },
+  {
+    id: "3",
+    name: "枚方ボーイズ",
+    prefecture: "osaka",
+    league: "boys",
+    description: "日本一の経験を持つ名門チーム。専用グラウンド完備。",
+    url: "https://example.com",
+  },
+  {
+    id: "4",
+    name: "東大阪北ボーイズ",
+    prefecture: "osaka",
+    league: "boys",
+    description: "基本技術の徹底と、高校で通用する体づくり。",
+    url: "https://example.com",
+  },
+  {
+    id: "5",
+    name: "大阪中央ボーイズ",
+    prefecture: "osaka",
+    league: "boys",
+    description: "文武両道を掲げ、学習サポートも充実。",
+    url: "https://example.com",
+  },
+
+  // Hyogo Boys
+  {
+    id: "11",
+    name: "神戸中央ボーイズ",
+    prefecture: "hyogo",
+    league: "boys",
+    description: "兵庫県屈指の強豪。甲子園球児を多数送り出す。",
+    url: "https://example.com",
+  },
+  {
+    id: "12",
+    name: "明石ボーイズ",
+    prefecture: "hyogo",
+    league: "boys",
+    description: "明るく元気な野球。チームワークの良さが特徴。",
+    url: "https://example.com",
+  },
+  {
+    id: "13",
+    name: "兵庫伊丹ボーイズ",
+    prefecture: "hyogo",
+    league: "boys",
+    description: "厳しい練習の中で培われる精神力。",
+    url: "https://example.com",
+  },
+  {
+    id: "14",
+    name: "西宮ボーイズ",
+    prefecture: "hyogo",
+    league: "boys",
+    description: "礼儀正しさと感謝の心を大切にする。",
+    url: "https://example.com",
+  },
+  {
+    id: "15",
+    name: "宝塚ボーイズ",
+    prefecture: "hyogo",
+    league: "boys",
+    description: "自然豊かな環境で伸び伸びとプレー。",
+    url: "https://example.com",
+  },
+];
+
