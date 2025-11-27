@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { PrefectureTabs } from "@/components/PrefectureTabs";
 import { LeagueFilter } from "@/components/LeagueFilter";
 import { TeamCard } from "@/components/TeamCard";
+import { SubServiceTabs } from "@/components/SubServiceTabs";
 import { dummyTeams } from "@/lib/dummy-data";
 
 // Import 3D scene dynamically to avoid SSR issues and reduce initial load
@@ -55,6 +56,14 @@ export default function Home() {
             NO DATA FOUND IN SECTOR {prefecture.toUpperCase()}
           </div>
         )}
+
+        {/* Sub Services Section */}
+        <div className="mt-20 mb-12">
+          <h2 className="text-3xl font-bold text-center mb-8 font-mono text-cyber-cyan">
+            OUR SERVICES
+          </h2>
+          <SubServiceTabs />
+        </div>
       </main>
 
       {/* Footer */}
