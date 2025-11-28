@@ -93,3 +93,13 @@ a {
 a:hover {
   text-shadow: 0 0 15px currentColor;
 }
+
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

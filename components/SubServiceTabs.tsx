@@ -2,53 +2,78 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { IoGlobeOutline, IoCloseOutline, IoChevronForward, IoLanguage, IoCode, IoBaseball, IoTrophy, IoBriefcase, IoFlash, IoSparkles } from "react-icons/io5";
+import { IoGlobeOutline, IoCloseOutline, IoChevronForward, IoLanguage, IoCode, IoBaseball, IoTrophy, IoBriefcase, IoFlash, IoSparkles, IoRocket, IoStar, IoArrowForward } from "react-icons/io5";
 
 const subServices = [
   {
     id: "english",
     label: "英語学習",
     labelEn: "ENGLISH",
+    description: "野球×英語で世界へ",
+    catchphrase: "MLB挑戦も夢じゃない",
     url: "https://english.rookiesmart-jp.com/",
     icon: IoLanguage,
-    gradient: "from-blue-500 via-cyan-400 to-cyan-500",
-    shadow: "0 0 30px rgba(0,240,255,0.5)"
+    color: "cyan",
+    gradient: "from-cyan-400 via-blue-500 to-cyan-500",
+    bgGradient: "from-cyan-500/30 via-blue-600/20 to-cyan-400/30",
+    borderColor: "#00F0FF",
+    shadowColor: "0,240,255",
   },
   {
     id: "academy",
     label: "ITアカデミー",
     labelEn: "IT ACADEMY",
+    description: "野球引退後も安心",
+    catchphrase: "プログラミングで第二の人生",
     url: "https://academy.rookiesmart-jp.com/",
     icon: IoCode,
-    gradient: "from-purple-500 via-pink-500 to-purple-400",
-    shadow: "0 0 30px rgba(255,0,170,0.5)"
+    color: "pink",
+    gradient: "from-pink-500 via-purple-500 to-fuchsia-500",
+    bgGradient: "from-pink-500/30 via-purple-600/20 to-fuchsia-500/30",
+    borderColor: "#FF00AA",
+    shadowColor: "255,0,170",
   },
   {
     id: "yakyu-juku",
     label: "野球塾",
-    labelEn: "BASEBALL",
+    labelEn: "BASEBALL SCHOOL",
+    description: "元プロが直接指導",
+    catchphrase: "技術を極める特別レッスン",
     url: "https://yakyu-juku.rookiesmart-jp.com/",
     icon: IoBaseball,
-    gradient: "from-red-500 via-orange-500 to-red-400",
-    shadow: "0 0 30px rgba(255,42,68,0.5)"
+    color: "red",
+    gradient: "from-red-500 via-orange-500 to-red-600",
+    bgGradient: "from-red-500/30 via-orange-600/20 to-red-600/30",
+    borderColor: "#FF2A44",
+    shadowColor: "255,42,68",
   },
   {
     id: "scout",
-    label: "スカウト",
-    labelEn: "SCOUT",
+    label: "高校野球スカウト",
+    labelEn: "SCOUT SERVICE",
+    description: "強豪校への架け橋",
+    catchphrase: "あなたの実力を高校に届ける",
     url: "https://koko-yakyu-agent.rookiesmart-jp.com/",
     icon: IoTrophy,
-    gradient: "from-yellow-400 via-amber-500 to-yellow-500",
-    shadow: "0 0 30px rgba(255,255,0,0.5)"
+    color: "yellow",
+    gradient: "from-yellow-400 via-amber-500 to-orange-500",
+    bgGradient: "from-yellow-400/30 via-amber-500/20 to-orange-500/30",
+    borderColor: "#FACC15",
+    shadowColor: "250,204,21",
   },
   {
     id: "career",
-    label: "キャリア",
-    labelEn: "CAREER",
+    label: "キャリア支援",
+    labelEn: "CAREER SUPPORT",
+    description: "野球人のセカンドキャリア",
+    catchphrase: "経験を活かした就職サポート",
     url: "https://agent.rookiesmart-jp.com/",
     icon: IoBriefcase,
-    gradient: "from-green-400 via-emerald-500 to-green-500",
-    shadow: "0 0 30px rgba(34,197,94,0.5)"
+    color: "green",
+    gradient: "from-green-400 via-emerald-500 to-teal-500",
+    bgGradient: "from-green-400/30 via-emerald-500/20 to-teal-500/30",
+    borderColor: "#22C55E",
+    shadowColor: "34,197,94",
   },
 ];
 
@@ -65,8 +90,8 @@ export const SubServiceTabs = () => {
 
   return (
     <div className="w-full">
-      {/* Service Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 mb-10">
+      {/* Service Grid - 超目立つカードデザイン */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-10">
         {subServices.map((service, index) => {
           const Icon = service.icon;
           const isActive = activeTab === service.id;
@@ -74,63 +99,223 @@ export const SubServiceTabs = () => {
           return (
             <motion.button
               key={service.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 50, rotateX: -15 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              whileHover={{ scale: 1.05, y: -8 }}
+              transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => handleTabClick(service.id)}
-              className={`
-                relative p-6 border-2 transition-all duration-400 group overflow-hidden
-                ${isActive 
-                  ? `bg-gradient-to-br ${service.gradient} border-transparent` 
-                  : "bg-black/80 border-white/15 hover:border-white/30"
-                }
-              `}
+              className="relative group text-left overflow-hidden"
               style={{
-                boxShadow: isActive ? service.shadow : 'none'
+                background: isActive 
+                  ? `linear-gradient(135deg, rgba(${service.shadowColor},0.3), rgba(0,0,0,0.9))`
+                  : `linear-gradient(135deg, rgba(${service.shadowColor},0.15), rgba(0,0,0,0.95))`,
+                border: `3px solid ${isActive ? service.borderColor : `rgba(${service.shadowColor},0.4)`}`,
+                boxShadow: isActive 
+                  ? `0 0 50px rgba(${service.shadowColor},0.5), inset 0 0 30px rgba(${service.shadowColor},0.2)`
+                  : `0 0 25px rgba(${service.shadowColor},0.2)`,
               }}
             >
-              {/* Background glow on hover */}
-              {!isActive && (
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`} />
-              )}
+              {/* Animated gradient background */}
+              <div 
+                className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-60 group-hover:opacity-100 transition-opacity duration-500`}
+              />
               
-              {/* Corner accents */}
-              <div className={`absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 ${isActive ? 'border-white/50' : 'border-white/20'} transition-colors`} />
-              <div className={`absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 ${isActive ? 'border-white/50' : 'border-white/20'} transition-colors`} />
-              <div className={`absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 ${isActive ? 'border-white/50' : 'border-white/20'} transition-colors`} />
-              <div className={`absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 ${isActive ? 'border-white/50' : 'border-white/20'} transition-colors`} />
-              
-              {/* Icon */}
-              <div className={`w-14 h-14 mx-auto mb-4 flex items-center justify-center transition-all duration-300 relative ${isActive ? "text-white" : "text-white/60 group-hover:text-white group-hover:scale-110"}`}>
-                <Icon size={32} style={isActive ? { filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.8))' } : {}} />
-                {isActive && (
-                  <div className="absolute inset-0 animate-ping opacity-30">
-                    <Icon size={32} />
-                  </div>
-                )}
+              {/* Scan line effect */}
+              <motion.div 
+                className="absolute inset-0 opacity-30"
+                style={{
+                  background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(${service.shadowColor},0.1) 2px, rgba(${service.shadowColor},0.1) 4px)`,
+                }}
+              />
+
+              {/* Glowing top border */}
+              <div 
+                className="absolute top-0 left-0 right-0 h-1"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${service.borderColor}, transparent)`,
+                  boxShadow: `0 0 20px ${service.borderColor}`,
+                }}
+              />
+
+              {/* Corner decorations - より派手に */}
+              <div className="absolute top-0 left-0 w-8 h-8">
+                <div 
+                  className="absolute top-0 left-0 w-full h-[3px]"
+                  style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
+                />
+                <div 
+                  className="absolute top-0 left-0 h-full w-[3px]"
+                  style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
+                />
               </div>
-              
-              {/* Labels */}
-              <div className="text-center relative z-10">
-                <span className={`block text-xs font-mono mb-2 tracking-wider ${isActive ? "text-white/90" : "text-white/50"}`}>
-                  {service.labelEn}
-                </span>
-                <span className={`block text-base font-bold ${isActive ? "text-white" : "text-white/80 group-hover:text-white"}`}>
-                  {service.label}
-                </span>
+              <div className="absolute top-0 right-0 w-8 h-8">
+                <div 
+                  className="absolute top-0 right-0 w-full h-[3px]"
+                  style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
+                />
+                <div 
+                  className="absolute top-0 right-0 h-full w-[3px]"
+                  style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
+                />
               </div>
-              
-              {/* Active indicator */}
-              {isActive && (
+              <div className="absolute bottom-0 left-0 w-8 h-8">
+                <div 
+                  className="absolute bottom-0 left-0 w-full h-[3px]"
+                  style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
+                />
+                <div 
+                  className="absolute bottom-0 left-0 h-full w-[3px]"
+                  style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
+                />
+              </div>
+              <div className="absolute bottom-0 right-0 w-8 h-8">
+                <div 
+                  className="absolute bottom-0 right-0 w-full h-[3px]"
+                  style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
+                />
+                <div 
+                  className="absolute bottom-0 right-0 h-full w-[3px]"
+                  style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
+                />
+              </div>
+
+              {/* HOT badge */}
+              <div className="absolute -top-0 -right-0 z-20">
                 <motion.div 
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute top-3 right-3"
+                  className="px-3 py-1.5 text-[11px] font-mono font-black tracking-wider flex items-center gap-1"
+                  style={{
+                    background: `linear-gradient(135deg, ${service.borderColor}, ${service.borderColor}aa)`,
+                    color: service.color === 'yellow' ? '#000' : '#fff',
+                    boxShadow: `0 0 20px ${service.borderColor}`,
+                  }}
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <IoSparkles className="text-white animate-pulse" />
+                  <IoStar className="text-xs" />
+                  HOT
                 </motion.div>
+              </div>
+
+              {/* Content */}
+              <div className="relative z-10 p-5">
+                {/* Icon - 大きく派手に */}
+                <motion.div 
+                  className="mb-4 relative"
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div 
+                    className="w-16 h-16 flex items-center justify-center relative"
+                    style={{
+                      background: `linear-gradient(135deg, ${service.borderColor}30, transparent)`,
+                      border: `2px solid ${service.borderColor}`,
+                      boxShadow: `0 0 30px ${service.borderColor}60, inset 0 0 20px ${service.borderColor}20`,
+                    }}
+                  >
+                    <Icon 
+                      size={32} 
+                      style={{ 
+                        color: service.borderColor,
+                        filter: `drop-shadow(0 0 15px ${service.borderColor})`,
+                      }} 
+                    />
+                  </div>
+                  {/* Pulsing ring */}
+                  <motion.div 
+                    className="absolute inset-0 w-16 h-16"
+                    style={{ border: `2px solid ${service.borderColor}` }}
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </motion.div>
+                
+                {/* Labels */}
+                <div className="mb-3">
+                  <span 
+                    className="block text-[10px] font-mono mb-1 tracking-[0.2em]"
+                    style={{ 
+                      color: service.borderColor,
+                      textShadow: `0 0 10px ${service.borderColor}`,
+                    }}
+                  >
+                    {service.labelEn}
+                  </span>
+                  <span 
+                    className="block text-xl font-black text-white"
+                    style={{ textShadow: `0 0 20px rgba(${service.shadowColor},0.5)` }}
+                  >
+                    {service.label}
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p 
+                  className="text-sm font-bold mb-1"
+                  style={{ color: service.borderColor }}
+                >
+                  {service.description}
+                </p>
+                <p className="text-[11px] text-white/50 font-mono leading-relaxed mb-4">
+                  {service.catchphrase}
+                </p>
+                
+                {/* CTA Button */}
+                <div 
+                  className="flex items-center justify-between pt-3 border-t"
+                  style={{ borderColor: `${service.borderColor}40` }}
+                >
+                  <span 
+                    className="text-xs font-mono font-bold"
+                    style={{ color: service.borderColor }}
+                  >
+                    {isActive ? '▶ VIEWING' : '▶ CHECK IT'}
+                  </span>
+                  <motion.div
+                    className="flex items-center gap-1"
+                    style={{ color: service.borderColor }}
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <IoArrowForward size={16} />
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Hover overlay glow */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at 50% 50%, rgba(${service.shadowColor},0.3), transparent 70%)`,
+                }}
+              />
+
+              {/* Active sparkles */}
+              {isActive && (
+                <>
+                  <motion.div 
+                    className="absolute top-6 left-6"
+                    animate={{ scale: [0, 1.5, 0], rotate: [0, 180, 360] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <IoSparkles size={16} style={{ color: service.borderColor, filter: `drop-shadow(0 0 10px ${service.borderColor})` }} />
+                  </motion.div>
+                  <motion.div 
+                    className="absolute bottom-16 right-6"
+                    animate={{ scale: [0, 1.5, 0], rotate: [0, -180, -360] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  >
+                    <IoSparkles size={16} style={{ color: service.borderColor, filter: `drop-shadow(0 0 10px ${service.borderColor})` }} />
+                  </motion.div>
+                  <motion.div 
+                    className="absolute top-1/2 left-3"
+                    animate={{ scale: [0, 1, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, delay: 1 }}
+                  >
+                    <IoFlash size={12} style={{ color: service.borderColor }} />
+                  </motion.div>
+                </>
               )}
             </motion.button>
           );
@@ -145,17 +330,56 @@ export const SubServiceTabs = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.98 }}
             transition={{ duration: 0.4 }}
-            className="border-2 border-white/20 bg-black/80 overflow-hidden"
-            style={{ boxShadow: activeService.shadow }}
+            className="overflow-hidden"
+            style={{ 
+              boxShadow: `0 0 60px rgba(${activeService.shadowColor},0.4)`,
+              border: `3px solid ${activeService.borderColor}`,
+              background: `linear-gradient(135deg, rgba(${activeService.shadowColor},0.1), rgba(0,0,0,0.95))`,
+            }}
           >
             {/* Header */}
-            <div className={`flex items-center justify-between p-5 border-b-2 border-white/15 bg-gradient-to-r ${activeService.gradient}`}>
+            <div 
+              className="flex items-center justify-between p-5 border-b-2"
+              style={{
+                background: `linear-gradient(90deg, rgba(${activeService.shadowColor},0.3), transparent)`,
+                borderColor: `${activeService.borderColor}60`,
+              }}
+            >
               <div className="flex items-center gap-4">
-                <activeService.icon className="text-white" style={{ filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.5))' }} size={24} />
-                <span className="font-mono text-base text-white font-bold">
-                  {activeService.label}
-                </span>
-                <IoFlash className="text-white/70 animate-pulse" />
+                <div 
+                  className="p-3"
+                  style={{ 
+                    background: `${activeService.borderColor}30`,
+                    border: `2px solid ${activeService.borderColor}`,
+                    boxShadow: `0 0 20px ${activeService.borderColor}40`,
+                  }}
+                >
+                  <activeService.icon 
+                    size={28} 
+                    style={{ 
+                      color: activeService.borderColor,
+                      filter: `drop-shadow(0 0 10px ${activeService.borderColor})`,
+                    }} 
+                  />
+                </div>
+                <div>
+                  <span 
+                    className="font-mono text-xl font-black block"
+                    style={{ 
+                      color: activeService.borderColor,
+                      textShadow: `0 0 20px ${activeService.borderColor}`,
+                    }}
+                  >
+                    {activeService.label}
+                  </span>
+                  <span className="text-sm text-white/60 font-mono">{activeService.description}</span>
+                </div>
+                <motion.div
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                >
+                  <IoFlash className="text-xl ml-2" style={{ color: activeService.borderColor }} />
+                </motion.div>
               </div>
               
               <div className="flex items-center gap-3">
@@ -163,14 +387,23 @@ export const SubServiceTabs = () => {
                   href={activeService.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center px-4 py-2 text-sm text-white hover:text-white/80 border-2 border-white/40 hover:border-white bg-white/10 hover:bg-white/20 transition-all duration-300"
+                  className="flex items-center px-6 py-3 text-sm font-black transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: `linear-gradient(135deg, ${activeService.borderColor}, ${activeService.borderColor}aa)`,
+                    color: activeService.color === 'yellow' ? '#000' : '#fff',
+                    boxShadow: `0 0 30px ${activeService.borderColor}60`,
+                  }}
                 >
-                  <IoGlobeOutline className="mr-2" />
-                  新しいタブで開く
+                  <IoRocket className="mr-2" />
+                  サイトを開く
                 </a>
                 <button
                   onClick={() => setActiveTab(null)}
-                  className="p-2 text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300"
+                  className="p-2.5 text-white/50 hover:text-white transition-all duration-300"
+                  style={{
+                    border: `2px solid ${activeService.borderColor}40`,
+                    background: `${activeService.borderColor}10`,
+                  }}
                 >
                   <IoCloseOutline size={24} />
                 </button>
@@ -180,8 +413,19 @@ export const SubServiceTabs = () => {
             {/* Iframe */}
             <div className="relative" style={{ height: "550px" }}>
               {iframeError ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-10 bg-black/50">
-                  <IoGlobeOutline className="text-6xl text-white/30 mb-6 animate-pulse" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-10 bg-black/70">
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <IoGlobeOutline 
+                      className="text-7xl mb-6" 
+                      style={{ 
+                        color: activeService.borderColor,
+                        filter: `drop-shadow(0 0 20px ${activeService.borderColor})`,
+                      }} 
+                    />
+                  </motion.div>
                   <p className="text-white/60 mb-6 text-center font-mono text-lg">
                     {iframeError}
                   </p>
@@ -189,9 +433,14 @@ export const SubServiceTabs = () => {
                     href={activeService.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center px-8 py-4 bg-gradient-to-r ${activeService.gradient} text-white font-bold transition-all duration-300 hover:scale-105`}
-                    style={{ boxShadow: activeService.shadow }}
+                    className="flex items-center px-10 py-5 font-black text-lg transition-all duration-300 hover:scale-105"
+                    style={{
+                      background: `linear-gradient(135deg, ${activeService.borderColor}, ${activeService.borderColor}aa)`,
+                      color: activeService.color === 'yellow' ? '#000' : '#fff',
+                      boxShadow: `0 0 40px ${activeService.borderColor}60`,
+                    }}
                   >
+                    <IoRocket className="mr-3 text-xl" />
                     サイトを開く
                     <IoChevronForward className="ml-2" />
                   </a>

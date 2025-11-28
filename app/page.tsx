@@ -9,6 +9,8 @@ import { LeagueFilter } from "@/components/LeagueFilter";
 import { TeamCard } from "@/components/TeamCard";
 import { SubServiceTabs } from "@/components/SubServiceTabs";
 import { ColumnSection } from "@/components/ColumnSection";
+import { ContactForm } from "@/components/ContactForm";
+import { SupervisorSection } from "@/components/SupervisorSection";
 import { dummyTeams } from "@/lib/dummy-data";
 import { IoChevronDown, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles } from "react-icons/io5";
 
@@ -117,8 +119,8 @@ export default function Home() {
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-cyan-400">SYSTEM_ONLINE</span>
               </div>
-              <div className="text-pink-500">VER_2.0.24</div>
-              <div className="text-yellow-400">SECTOR_KANSAI</div>
+              <div className="text-pink-500">VER_2026</div>
+              <div className="text-yellow-400">SECTOR_JAPAN</div>
               <div className="text-white/50">UPLINK: <span className="text-green-400">ACTIVE</span></div>
             </div>
           </motion.div>
@@ -132,9 +134,9 @@ export default function Home() {
           >
             <div className="font-mono text-xs space-y-2 p-4 border border-pink-500/30 bg-black/80 backdrop-blur-md rounded">
               <div className="text-pink-500 animate-pulse">◈ SCANNING...</div>
-              <div className="text-cyan-400">TEAMS: <span className="text-white">50+</span></div>
+              <div className="text-cyan-400">TEAMS: <span className="text-white">1400+</span></div>
               <div className="text-yellow-400">LEAGUES: <span className="text-white">03</span></div>
-              <div className="text-red-500">AREAS: <span className="text-white">02</span></div>
+              <div className="text-red-500">AREAS: <span className="text-white">47</span></div>
             </div>
           </motion.div>
 
@@ -199,7 +201,7 @@ export default function Home() {
                 className="px-5 py-2 text-xs font-mono tracking-wider border-2 border-red-500/60 text-red-500 bg-red-500/10 shadow-[0_0_15px_rgba(255,42,68,0.4)] flex items-center gap-2"
               >
                 <span className="text-[10px] animate-pulse">◆</span>
-                BOYS
+                ボーイズリーグ
               </motion.span>
               <motion.span 
                 initial={{ opacity: 0, x: -30 }}
@@ -208,7 +210,7 @@ export default function Home() {
                 className="px-5 py-2 text-xs font-mono tracking-wider border-2 border-cyan-400/60 text-cyan-400 bg-cyan-400/10 shadow-[0_0_15px_rgba(0,240,255,0.4)] flex items-center gap-2"
               >
                 <span className="text-[10px] animate-pulse">◆</span>
-                SENIOR
+                シニアリーグ
               </motion.span>
               <motion.span 
                 initial={{ opacity: 0, x: -30 }}
@@ -217,7 +219,7 @@ export default function Home() {
                 className="px-5 py-2 text-xs font-mono tracking-wider border-2 border-yellow-400/60 text-yellow-400 bg-yellow-400/10 shadow-[0_0_15px_rgba(255,255,0,0.4)] flex items-center gap-2"
               >
                 <span className="text-[10px] animate-pulse">◆</span>
-                YOUNG
+                ヤングリーグ
               </motion.span>
             </motion.div>
 
@@ -228,7 +230,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="text-white/70 max-w-xl mx-auto text-lg md:text-xl leading-relaxed mb-12 font-mono"
             >
-              <span className="text-cyan-400">&gt;</span> 大阪・兵庫を中心とした中学硬式野球チームの<br className="hidden sm:block" />
+              <span className="text-cyan-400">&gt;</span> 全国の中学硬式野球チームの<br className="hidden sm:block" />
               <span className="text-pink-500">検索</span>・<span className="text-yellow-400">比較</span>プラットフォーム<span className="animate-pulse text-red-500">_</span>
             </motion.p>
 
@@ -237,7 +239,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.7 }}
-              className="flex flex-col sm:flex-row justify-center gap-5"
+              className="flex flex-col sm:flex-row justify-center gap-5 mb-12"
             >
               <a 
                 href="#search"
@@ -254,36 +256,35 @@ export default function Home() {
                 className="inline-flex items-center justify-center px-10 py-5 border-2 border-cyan-400/60 text-cyan-400 hover:bg-cyan-400/20 font-bold text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.4)]"
               >
                 <IoSparkles className="mr-2" />
-                サービス一覧
+                サブチャンネル
               </a>
             </motion.div>
-          </div>
 
-          {/* Stats bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="absolute bottom-24 left-1/2 -translate-x-1/2"
-          >
-            <div className="flex items-center gap-10 px-10 py-5 border-2 border-red-500/40 bg-black/80 backdrop-blur-md">
-              <div className="text-center">
-                <div className="text-xs text-red-500 font-mono mb-2 animate-pulse">▣</div>
-                <div className="text-3xl font-black text-red-500 font-mono">50+</div>
-                <div className="text-[10px] text-white/50 font-mono tracking-widest mt-1">TEAMS</div>
+            {/* Stats bar - ボタンの下に配置 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+            >
+              <div className="flex items-center justify-center gap-8 sm:gap-10 px-6 sm:px-10 py-4 border-2 border-red-500/40 bg-black/80 backdrop-blur-md">
+                <div className="text-center">
+                  <div className="text-xs text-red-500 font-mono mb-1 animate-pulse">▣</div>
+                  <div className="text-2xl sm:text-3xl font-black text-red-500 font-mono">1400+</div>
+                  <div className="text-[10px] text-white/50 font-mono tracking-widest mt-1">チーム数</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xs text-cyan-400 font-mono mb-1 animate-pulse">◎</div>
+                  <div className="text-2xl sm:text-3xl font-black text-cyan-400 font-mono">47</div>
+                  <div className="text-[10px] text-white/50 font-mono tracking-widest mt-1">都道府県</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xs text-yellow-400 font-mono mb-1 animate-pulse">◈</div>
+                  <div className="text-2xl sm:text-3xl font-black text-yellow-400 font-mono">03</div>
+                  <div className="text-[10px] text-white/50 font-mono tracking-widest mt-1">リーグ数</div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-xs text-cyan-400 font-mono mb-2 animate-pulse">◎</div>
-                <div className="text-3xl font-black text-cyan-400 font-mono">02</div>
-                <div className="text-[10px] text-white/50 font-mono tracking-widest mt-1">AREAS</div>
-              </div>
-              <div className="text-center">
-                <div className="text-xs text-yellow-400 font-mono mb-2 animate-pulse">◈</div>
-                <div className="text-3xl font-black text-yellow-400 font-mono">03</div>
-                <div className="text-[10px] text-white/50 font-mono tracking-widest mt-1">LEAGUES</div>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           {/* Scroll indicator */}
           <motion.div
@@ -302,6 +303,9 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </section>
+
+        {/* Supervisor Section */}
+        <SupervisorSection />
 
         {/* Search Section */}
         <section className="py-28 px-4 relative" id="search">
@@ -405,14 +409,14 @@ export default function Home() {
             >
               <div className="inline-block mb-6">
                 <div className="flex items-center gap-4 px-6 py-3 border-2 border-cyan-400/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-                  <span className="text-sm font-mono text-cyan-400 tracking-widest">◈ SERVICES ◈</span>
+                  <span className="text-sm font-mono text-cyan-400 tracking-widest">◈ SUB_CHANNEL ◈</span>
                 </div>
               </div>
               <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
-                関連<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>サービス</span>
+                サブ<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>チャンネル</span>
               </h2>
               <p className="text-white/50 max-w-md mx-auto font-mono text-base">
-                <span className="text-pink-500">&gt;</span> 野球以外にも多彩なサポートを提供<span className="animate-pulse text-cyan-400">_</span>
+                <span className="text-pink-500">&gt;</span> 野球少年の未来を広げる関連サービス<span className="animate-pulse text-cyan-400">_</span>
               </p>
             </motion.div>
             
@@ -422,6 +426,9 @@ export default function Home() {
 
         {/* Column Section */}
         <ColumnSection />
+
+        {/* Contact Form Section */}
+        <ContactForm />
       </main>
 
       {/* Footer */}

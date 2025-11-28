@@ -1,5 +1,9 @@
 # 中学硬式野球メディア - ROOKIE SMART
 
+> **非エンジニアでも運用できる、中学硬式野球チームのSEO特化オウンドメディア**  
+> 技術スタック: Sanity CMS + Next.js + Cloudflare Pages  
+> デザインコンセプト: **サイバーパンク**
+
 サイバーパンクテイストの中学硬式野球チーム検索メディア。
 Next.js 14, Tailwind CSS, Framer Motion, Three.js, Sanity CMS を使用しています。
 
