@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { RiBaseballFill } from "react-icons/ri";
+import { IoBaseball } from "react-icons/io5";
 
 export const Navbar = () => {
   return (
     <nav className="w-full border-b border-cyber-cyan/30 bg-cyber-bg-sub/80 backdrop-blur-md sticky top-0 z-50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2 group">
-          <RiBaseballFill className="text-3xl text-cyber-cyan group-hover:text-cyber-magenta transition-colors duration-300" />
+          <IoBaseball className="text-3xl text-cyber-cyan group-hover:text-cyber-magenta transition-colors duration-300" />
           <span className="font-mono text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-cyber-magenta">
             ROOKIE SMART
           </span>

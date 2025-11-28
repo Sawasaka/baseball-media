@@ -1,21 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
-import * as random from "three/examples/jsm/math/MeshSurfaceSampler"; // This might not be needed for simple random points
-// Actually simpler to just generate random float32array
-import * as THREE from "three";
 
 function Stars(props: any) {
   const ref = useRef<any>();
-  const [sphere] = useRef(() => {
-    const positions = new Float32Array(3000); // 1000 points * 3 coords
+  
+  const sphere = useMemo(() => {
+    const positions = new Float32Array(3000);
     for (let i = 0; i < 3000; i++) {
-      positions[i] = (Math.random() - 0.5) * 10; // spread within 10 units
+      positions[i] = (Math.random() - 0.5) * 10;
     }
     return positions;
-  }).current;
+  }, []);
 
   useFrame((state, delta) => {
     if (ref.current) {

@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { RiMapPinLine, RiGlobalLine } from "react-icons/ri";
+import { IoLocationSharp, IoGlobeOutline } from "react-icons/io5";
 
 interface Team {
   id: string;
@@ -42,7 +41,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
             {team.league.toUpperCase()}
           </span>
           <div className="flex items-center text-gray-400 text-xs">
-            <RiMapPinLine className="mr-1" />
+            <IoLocationSharp className="mr-1" />
             {team.prefecture === 'osaka' ? '大阪' : '兵庫'}
           </div>
         </div>
@@ -62,7 +61,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
             rel="noopener noreferrer"
             className="inline-flex items-center text-sm text-cyber-cyan hover:text-white transition-colors"
           >
-            <RiGlobalLine className="mr-2" />
+            <IoGlobeOutline className="mr-2" />
             OFFICIAL SITE
           </a>
         )}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RiGlobalLine, RiCloseLine } from "react-icons/ri";
+import { IoGlobeOutline, IoCloseOutline } from "react-icons/io5";
 
 const subServices = [
   {
@@ -75,7 +75,7 @@ export const SubServiceTabs = () => {
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-cyber-cyan/20 bg-cyber-bg-sub/80">
               <div className="flex items-center space-x-2">
-                <RiGlobalLine className="text-cyber-cyan" />
+                <IoGlobeOutline className="text-cyber-cyan" />
                 <span className="font-mono text-sm text-cyber-cyan">
                   {activeService.label}
                 </span>
@@ -84,7 +84,7 @@ export const SubServiceTabs = () => {
                 onClick={() => setActiveTab(null)}
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                <RiCloseLine className="text-xl" />
+                <IoCloseOutline className="text-xl" />
               </button>
             </div>
 

@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <>
-      <Scene3D />
+      {/* <Scene3D /> */}
       <Navbar />
       
       <main className="container mx-auto px-4 py-12 relative z-10">
