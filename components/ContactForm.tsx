@@ -13,7 +13,8 @@ import {
   IoSparkles,
   IoNewspaper,
   IoTrophy,
-  IoMegaphone
+  IoMegaphone,
+  IoApps
 } from "react-icons/io5";
 
 interface FormData {
@@ -48,6 +49,12 @@ const exampleConsultations = [
     title: "スポーツメーカー様からのスポンサー相談",
     description: "中学野球市場へのアプローチをご支援",
     color: "#FACC15",
+  },
+  {
+    icon: IoApps,
+    title: "サブチャンネル（英語・IT・野球塾等）のご相談",
+    description: "各サービスへのお問い合わせ・提携のご相談",
+    color: "#22C55E",
   },
 ];
 
@@ -181,7 +188,7 @@ export function ContactForm() {
             <span className="text-sm font-mono text-cyan-400 tracking-wider">ご相談いただける内容例</span>
             <span className="text-yellow-400 text-sm">◈</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {exampleConsultations.map((item, index) => {
               const Icon = item.icon;
               return (
