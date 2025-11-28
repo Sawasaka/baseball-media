@@ -8,38 +8,73 @@ interface Props {
 }
 
 const prefectures = [
-  { id: "osaka", label: "OSAKA", sub: "大阪" },
-  { id: "hyogo", label: "HYOGO", sub: "兵庫" },
+  { id: "osaka", label: "大阪", labelEn: "OSAKA", code: "027", icon: "◈" },
+  { id: "hyogo", label: "兵庫", labelEn: "HYOGO", code: "028", icon: "◆" },
 ];
 
 export const PrefectureTabs = ({ currentPrefecture, onSelect }: Props) => {
   return (
-    <div className="flex justify-center space-x-8 mb-12">
-      {prefectures.map((pref) => (
-        <button
-          key={pref.id}
-          onClick={() => onSelect(pref.id)}
-          className="relative px-6 py-2 group"
-        >
-          <div className="flex flex-col items-center z-10 relative">
-            <span className={`font-mono text-2xl font-bold transition-colors duration-300 ${
-              currentPrefecture === pref.id ? "text-cyber-cyan" : "text-gray-500 group-hover:text-gray-300"
-            }`}>
-              {pref.label}
-            </span>
-            <span className="text-xs tracking-widest text-gray-400">{pref.sub}</span>
-          </div>
+    <div className="flex justify-center mb-10">
+      <div className="inline-flex bg-black/80 border-2 border-cyan-400/30 p-2 relative overflow-hidden">
+        {/* Background scan effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent" />
+        
+        {/* Corner decorations */}
+        <div className="absolute -top-1 -left-1 w-5 h-5 border-t-2 border-l-2 border-cyan-400" style={{ boxShadow: '0 0 10px #00F0FF' }} />
+        <div className="absolute -top-1 -right-1 w-5 h-5 border-t-2 border-r-2 border-pink-500" style={{ boxShadow: '0 0 10px #FF00AA' }} />
+        <div className="absolute -bottom-1 -left-1 w-5 h-5 border-b-2 border-l-2 border-pink-500" style={{ boxShadow: '0 0 10px #FF00AA' }} />
+        <div className="absolute -bottom-1 -right-1 w-5 h-5 border-b-2 border-r-2 border-cyan-400" style={{ boxShadow: '0 0 10px #00F0FF' }} />
+        
+        {prefectures.map((pref, index) => {
+          const isActive = currentPrefecture === pref.id;
           
-          {currentPrefecture === pref.id && (
-            <motion.div
-              layoutId="activeTab"
-              className="absolute inset-0 bg-cyber-cyan/10 border border-cyber-cyan/50 rounded skew-x-12"
-              transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-            />
-          )}
-        </button>
-      ))}
+          return (
+            <button
+              key={pref.id}
+              onClick={() => onSelect(pref.id)}
+              className={`relative px-10 py-4 transition-all duration-400 ${
+                isActive ? "text-white" : "text-white/50 hover:text-white/80"
+              }`}
+            >
+              {/* Active background with glow */}
+              {isActive && (
+                <motion.div
+                  layoutId="activePref"
+                  className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-red-600"
+                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                  style={{
+                    boxShadow: '0 0 30px rgba(255,42,68,0.5), inset 0 0 20px rgba(255,42,68,0.2)'
+                  }}
+                />
+              )}
+              
+              {/* Hover effect for inactive */}
+              {!isActive && (
+                <div className="absolute inset-0 bg-red-500/0 hover:bg-red-500/10 transition-colors" />
+              )}
+              
+              {/* Content */}
+              <div className="relative z-10 flex flex-col items-center font-mono">
+                <span className={`text-[10px] mb-1 ${isActive ? 'text-cyan-400' : 'text-white/40'}`}>
+                  [{pref.code}]
+                </span>
+                <span className={`text-xl font-bold tracking-wider flex items-center gap-2`}>
+                  <span className="text-xs">{pref.icon}</span>
+                  {pref.labelEn}
+                </span>
+                <span className={`text-xs mt-1 ${isActive ? 'text-cyan-400' : 'text-white/50'}`}>
+                  {pref.label}
+                </span>
+              </div>
+              
+              {/* Separator line */}
+              {index < prefectures.length - 1 && (
+                <div className="absolute right-0 top-1/4 bottom-1/4 w-[2px] bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent" />
+              )}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };
-

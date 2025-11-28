@@ -9,30 +9,24 @@ const config: Config = {
     extend: {
       colors: {
         cyber: {
-          cyan: "#00f0ff",
-          magenta: "#ff00ff",
-          yellow: "#ffff00",
-          bg: "#0a0a0f",
-          "bg-sub": "#1a1a2e",
-          text: "#e0e0e0",
+          bg: "#050508",
+          "bg-secondary": "#0A0A12",
+          "bg-card": "#12121A",
         },
-      },
-      backgroundImage: {
-        "cyber-grid": "linear-gradient(to right, #1a1a2e 1px, transparent 1px), linear-gradient(to bottom, #1a1a2e 1px, transparent 1px)",
       },
       fontFamily: {
         sans: ['var(--font-zen-kaku)', 'sans-serif'],
         mono: ['var(--font-orbitron)', 'monospace'],
       },
       animation: {
-        "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "glitch": "glitch 1s linear infinite",
+        "float": "float 6s ease-in-out infinite",
+        "pulse-slow": "pulse 3s ease-in-out infinite",
+        "spin-slow": "spin 20s linear infinite",
       },
       keyframes: {
-        glitch: {
-          "2%, 64%": { transform: "translate(2px,0) skew(0deg)" },
-          "4%, 60%": { transform: "translate(-2px,0) skew(0deg)" },
-          "62%": { transform: "translate(0,0) skew(5deg)" },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-20px)" }
         },
       },
     },
@@ -40,4 +34,3 @@ const config: Config = {
   plugins: [],
 };
 export default config;
-

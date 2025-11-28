@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
-import { Zen_Kaku_Gothic_New, Orbitron } from "next/font/google";
+import { Noto_Sans_JP, Orbitron } from "next/font/google";
 import "./globals.css";
 
-const zenKaku = Zen_Kaku_Gothic_New({ 
+const notoSansJP = Noto_Sans_JP({ 
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-zen-kaku",
+  weight: ["400", "500", "700", "900"],
+  variable: "--font-noto-sans",
   display: "swap",
 });
 
 const orbitron = Orbitron({ 
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-orbitron",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "中学硬式野球メディア | ボーイズ・シニア・ヤング徹底比較",
-  description: "大阪・兵庫を中心とした中学硬式野球チーム（ボーイズ、シニア、ヤング）の検索サイト。元プロ野球選手監修のお役立ちコラムも配信。",
+  title: "ROOKIE SMART | 中学硬式野球チーム検索",
+  description: "大阪・兵庫を中心とした中学硬式野球チーム（ボーイズ、シニア、ヤング）の検索・比較サイト。あなたの次のステージを見つけよう。",
 };
 
 export default function RootLayout({
@@ -27,14 +27,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
-      <body className={`${zenKaku.variable} ${orbitron.variable} font-sans bg-cyber-bg text-cyber-text`}>
-        <div className="fixed inset-0 z-[-1] bg-cyber-grid opacity-20 pointer-events-none"></div>
-        <main className="min-h-screen flex flex-col">
-          {children}
-        </main>
+    <html lang="ja" className="scroll-smooth">
+      <body className={`${notoSansJP.variable} ${orbitron.variable} font-sans bg-cyber-bg text-white antialiased`}>
+        {children}
       </body>
     </html>
   );
 }
-
