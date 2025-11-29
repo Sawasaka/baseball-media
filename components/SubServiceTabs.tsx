@@ -10,7 +10,7 @@ const subServices = [
     label: "英語学習",
     labelEn: "ENGLISH",
     description: "野球×英語で世界へ",
-    catchphrase: "MLB挑戦も夢じゃない",
+    catchphrase: "英語力で可能性を広げる",
     url: "https://english.rookiesmart-jp.com/",
     icon: IoLanguage,
     color: "cyan",
@@ -90,6 +90,89 @@ export const SubServiceTabs = () => {
 
   return (
     <div className="w-full">
+      {/* Pricing Banner - 料金プラン */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-12"
+      >
+        <div className="relative overflow-hidden border-2 border-yellow-400/60 bg-gradient-to-r from-yellow-400/10 via-orange-500/10 to-red-500/10">
+          {/* Animated background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/5 via-transparent to-orange-500/5 animate-pulse" />
+          
+          {/* Scanline effect */}
+          <div className="absolute inset-0 opacity-10" style={{
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(250,204,21,0.1) 2px, rgba(250,204,21,0.1) 4px)',
+          }} />
+          
+          {/* Corner accents */}
+          <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-yellow-400" />
+          <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-yellow-400" />
+          <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-yellow-400" />
+          <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-yellow-400" />
+          
+          <div className="relative z-10 p-6 md:p-8">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+              {/* Left: Price info */}
+              <div className="text-center lg:text-left">
+                <div className="flex items-center justify-center lg:justify-start gap-3 mb-3">
+                  <IoSparkles className="text-yellow-400 text-2xl animate-pulse" />
+                  <span className="text-xs font-mono text-yellow-400/80 tracking-wider">ALL_ACCESS_PLAN</span>
+                </div>
+                <div className="flex items-baseline justify-center lg:justify-start gap-2">
+                  <span className="text-white/60 text-sm font-mono">月額</span>
+                  <span className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400" style={{ textShadow: '0 0 40px rgba(250,204,21,0.5)' }}>
+                    ¥9,800
+                  </span>
+                  <span className="text-white/60 text-sm font-mono">(税込)</span>
+                </div>
+                <p className="text-white/70 text-sm mt-3 font-mono">
+                  <span className="text-cyan-400">▸</span> 全5つのサブチャンネルが<span className="text-yellow-400 font-bold">使い放題</span>
+                </p>
+              </div>
+              
+              {/* Center: Features */}
+              <div className="flex flex-wrap justify-center gap-3">
+                {['英語学習', 'ITアカデミー', '野球塾', 'スカウト', 'キャリア'].map((item, i) => (
+                  <span 
+                    key={item}
+                    className="px-3 py-1.5 text-xs font-mono border border-white/30 text-white/80 bg-white/5"
+                  >
+                    ✓ {item}
+                  </span>
+                ))}
+              </div>
+              
+              {/* Right: Limited badge */}
+              <div className="text-center">
+                <div className="relative inline-block">
+                  <motion.div
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="px-6 py-4 border-2 border-red-500 bg-gradient-to-br from-red-500/30 to-red-600/20 relative overflow-hidden"
+                    style={{ boxShadow: '0 0 30px rgba(239,68,68,0.4)' }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/20 to-transparent animate-pulse" />
+                    <div className="relative z-10">
+                      <div className="text-red-400 text-xs font-mono mb-1">⚠ LIMITED</div>
+                      <div className="text-white font-black text-2xl">100名</div>
+                      <div className="text-white/70 text-xs font-mono">限定枠</div>
+                    </div>
+                  </motion.div>
+                </div>
+                <p className="text-white/50 text-[10px] font-mono mt-2">
+                  ※ 定員以降は<span className="text-red-400">紹介制</span>となります
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Bottom glow line */}
+          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-yellow-400 to-transparent" style={{ boxShadow: '0 0 15px rgba(250,204,21,0.8)' }} />
+        </div>
+      </motion.div>
+
       {/* Service Grid - 超目立つカードデザイン */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-10">
         {subServices.map((service, index) => {
@@ -321,6 +404,73 @@ export const SubServiceTabs = () => {
           );
         })}
       </div>
+
+      {/* Free Counseling Button - カードの下に1つ */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-10"
+      >
+        <a
+          href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block max-w-md mx-auto"
+        >
+          <motion.div
+            whileHover={{ scale: 1.02, y: -3 }}
+            whileTap={{ scale: 0.98 }}
+            className="relative overflow-hidden border-2 border-green-400 bg-gradient-to-r from-green-400/20 via-emerald-500/20 to-green-400/20 p-5 text-center group cursor-pointer"
+            style={{ boxShadow: '0 0 30px rgba(34,197,94,0.4)' }}
+          >
+            {/* Animated background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            
+            {/* Corner accents */}
+            <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-green-400" />
+            <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-green-400" />
+            <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-green-400" />
+            <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-green-400" />
+            
+            <div className="relative z-10">
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="w-3 h-3 bg-green-400 rounded-full"
+                  style={{ boxShadow: '0 0 15px rgba(34,197,94,0.8)' }}
+                />
+                <span className="text-green-400 text-xs font-mono tracking-wider">FREE_COUNSELING</span>
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+                  className="w-3 h-3 bg-green-400 rounded-full"
+                  style={{ boxShadow: '0 0 15px rgba(34,197,94,0.8)' }}
+                />
+              </div>
+              <p className="text-white text-lg font-bold mb-1">
+                🎯 無料カウンセリング予約
+              </p>
+              <p className="text-white/60 text-xs font-mono">
+                サブチャンネルについてお気軽にご相談ください
+              </p>
+              <div className="mt-3 flex items-center justify-center gap-2 text-green-400 text-sm font-mono font-bold">
+                <span>日程を予約する</span>
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                >
+                  →
+                </motion.span>
+              </div>
+            </div>
+            
+            {/* Bottom glow */}
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-green-400 to-transparent" />
+          </motion.div>
+        </a>
+      </motion.div>
 
       {/* Content Panel */}
       <AnimatePresence mode="wait">

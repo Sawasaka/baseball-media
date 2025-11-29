@@ -137,26 +137,30 @@ export const Navbar = () => {
               );
             })}
             
-            {/* CTA - CONTACT */}
+            {/* CTA - 無料カウンセリング */}
             <a 
-              href="#contact" 
-              className="ml-3 px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-bold font-mono transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,42,68,0.6)] flex items-center gap-2 relative overflow-hidden group"
+              href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-3 px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white text-sm font-bold font-mono transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] flex items-center gap-2 relative overflow-hidden group"
             >
-              <IoFlash className="text-sm group-hover:animate-bounce" />
-              CONTACT
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+              無料相談
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </a>
           </div>
 
-          {/* Tablet/Mobile - CONTACTボタンのみ */}
+          {/* Tablet/Mobile - 無料カウンセリングボタン */}
           <div className="lg:hidden flex items-center">
             <a 
-              href="#contact" 
-              className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs md:text-sm font-bold font-mono flex items-center gap-1"
-              style={{ boxShadow: '0 0 15px rgba(255,42,68,0.4)' }}
+              href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-bold font-mono flex items-center gap-1"
+              style={{ boxShadow: '0 0 15px rgba(34,197,94,0.4)' }}
             >
-              <IoMail className="text-sm" />
-              <span className="hidden sm:inline">CONTACT</span>
+              <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+              <span className="hidden sm:inline">無料相談</span>
             </a>
           </div>
         </div>

@@ -130,7 +130,7 @@ export default function Home() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="absolute top-28 right-8 hidden lg:block"
+            className="absolute top-28 right-12 hidden lg:block"
           >
             <div className="font-mono text-xs space-y-2 p-4 border border-pink-500/30 bg-black/80 backdrop-blur-md rounded">
               <div className="text-pink-500 animate-pulse">◈ SCANNING...</div>
@@ -452,33 +452,72 @@ export default function Home() {
               </p>
             </div>
             
-            {/* Navigation */}
+            {/* Sub Channels */}
             <div>
-              <h4 className="text-base font-bold text-pink-500 mb-6 font-mono">// NAVIGATION</h4>
+              <h4 className="text-base font-bold text-pink-500 mb-6 font-mono">// SUB_CHANNELS</h4>
               <ul className="space-y-3">
-                {["チーム検索", "コラム", "運営情報", "お問い合わせ"].map((item) => (
-                  <li key={item}>
-                    <a href="#" className="text-white/50 text-sm hover:text-cyan-400 transition-all duration-300 font-mono flex items-center gap-3 group">
+                {[
+                  { name: "英語学習", url: "https://english.rookiesmart-jp.com/" },
+                  { name: "ITアカデミー", url: "https://academy.rookiesmart-jp.com/" },
+                  { name: "野球塾", url: "https://yakyu-juku.rookiesmart-jp.com/" },
+                  { name: "スカウト", url: "https://koko-yakyu-agent.rookiesmart-jp.com/" },
+                  { name: "キャリア", url: "https://career.rookiesmart-jp.com/" },
+                ].map((item) => (
+                  <li key={item.name}>
+                    <a 
+                      href={item.url} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/50 text-sm hover:text-cyan-400 transition-all duration-300 font-mono flex items-center gap-3 group"
+                    >
                       <span className="text-red-500 group-hover:text-cyan-400 transition-colors">&gt;</span>
-                      <span className="group-hover:translate-x-2 transition-transform">{item}</span>
+                      <span className="group-hover:translate-x-2 transition-transform">{item.name}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
             
-            {/* Contact */}
+            {/* Free Interview CTA */}
             <div>
-              <h4 className="text-base font-bold text-yellow-400 mb-6 font-mono">// CONTACT</h4>
-              <a 
-                href="mailto:info@rookiesmart-jp.com" 
-                className="text-cyan-400 hover:text-white transition-all duration-300 text-sm font-mono"
-              >
-                info@rookiesmart-jp.com
-              </a>
-              <div className="mt-6 flex items-center gap-3 p-3 border border-green-500/30 bg-green-500/5 inline-block">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-xs text-green-400 font-mono">SYSTEM_ONLINE</span>
+              <h4 className="text-base font-bold text-yellow-400 mb-6 font-mono">// FREE_INTERVIEW</h4>
+              <div className="p-4 border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-500/10 to-pink-500/10 relative overflow-hidden group hover:border-cyan-400 transition-all duration-300">
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-cyan-400" />
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-pink-500" />
+                
+                <div className="relative z-10">
+                  <p className="text-white text-sm font-bold mb-2">
+                    📣 チーム特集インタビュー
+                  </p>
+                  <p className="text-white/60 text-xs mb-4 leading-relaxed">
+                    中学硬式野球チームの魅力を<br />
+                    <span className="text-cyan-400 font-bold">無料</span>で記事にしてお届けします！
+                  </p>
+                  <a 
+                    href="#contact-name"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const el = document.getElementById('contact-name');
+                      if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(() => el.focus(), 500);
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-pink-500 text-white text-xs font-bold hover:from-cyan-400 hover:to-pink-400 transition-all duration-300 group/btn cursor-pointer"
+                  >
+                    <span>お気軽にご依頼ください</span>
+                    <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                  </a>
+                </div>
+              </div>
+              
+              <div className="mt-4 flex items-center gap-3">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="text-[10px] text-green-400/70 font-mono">ACCEPTING_REQUESTS</span>
               </div>
             </div>
           </div>
@@ -486,12 +525,12 @@ export default function Home() {
           {/* Copyright */}
           <div className="border-t-2 border-red-500/20 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-white/30 text-xs font-mono">
-              © 2024 <span className="text-red-500">ROOKIE_SMART</span> // ALL_RIGHTS_RESERVED
+              © 2026 <span className="text-red-500">ROOKIE_SMART</span> // ALL_RIGHTS_RESERVED
             </p>
             <div className="text-xs text-white/30 font-mono flex items-center gap-4">
-              <span className="text-cyan-400">BUILD_v2.0.24</span>
+              <span className="text-cyan-400">BUILD_v2026</span>
               <span className="text-pink-500">//</span>
-              <span className="text-yellow-400">KANSAI_SECTOR</span>
+              <span className="text-yellow-400">SECTOR_JAPAN</span>
             </div>
           </div>
         </div>

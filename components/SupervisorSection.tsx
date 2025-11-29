@@ -43,7 +43,7 @@ export function SupervisorSection() {
             </div>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-            監修者・<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>編集長</span>
+            監修者・<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>編集者</span>
           </h2>
         </motion.div>
 

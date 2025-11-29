@@ -1,16 +1,35 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { IoLocationSharp, IoGlobeOutline, IoChevronForward, IoBaseball, IoFlash } from "react-icons/io5";
+import { IoLocationSharp, IoGlobeOutline, IoBaseball, IoFlash } from "react-icons/io5";
 
 interface Team {
   id: string;
   name: string;
   prefecture: string;
+  area?: string;
   league: string;
   description: string;
   url?: string;
+  tags?: string[];
 }
+
+// 都道府県の日本語マッピング
+const prefectureNames: Record<string, string> = {
+  osaka: "大阪",
+  hyogo: "兵庫",
+  kyoto: "京都",
+  nara: "奈良",
+  wakayama: "和歌山",
+  shiga: "滋賀",
+  tokyo: "東京",
+  kanagawa: "神奈川",
+  chiba: "千葉",
+  saitama: "埼玉",
+  aichi: "愛知",
+  fukuoka: "福岡",
+  hokkaido: "北海道",
+};
 
 const getLeagueStyles = (league: string) => {
   switch (league) {
@@ -98,7 +117,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
         <div className={`absolute bottom-3 right-3 w-5 h-5 border-r-2 border-b-2 ${style.borderColor}/30 group-hover:${style.borderColor} transition-all duration-300`} />
         
         {/* Header area */}
-        <div className="h-36 relative bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden">
+        <div className="h-28 relative bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden">
           {/* Grid pattern */}
           <div 
             className="absolute inset-0 opacity-20"
@@ -109,28 +128,30 @@ export const TeamCard = ({ team }: { team: Team }) => {
             }}
           />
           
-          {/* League icon */}
+          {/* League badge */}
           <div className="relative z-10 flex flex-col items-center">
             <div className="relative">
-              <IoBaseball className={`text-5xl ${style.textColor} opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500`} />
+              <IoBaseball className={`text-4xl ${style.textColor} opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500`} />
             </div>
-            <span className={`mt-3 text-xs font-mono ${style.textColor} tracking-widest`}>
-              {style.icon} {team.league.toUpperCase()} {style.icon}
+            <span className={`mt-2 text-sm font-mono font-bold ${style.textColor} tracking-widest`}>
+              {team.league === 'boys' ? 'ボーイズ' : team.league === 'senior' ? 'シニア' : 'ヤング'}
             </span>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          {/* Meta info */}
-          <div className="flex items-center justify-between mb-4">
-            <span className={`text-xs font-mono px-4 py-1.5 border-2 ${style.borderColor}/50 ${style.textColor} ${style.bgLight} tracking-wider`}>
-              {style.icon} {team.league.toUpperCase()}
-            </span>
-            <div className={`flex items-center text-white/50 text-xs font-mono`}>
-              <IoLocationSharp className={`mr-1.5 ${style.textColor}`} />
-              {team.prefecture === 'osaka' ? 'OSAKA' : 'HYOGO'}
+        <div className="p-5">
+          {/* Location info */}
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <div className={`flex items-center text-xs font-mono px-2 py-1 border ${style.borderColor}/40 ${style.bgLight}`}>
+              <IoLocationSharp className={`mr-1 ${style.textColor}`} />
+              <span className="text-white/80">{prefectureNames[team.prefecture] || team.prefecture}</span>
             </div>
+            {team.area && (
+              <div className="text-xs font-mono px-2 py-1 border border-white/20 bg-white/5 text-white/60">
+                {team.area}
+              </div>
+            )}
           </div>
 
           {/* Team name */}
@@ -145,12 +166,26 @@ export const TeamCard = ({ team }: { team: Team }) => {
           />
           
           {/* Description */}
-          <p className="text-white/50 text-sm line-clamp-2 mb-5 leading-relaxed font-mono">
+          <p className="text-white/50 text-sm line-clamp-2 mb-4 leading-relaxed font-mono">
             {team.description}
           </p>
 
+          {/* Tags */}
+          {team.tags && team.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {team.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className={`text-[10px] font-mono px-2 py-0.5 border ${style.borderColor}/30 ${style.textColor} bg-black/50`}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
+
           {/* Actions */}
-          <div className="flex items-center justify-between pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors">
+          <div className="flex items-center pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors">
             {team.url ? (
               <a
                 href={team.url}
@@ -159,17 +194,12 @@ export const TeamCard = ({ team }: { team: Team }) => {
                 className="flex items-center text-sm text-cyan-400 hover:text-white transition-all duration-300 font-mono"
               >
                 <IoGlobeOutline className="mr-2" />
-                <span>LINK</span>
+                <span>公式サイト</span>
                 <IoFlash className="ml-1 text-xs animate-pulse" />
               </a>
             ) : (
               <span className="text-xs text-white/25 font-mono">NO_LINK</span>
             )}
-            
-            <button className={`flex items-center text-sm text-white/60 hover:${style.textColor} transition-all duration-300 group/btn font-mono`}>
-              DETAIL
-              <IoChevronForward className="ml-1 group-hover/btn:translate-x-2 transition-transform" />
-            </button>
           </div>
         </div>
 

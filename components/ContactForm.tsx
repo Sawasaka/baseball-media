@@ -34,26 +34,22 @@ interface FormErrors {
 const exampleConsultations = [
   {
     icon: IoNewspaper,
-    title: "野球チームの無料特集インタビュー依頼",
-    description: "チームの魅力を記事で発信しませんか？",
+    title: "無料特集インタビュー",
     color: "#00F0FF",
   },
   {
     icon: IoTrophy,
-    title: "高校野球関係者様による中学選手スカウトのご相談",
-    description: "優秀な選手との出会いをサポートします",
+    title: "高校野球スカウト",
     color: "#FF2A44",
   },
   {
     icon: IoMegaphone,
-    title: "スポーツメーカー様からのスポンサー相談",
-    description: "中学野球市場へのアプローチをご支援",
+    title: "スポンサー協賛",
     color: "#FACC15",
   },
   {
     icon: IoApps,
-    title: "サブチャンネル（英語・IT・野球塾等）のご相談",
-    description: "各サービスへのお問い合わせ・提携のご相談",
+    title: "サブチャンネル",
     color: "#22C55E",
   },
 ];
@@ -204,7 +200,7 @@ export function ContactForm() {
                     boxShadow: `0 0 20px ${item.color}20`,
                   }}
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-center gap-4">
                     <div 
                       className="p-3 shrink-0"
                       style={{ 
@@ -214,17 +210,12 @@ export function ContactForm() {
                     >
                       <Icon size={24} style={{ color: item.color }} />
                     </div>
-                    <div>
-                      <h4 
-                        className="font-bold text-sm mb-1"
-                        style={{ color: item.color }}
-                      >
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-white/50 font-mono">
-                        {item.description}
-                      </p>
-                    </div>
+                    <h4 
+                      className="font-bold text-sm"
+                      style={{ color: item.color }}
+                    >
+                      {item.title}
+                    </h4>
                   </div>
                 </motion.div>
               );
@@ -280,6 +271,7 @@ export function ContactForm() {
                   </label>
                   <input
                     type="text"
+                    id="contact-name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -395,10 +387,6 @@ export function ContactForm() {
                 </motion.button>
               </div>
 
-              {/* Privacy Note */}
-              <p className="text-center text-xs text-white/40 font-mono">
-                <span className="text-green-400">*</span> は必須項目です。ご入力いただいた情報は、お問い合わせ対応のみに使用いたします。
-              </p>
             </form>
           )}
         </motion.div>
