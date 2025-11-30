@@ -17,8 +17,20 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: "ROOKIE SMART | 中学硬式野球チーム検索",
-  description: "大阪・兵庫を中心とした中学硬式野球チーム（ボーイズ、シニア、ヤング）の検索・比較サイト。あなたの次のステージを見つけよう。",
+  title: "全国の中学硬式野球チーム検索・比較サイト｜ボーイズ・シニア・ヤング対応｜ROOKIE SMART",
+  description: "全国の中学硬式野球チーム（ボーイズリーグ・シニアリーグ・ヤングリーグ）をエリアや特徴から検索・比較できるプラットフォーム。支部・地域・進路実績・練習環境など、クラブ選びに役立つ情報とコラムを提供し、選手と保護者の「後悔しないチーム選び」をサポートします。",
+  keywords: ["中学硬式野球", "ボーイズリーグ", "シニアリーグ", "ヤングリーグ", "中学野球チーム", "野球クラブ", "チーム検索", "チーム比較", "野球進路"],
+  openGraph: {
+    title: "全国の中学硬式野球チーム検索・比較サイト｜ROOKIE SMART",
+    description: "全国の中学硬式野球チーム（ボーイズ・シニア・ヤング）をエリアや特徴から検索・比較。選手と保護者の「後悔しないチーム選び」をサポート。",
+    type: "website",
+    locale: "ja_JP",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "全国の中学硬式野球チーム検索・比較サイト｜ROOKIE SMART",
+    description: "全国の中学硬式野球チーム（ボーイズ・シニア・ヤング）をエリアや特徴から検索・比較できるプラットフォーム。",
+  },
 };
 
 export default function RootLayout({

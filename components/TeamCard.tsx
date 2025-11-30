@@ -2,34 +2,33 @@
 
 import { motion } from "framer-motion";
 import { IoLocationSharp, IoGlobeOutline, IoBaseball, IoFlash } from "react-icons/io5";
+import type { Team as MicroCMSTeam } from "@/lib/microcms/types";
 
+// TeamCard用の型（microCMS の Team 型を拡張）
+// microCMS のセレクトフィールドは配列で返ってくる
 interface Team {
   id: string;
   name: string;
-  prefecture: string;
+  prefecture: string[];  // 配列
   area?: string;
-  league: string;
-  description: string;
-  url?: string;
-  tags?: string[];
+  league: string[];      // 配列
+  branch?: string;
+  catchcopy?: string;
+  officialurl?: string;
+  feature1?: string;
+  feature2?: string;
+  feature3?: string;
 }
 
-// 都道府県の日本語マッピング
-const prefectureNames: Record<string, string> = {
-  osaka: "大阪",
-  hyogo: "兵庫",
-  kyoto: "京都",
-  nara: "奈良",
-  wakayama: "和歌山",
-  shiga: "滋賀",
-  tokyo: "東京",
-  kanagawa: "神奈川",
-  chiba: "千葉",
-  saitama: "埼玉",
-  aichi: "愛知",
-  fukuoka: "福岡",
-  hokkaido: "北海道",
+// リーグ名を内部IDに変換
+const getLeagueId = (league: string[]): string => {
+  const leagueName = league?.[0] || '';
+  if (leagueName === 'ボーイズ') return 'boys';
+  if (leagueName === 'シニア') return 'senior';
+  if (leagueName === 'ヤング') return 'young';
+  return 'boys';
 };
+
 
 const getLeagueStyles = (league: string) => {
   switch (league) {
@@ -77,7 +76,10 @@ const getLeagueStyles = (league: string) => {
 };
 
 export const TeamCard = ({ team }: { team: Team }) => {
-  const style = getLeagueStyles(team.league);
+  const leagueId = getLeagueId(team.league);
+  const style = getLeagueStyles(leagueId);
+  const prefectureName = team.prefecture?.[0] || '';
+  const leagueName = team.league?.[0] || '';
 
   return (
     <motion.div
@@ -95,16 +97,16 @@ export const TeamCard = ({ team }: { team: Team }) => {
       <div 
         className="relative bg-black/80 border-2 border-white/10 overflow-hidden transition-all duration-500 group-hover:border-opacity-70"
         style={{ 
-          borderColor: team.league === 'boys' ? 'rgba(255,42,68,0.2)' : team.league === 'senior' ? 'rgba(0,240,255,0.2)' : 'rgba(255,255,0,0.2)'
+          borderColor: leagueId === 'boys' ? 'rgba(255,42,68,0.2)' : leagueId === 'senior' ? 'rgba(0,240,255,0.2)' : 'rgba(255,255,0,0.2)'
         }}
       >
         {/* Top accent line */}
         <div 
           className="h-[3px]"
           style={{
-            background: team.league === 'boys' 
+            background: leagueId === 'boys' 
               ? 'linear-gradient(90deg, #FF2A44, #FF00AA, #FF2A44)' 
-              : team.league === 'senior' 
+              : leagueId === 'senior' 
               ? 'linear-gradient(90deg, #00F0FF, #4466FF, #00F0FF)' 
               : 'linear-gradient(90deg, #FFFF00, #FFD700, #FFFF00)'
           }}
@@ -117,25 +119,39 @@ export const TeamCard = ({ team }: { team: Team }) => {
         <div className={`absolute bottom-3 right-3 w-5 h-5 border-r-2 border-b-2 ${style.borderColor}/30 group-hover:${style.borderColor} transition-all duration-300`} />
         
         {/* Header area */}
-        <div className="h-28 relative bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden">
-          {/* Grid pattern */}
+        <div className="h-32 relative bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden">
+          {/* Background grid */}
           <div 
             className="absolute inset-0 opacity-20"
             style={{
               backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
               backgroundSize: '25px 25px',
-              color: team.league === 'boys' ? '#FF2A44' : team.league === 'senior' ? '#00F0FF' : '#FFFF00'
+              color: leagueId === 'boys' ? '#FF2A44' : leagueId === 'senior' ? '#00F0FF' : '#FFFF00'
             }}
           />
           
-          {/* League badge */}
+          {/* League icon */}
           <div className="relative z-10 flex flex-col items-center">
             <div className="relative">
-              <IoBaseball className={`text-4xl ${style.textColor} opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500`} />
+              <IoBaseball className={`text-5xl ${style.textColor} opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500`} />
             </div>
-            <span className={`mt-2 text-sm font-mono font-bold ${style.textColor} tracking-widest`}>
-              {team.league === 'boys' ? 'ボーイズ' : team.league === 'senior' ? 'シニア' : 'ヤング'}
+          </div>
+          
+          {/* League & Branch badges - right corner */}
+          <div className="absolute top-3 right-3 flex flex-col items-end gap-1">
+            <span 
+              className={`text-[9px] font-mono font-bold px-2 py-0.5 border ${style.borderColor}/50`}
+              style={{ color: leagueId === 'boys' ? '#FF2A44' : leagueId === 'senior' ? '#00F0FF' : '#FACC15' }}
+            >
+              {leagueName || (leagueId === 'boys' ? 'ボーイズ' : leagueId === 'senior' ? 'シニア' : 'ヤング')}
             </span>
+            {team.branch && (
+              <span 
+                className="text-[9px] font-mono px-2 py-0.5 border border-white/30 bg-white/10 text-white/80"
+              >
+                {team.branch}
+              </span>
+            )}
           </div>
         </div>
 
@@ -145,7 +161,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
           <div className="flex items-center gap-2 mb-3 flex-wrap">
             <div className={`flex items-center text-xs font-mono px-2 py-1 border ${style.borderColor}/40 ${style.bgLight}`}>
               <IoLocationSharp className={`mr-1 ${style.textColor}`} />
-              <span className="text-white/80">{prefectureNames[team.prefecture] || team.prefecture}</span>
+              <span className="text-white/80">{prefectureName}</span>
             </div>
             {team.area && (
               <div className="text-xs font-mono px-2 py-1 border border-white/20 bg-white/5 text-white/60">
@@ -165,15 +181,15 @@ export const TeamCard = ({ team }: { team: Team }) => {
             style={{ boxShadow: `0 0 10px currentColor` }}
           />
           
-          {/* Description */}
+          {/* Description / Catchcopy */}
           <p className="text-white/50 text-sm line-clamp-2 mb-4 leading-relaxed font-mono">
-            {team.description}
+            {team.catchcopy || "チーム情報準備中"}
           </p>
 
-          {/* Tags */}
-          {team.tags && team.tags.length > 0 && (
+          {/* Feature Tags */}
+          {(team.feature1 || team.feature2 || team.feature3) && (
             <div className="flex flex-wrap gap-1.5 mb-4">
-              {team.tags.map((tag, index) => (
+              {[team.feature1, team.feature2, team.feature3].filter(Boolean).map((tag, index) => (
                 <span
                   key={index}
                   className={`text-[10px] font-mono px-2 py-0.5 border ${style.borderColor}/30 ${style.textColor} bg-black/50`}
@@ -186,9 +202,9 @@ export const TeamCard = ({ team }: { team: Team }) => {
 
           {/* Actions */}
           <div className="flex items-center pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors">
-            {team.url ? (
+            {team.officialurl ? (
               <a
-                href={team.url}
+                href={team.officialurl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center text-sm text-cyan-400 hover:text-white transition-all duration-300 font-mono"
@@ -201,13 +217,6 @@ export const TeamCard = ({ team }: { team: Team }) => {
               <span className="text-xs text-white/25 font-mono">NO_LINK</span>
             )}
           </div>
-        </div>
-
-        {/* Data indicator */}
-        <div className="absolute top-5 right-5 flex gap-2">
-          <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '0.3s' }} />
-          <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0.6s' }} />
         </div>
 
         {/* ID tag */}

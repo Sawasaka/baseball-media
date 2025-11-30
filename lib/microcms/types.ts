@@ -93,3 +93,32 @@ export interface SEOMetadata {
   noindex?: boolean;
 }
 
+/**
+ * チーム（teams API）
+ * microCMS のフィールドID に合わせた定義
+ * ※ microCMS のセレクトフィールドは配列で返ってくる
+ */
+export interface Team extends MicroCMSBase {
+  name: string;                    // チーム名
+  league: string[];                // リーグ（選択フィールド - 配列で返る）
+  prefecture: string[];            // 都道府県（選択フィールド - 配列で返る）
+  branch?: string;                 // 所属支部
+  area?: string;                   // 地域（エリア名）
+  feature1?: string;               // 特徴タグ1
+  feature2?: string;               // 特徴タグ2
+  feature3?: string;               // 特徴タグ3
+  catchcopy?: string;              // キャッチコピー1行
+  officialurl?: string;            // 公式サイトURL
+}
+
+/**
+ * チーム一覧取得用のクエリパラメータ
+ */
+export interface TeamListQuery {
+  limit?: number;
+  offset?: number;
+  filters?: string;
+  orders?: string;
+  fields?: string;
+}
+

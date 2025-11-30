@@ -1,7 +1,7 @@
 # 中学硬式野球メディア - ROOKIE SMART
 
 > **非エンジニアでも運用できる、中学硬式野球チームのSEO特化オウンドメディア**  
-> 技術スタック: microCMS + Next.js + Cloudflare Pages  
+> 技術スタック: microCMS + Next.js + Cloudflare Pages 
 > デザインコンセプト: **サイバーパンク**
 
 サイバーパンクテイストの中学硬式野球チーム検索メディア。

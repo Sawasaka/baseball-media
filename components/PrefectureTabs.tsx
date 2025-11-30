@@ -8,8 +8,8 @@ interface Props {
 }
 
 const prefectures = [
-  { id: "osaka", label: "大阪", labelEn: "OSAKA", code: "027", icon: "◈" },
-  { id: "hyogo", label: "兵庫", labelEn: "HYOGO", code: "028", icon: "◆" },
+  { id: "大阪府", label: "大阪", labelEn: "OSAKA", code: "027", icon: "◈" },
+  { id: "兵庫県", label: "兵庫", labelEn: "HYOGO", code: "028", icon: "◆" },
 ];
 
 export const PrefectureTabs = ({ currentPrefecture, onSelect }: Props) => {

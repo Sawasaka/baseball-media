@@ -11,7 +11,7 @@ import { SubServiceTabs } from "@/components/SubServiceTabs";
 import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
-import { dummyTeams } from "@/lib/dummy-data";
+import type { Team } from "@/lib/microcms/types";
 import { IoChevronDown, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles } from "react-icons/io5";
 
 // Import 3D scene dynamically
@@ -38,14 +38,44 @@ function useTypewriter(text: string, speed: number = 80) {
 }
 
 export default function Home() {
-  const [prefecture, setPrefecture] = useState("osaka");
+  const [prefecture, setPrefecture] = useState("大阪府");
   const [league, setLeague] = useState("boys");
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const typedText = useTypewriter("NEXT STAGE", 100);
 
-  const filteredTeams = dummyTeams.filter(
-    (team) =>
-      team.prefecture === prefecture &&
-      (league === "all" || team.league === league)
+  // microCMS からチームデータを取得
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const res = await fetch("/api/teams");
+        if (res.ok) {
+          const data = await res.json();
+          setTeams(data.teams || []);
+        }
+      } catch (error) {
+        console.error("Failed to fetch teams:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchTeams();
+  }, []);
+
+  // リーグ名からIDへの変換
+  const getLeagueIdFromName = (leagueName: string): string => {
+    if (leagueName === 'ボーイズ') return 'boys';
+    if (leagueName === 'シニア') return 'senior';
+    if (leagueName === 'ヤング') return 'young';
+    return 'boys';
+  };
+
+  const filteredTeams = teams.filter(
+    (team) => {
+      const teamPrefecture = team.prefecture?.[0] || '';
+      const teamLeagueId = getLeagueIdFromName(team.league?.[0] || '');
+      return teamPrefecture === prefecture && (league === "all" || teamLeagueId === league);
+    }
   );
 
   return (
@@ -141,27 +171,31 @@ export default function Home() {
           </motion.div>
 
           {/* Hero Content */}
-          <div className="text-center max-w-5xl mx-auto relative z-20">
-            {/* Terminal-style badge */}
+          <div className="text-center max-w-5xl mx-auto relative z-20 px-4">
+            {/* Terminal-style badge - モバイルでサブチャンネルと被らないよう上マージン追加 */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-3 px-6 py-3 border-2 border-cyan-400/50 bg-black/90 backdrop-blur-md mb-10 shadow-[0_0_30px_rgba(0,240,255,0.3)]"
+              className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/90 backdrop-blur-md mb-6 sm:mb-10 mt-16 sm:mt-0 shadow-[0_0_30px_rgba(0,240,255,0.3)]"
             >
-              <IoTerminal className="text-cyan-400 text-xl animate-pulse" />
-              <span className="font-mono text-sm text-cyan-400 tracking-wider">
+              <IoTerminal className="text-cyan-400 text-lg sm:text-xl animate-pulse" />
+              <span className="font-mono text-xs sm:text-sm text-cyan-400 tracking-wider">
                 &gt; 中学硬式野球チーム検索システム<span className="animate-pulse">_</span>
               </span>
-              <IoSparkles className="text-yellow-400 text-lg animate-pulse" />
+              <IoSparkles className="text-yellow-400 text-base sm:text-lg animate-pulse" />
             </motion.div>
 
-            {/* Main Title */}
-            <motion.h1 
+            {/* Main Title - SEO用H1は視覚的に隠し、デザイン用タイトルは別途表示 */}
+            <h1 className="sr-only">
+              全国の中学硬式野球チーム検索・比較サイト｜ボーイズリーグ・シニアリーグ・ヤングリーグ対応
+            </h1>
+            <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-5xl sm:text-6xl md:text-8xl font-black mb-10 tracking-tight"
+              aria-hidden="true"
             >
               <span className="block text-white/90 mb-2 text-4xl sm:text-5xl md:text-6xl font-medium tracking-wide">
                 FIND YOUR
@@ -185,41 +219,41 @@ export default function Home() {
                   className="absolute -bottom-2 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 origin-left"
                 />
               </span>
-            </motion.h1>
+            </motion.div>
 
-            {/* League badges */}
+            {/* League badges - モバイルで横並び3つ収まるように調整 */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex justify-center gap-5 mb-8 flex-wrap"
+              className="flex justify-center gap-2 sm:gap-5 mb-6 sm:mb-8 flex-wrap px-2"
             >
               <motion.span 
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
-                className="px-5 py-2 text-xs font-mono tracking-wider border-2 border-red-500/60 text-red-500 bg-red-500/10 shadow-[0_0_15px_rgba(255,42,68,0.4)] flex items-center gap-2"
+                className="px-3 sm:px-5 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono tracking-wider border-2 border-red-500/60 text-red-500 bg-red-500/10 shadow-[0_0_15px_rgba(255,42,68,0.4)] flex items-center gap-1 sm:gap-2"
               >
-                <span className="text-[10px] animate-pulse">◆</span>
-                ボーイズリーグ
+                <span className="text-[8px] sm:text-[10px] animate-pulse">◆</span>
+                ボーイズ
               </motion.span>
               <motion.span 
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.65 }}
-                className="px-5 py-2 text-xs font-mono tracking-wider border-2 border-cyan-400/60 text-cyan-400 bg-cyan-400/10 shadow-[0_0_15px_rgba(0,240,255,0.4)] flex items-center gap-2"
+                className="px-3 sm:px-5 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono tracking-wider border-2 border-cyan-400/60 text-cyan-400 bg-cyan-400/10 shadow-[0_0_15px_rgba(0,240,255,0.4)] flex items-center gap-1 sm:gap-2"
               >
-                <span className="text-[10px] animate-pulse">◆</span>
-                シニアリーグ
+                <span className="text-[8px] sm:text-[10px] animate-pulse">◆</span>
+                シニア
               </motion.span>
               <motion.span 
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.8 }}
-                className="px-5 py-2 text-xs font-mono tracking-wider border-2 border-yellow-400/60 text-yellow-400 bg-yellow-400/10 shadow-[0_0_15px_rgba(255,255,0,0.4)] flex items-center gap-2"
+                className="px-3 sm:px-5 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono tracking-wider border-2 border-yellow-400/60 text-yellow-400 bg-yellow-400/10 shadow-[0_0_15px_rgba(255,255,0,0.4)] flex items-center gap-1 sm:gap-2"
               >
-                <span className="text-[10px] animate-pulse">◆</span>
-                ヤングリーグ
+                <span className="text-[8px] sm:text-[10px] animate-pulse">◆</span>
+                ヤング
               </motion.span>
             </motion.div>
 
@@ -354,7 +388,7 @@ export default function Home() {
                 </div>
               </div>
               <span className="text-sm text-cyan-400 font-mono px-4 py-2 border border-cyan-400/30 bg-cyan-400/5">
-                {prefecture.toUpperCase()}/{league.toUpperCase()}
+                {prefecture}/{league === 'boys' ? 'ボーイズ' : league === 'senior' ? 'シニア' : league === 'young' ? 'ヤング' : '全て'}
               </span>
             </div>
 

@@ -4,8 +4,10 @@ import type {
   Category,
   Tag,
   Author,
+  Team,
   MicroCMSListResponse,
   ArticleListQuery,
+  TeamListQuery,
 } from "./types";
 
 // microCMS クライアント作成
@@ -232,5 +234,94 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
 export async function getAllAuthorSlugs(): Promise<string[]> {
   const response = await getAuthors();
   return response.contents.map((author) => author.slug);
+}
+
+/**
+ * =====================
+ * チーム (Team) 関連
+ * =====================
+ */
+
+// チーム一覧を取得
+export async function getTeams(
+  query: TeamListQuery = {}
+): Promise<MicroCMSListResponse<Team>> {
+  const { limit = 50, offset = 0, filters, orders = "createdAt", fields } = query;
+
+  return client.get<MicroCMSListResponse<Team>>({
+    endpoint: "teams",
+    queries: {
+      limit,
+      offset,
+      filters,
+      orders,
+      fields,
+    },
+  });
+}
+
+// 全チームを取得
+export async function getAllTeams(): Promise<Team[]> {
+  const teams: Team[] = [];
+  let offset = 0;
+  const limit = 100;
+
+  while (true) {
+    const response = await getTeams({ limit, offset });
+    teams.push(...response.contents);
+    
+    if (teams.length >= response.totalCount) {
+      break;
+    }
+    offset += limit;
+  }
+
+  return teams;
+}
+
+// チームをIDで取得
+export async function getTeamById(id: string): Promise<Team | null> {
+  try {
+    return client.get<Team>({
+      endpoint: "teams",
+      contentId: id,
+    });
+  } catch {
+    return null;
+  }
+}
+
+// リーグ別のチーム一覧を取得
+export async function getTeamsByLeague(
+  league: 'boys' | 'senior' | 'young',
+  query: TeamListQuery = {}
+): Promise<MicroCMSListResponse<Team>> {
+  return getTeams({
+    ...query,
+    filters: `league[equals]${league}`,
+  });
+}
+
+// 都道府県別のチーム一覧を取得
+export async function getTeamsByPrefecture(
+  prefecture: string,
+  query: TeamListQuery = {}
+): Promise<MicroCMSListResponse<Team>> {
+  return getTeams({
+    ...query,
+    filters: `prefecture[equals]${prefecture}`,
+  });
+}
+
+// リーグ＋都道府県でチーム一覧を取得
+export async function getTeamsByLeagueAndPrefecture(
+  league: 'boys' | 'senior' | 'young',
+  prefecture: string,
+  query: TeamListQuery = {}
+): Promise<MicroCMSListResponse<Team>> {
+  return getTeams({
+    ...query,
+    filters: `league[equals]${league}[and]prefecture[equals]${prefecture}`,
+  });
 }
 
