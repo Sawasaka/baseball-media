@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className="scroll-smooth">
+    <html lang="ja">
       <body className={`${notoSansJP.variable} ${orbitron.variable} font-sans bg-cyber-bg text-white antialiased`}>
         {children}
       </body>

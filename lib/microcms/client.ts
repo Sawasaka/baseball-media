@@ -31,16 +31,21 @@ export async function getArticles(
 ): Promise<MicroCMSListResponse<Article>> {
   const { limit = 10, offset = 0, filters, orders = "-publishedAt", fields } = query;
 
-  return client.get<MicroCMSListResponse<Article>>({
-    endpoint: "articles",
-    queries: {
-      limit,
-      offset,
-      filters,
-      orders,
-      fields,
-    },
-  });
+  try {
+    return await client.get<MicroCMSListResponse<Article>>({
+      endpoint: "articles",
+      queries: {
+        limit,
+        offset,
+        filters,
+        orders,
+        fields,
+      },
+    });
+  } catch {
+    // APIが未設定の場合は空配列を返す
+    return { contents: [], totalCount: 0, offset: 0, limit };
+  }
 }
 
 // 全記事を取得（サイトマップ用）
@@ -126,13 +131,18 @@ export async function getArticlesByAuthor(
 
 // カテゴリ一覧を取得（作成日時の古い順＝最初に登録したものが先）
 export async function getCategories(): Promise<MicroCMSListResponse<Category>> {
-  return client.get<MicroCMSListResponse<Category>>({
-    endpoint: "categories",
-    queries: {
-      limit: 100,
-      orders: "createdAt", // 古い順（昇順）
-    },
-  });
+  try {
+    return await client.get<MicroCMSListResponse<Category>>({
+      endpoint: "categories",
+      queries: {
+        limit: 100,
+        orders: "createdAt", // 古い順（昇順）
+      },
+    });
+  } catch {
+    // APIが未設定の場合は空配列を返す
+    return { contents: [], totalCount: 0, offset: 0, limit: 100 };
+  }
 }
 
 // カテゴリをスラッグで取得
@@ -166,12 +176,17 @@ export async function getAllCategorySlugs(): Promise<string[]> {
 
 // タグ一覧を取得
 export async function getTags(): Promise<MicroCMSListResponse<Tag>> {
-  return client.get<MicroCMSListResponse<Tag>>({
-    endpoint: "tags",
-    queries: {
-      limit: 100,
-    },
-  });
+  try {
+    return await client.get<MicroCMSListResponse<Tag>>({
+      endpoint: "tags",
+      queries: {
+        limit: 100,
+      },
+    });
+  } catch {
+    // APIが未設定の場合は空配列を返す
+    return { contents: [], totalCount: 0, offset: 0, limit: 100 };
+  }
 }
 
 // タグをスラッグで取得
@@ -205,12 +220,17 @@ export async function getAllTagSlugs(): Promise<string[]> {
 
 // 著者一覧を取得
 export async function getAuthors(): Promise<MicroCMSListResponse<Author>> {
-  return client.get<MicroCMSListResponse<Author>>({
-    endpoint: "authors",
-    queries: {
-      limit: 100,
-    },
-  });
+  try {
+    return await client.get<MicroCMSListResponse<Author>>({
+      endpoint: "authors",
+      queries: {
+        limit: 100,
+      },
+    });
+  } catch {
+    // APIが未設定の場合は空配列を返す
+    return { contents: [], totalCount: 0, offset: 0, limit: 100 };
+  }
 }
 
 // 著者をスラッグで取得
@@ -248,16 +268,21 @@ export async function getTeams(
 ): Promise<MicroCMSListResponse<Team>> {
   const { limit = 50, offset = 0, filters, orders = "createdAt", fields } = query;
 
-  return client.get<MicroCMSListResponse<Team>>({
-    endpoint: "teams",
-    queries: {
-      limit,
-      offset,
-      filters,
-      orders,
-      fields,
-    },
-  });
+  try {
+    return await client.get<MicroCMSListResponse<Team>>({
+      endpoint: "teams",
+      queries: {
+        limit,
+        offset,
+        filters,
+        orders,
+        fields,
+      },
+    });
+  } catch {
+    // APIが未設定の場合は空配列を返す
+    return { contents: [], totalCount: 0, offset: 0, limit };
+  }
 }
 
 // 全チームを取得

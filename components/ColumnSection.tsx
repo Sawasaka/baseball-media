@@ -160,7 +160,7 @@ export function ColumnSection() {
   };
 
   return (
-    <section className="py-28 px-4 relative" id="columns">
+    <section className="py-16 sm:py-28 px-3 sm:px-4 relative" id="columns">
       {/* Top neon line */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-pink-500 to-transparent shadow-[0_0_20px_rgba(255,0,170,0.8)]" />
       
@@ -182,15 +182,15 @@ export function ColumnSection() {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <div className="inline-block mb-6">
-            <div className="flex items-center gap-4 px-6 py-3 border-2 border-pink-500/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(255,0,170,0.4)]">
-              <span className="text-sm font-mono text-pink-500 tracking-widest">◈ COLUMN_DATABASE ◈</span>
+          <div className="inline-block mb-4 sm:mb-6">
+            <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-pink-500/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(255,0,170,0.4)]">
+              <span className="text-xs sm:text-sm font-mono text-pink-500 tracking-widest">◈ COLUMN_DATABASE ◈</span>
             </div>
           </div>
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
             お役立ち<span className="text-pink-500" style={{ textShadow: '0 0 30px rgba(255,0,170,0.8)' }}>コラム</span>
           </h2>
-          <p className="text-white/50 max-w-lg mx-auto font-mono text-base mb-10">
+          <p className="text-white/50 max-w-lg mx-auto font-mono text-sm sm:text-base mb-6 sm:mb-10">
             <span className="text-yellow-400">&gt;</span> 中学野球を頑張る選手と保護者のための情報メディア<span className="animate-pulse text-pink-500">_</span>
           </p>
         </motion.div>
@@ -198,11 +198,11 @@ export function ColumnSection() {
         {/* Category Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12"
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+          className="mb-8 sm:mb-12"
         >
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 px-2">
             {categoryTabs.map((cat) => {
               const isActive = selectedCategory === cat.key;
               const colors = colorVariants[cat.color] || colorVariants.pink;
@@ -211,7 +211,7 @@ export function ColumnSection() {
                   key={cat.key}
                   onClick={() => setSelectedCategory(cat.key)}
                   className={`
-                    px-5 py-2.5 text-sm font-mono border-2 transition-all duration-300
+                    px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-mono border-2 transition-all duration-300
                     ${isActive 
                       ? `${colors.border} ${colors.text} ${colors.bg} ${colors.shadow}`
                       : 'border-white/20 text-white/50 hover:border-pink-500/50 hover:text-pink-500 hover:bg-pink-500/10'
@@ -260,7 +260,7 @@ export function ColumnSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8"
               >
                 {filteredArticles.length === 0 ? (
                   <div className="col-span-2 text-center py-12">
@@ -281,16 +281,16 @@ export function ColumnSection() {
                         className={`
                           group relative cursor-pointer overflow-hidden
                           border-2 ${colors.border} ${colors.bg}
-                          p-6 transition-all duration-500
+                          p-4 sm:p-6 transition-all duration-500
                           hover:shadow-[0_0_40px_rgba(255,0,170,0.3)]
                           hover:border-pink-500/70
                         `}
-                        style={{
+                  style={{ 
                           background: `linear-gradient(135deg, ${colors.solidBg}15, ${colors.solidBg}05, transparent)`,
                           boxShadow: `0 0 25px ${colors.solidBg}20, inset 0 0 30px ${colors.solidBg}05`,
-                        }}
+                  }}
                       >
-                        {/* Corner accents */}
+                {/* Corner accents */}
                         <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2" style={{ borderColor: colors.solidBg }} />
                         <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2" style={{ borderColor: colors.solidBg }} />
                         <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2" style={{ borderColor: colors.solidBg }} />
@@ -302,12 +302,12 @@ export function ColumnSection() {
                             className="text-red-500 text-xl" 
                             style={{ filter: 'drop-shadow(0 0 8px rgba(255,0,0,0.8))' }} 
                           />
-                        </div>
-
+                  </div>
+                  
                         {/* Category & Icon */}
-                        <div className="flex items-center gap-3 mb-4">
+                        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                           <div 
-                            className="p-2.5 border-2"
+                            className="p-2 sm:p-2.5 border-2"
                             style={{ 
                               borderColor: colors.solidBg,
                               background: `${colors.solidBg}20`,
@@ -328,29 +328,29 @@ export function ColumnSection() {
                             }}
                           >
                             {article.category?.name || "未分類"}
-                          </span>
-                        </div>
-
-                        {/* Title */}
+                    </span>
+                  </div>
+                  
+                  {/* Title */}
                         <h3 
-                          className="text-xl font-bold text-white mb-3 group-hover:text-opacity-90 transition-colors line-clamp-2"
+                          className="text-base sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-opacity-90 transition-colors line-clamp-2"
                           style={{ textShadow: `0 0 20px ${colors.solidBg}30` }}
                         >
                           {article.title}
-                        </h3>
-
-                        {/* Description */}
-                        <p className="text-white/60 text-sm mb-6 line-clamp-3 leading-relaxed">
+                  </h3>
+                  
+                  {/* Description */}
+                        <p className="text-white/60 text-xs sm:text-sm mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-3 leading-relaxed">
                           {extractPlainText(article.body)}
                         </p>
 
                         {/* Footer */}
                         <div 
-                          className="flex items-center justify-end pt-4 border-t-2 group-hover:border-opacity-50 transition-all"
+                          className="flex items-center justify-end pt-3 sm:pt-4 border-t-2 group-hover:border-opacity-50 transition-all"
                           style={{ borderColor: `${colors.solidBg}30` }}
                         >
                           <div 
-                            className={`flex items-center gap-3 ${colors.text} font-mono text-sm font-bold px-4 py-2 border ${colors.border} group-hover:gap-5 transition-all duration-300`}
+                            className={`flex items-center gap-2 sm:gap-3 ${colors.text} font-mono text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 border ${colors.border} group-hover:gap-4 sm:group-hover:gap-5 transition-all duration-300`}
                             style={{
                               background: `linear-gradient(90deg, ${colors.solidBg}20, transparent)`,
                               boxShadow: `0 0 15px ${colors.solidBg}20`,
@@ -358,11 +358,11 @@ export function ColumnSection() {
                           >
                             <span>詳しく見る</span>
                             <IoArrowForward className="group-hover:translate-x-2 transition-transform text-lg" />
-                          </div>
-                        </div>
-
-                        {/* Bottom accent line */}
-                        <div 
+                  </div>
+                </div>
+                
+                {/* Bottom accent line */}
+                <div 
                           className="absolute bottom-0 left-0 right-0 h-1 group-hover:h-1.5 transition-all duration-300"
                           style={{
                             background: `linear-gradient(90deg, transparent 0%, ${colors.solidBg} 50%, transparent 100%)`,
@@ -372,29 +372,29 @@ export function ColumnSection() {
 
                         {/* Floating particles effect on hover */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping" style={{ background: colors.solidBg }} />
-                      </motion.article>
-                    );
+              </motion.article>
+            );
                   })
                 )}
               </motion.div>
             </AnimatePresence>
 
-            {/* View All Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mt-16"
-            >
+        {/* View All Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-10 sm:mt-16"
+        >
               <button 
                 onClick={() => setShowAllColumnsModal(true)}
-                className="group inline-flex items-center justify-center gap-3 px-10 py-5 border-2 border-pink-500/50 text-pink-500 hover:bg-pink-500/20 font-bold text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,170,0.4)]"
-              >
-                <IoGrid className="text-xl" />
-                <span className="font-mono">すべてのコラムを見る</span>
-                <IoArrowForward className="group-hover:translate-x-2 transition-transform" />
+            className="group inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-10 py-3 sm:py-5 border-2 border-pink-500/50 text-pink-500 hover:bg-pink-500/20 font-bold text-sm sm:text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,0,170,0.4)]"
+          >
+                <IoGrid className="text-lg sm:text-xl" />
+            <span className="font-mono">すべてのコラムを見る</span>
+            <IoArrowForward className="group-hover:translate-x-2 transition-transform" />
               </button>
-            </motion.div>
+        </motion.div>
           </>
         )}
       </div>
@@ -402,8 +402,8 @@ export function ColumnSection() {
       {/* Article Detail Modal */}
       <AnimatePresence>
         {selectedArticle && (
-          <motion.div
-            initial={{ opacity: 0 }}
+        <motion.div
+          initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
@@ -498,14 +498,14 @@ export function ColumnSection() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="sticky top-0 z-10 p-4 md:p-6 border-b-2 border-pink-500/30 bg-black/95">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-pink-500/20 border-2 border-pink-500">
-                      <IoGrid className="text-2xl text-pink-500" />
+              <div className="sticky top-0 z-10 p-3 sm:p-4 md:p-6 border-b-2 border-pink-500/30 bg-black/95">
+                <div className="flex items-center justify-between gap-2 sm:gap-4">
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <div className="p-2 sm:p-3 bg-pink-500/20 border-2 border-pink-500">
+                      <IoGrid className="text-xl sm:text-2xl text-pink-500" />
                     </div>
                     <div>
-                      <h2 className="text-xl md:text-2xl font-bold text-white font-mono">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white font-mono">
                         ALL<span className="text-pink-500">_</span>COLUMNS
                       </h2>
                       <p className="text-xs text-white/50 font-mono mt-1">
@@ -601,14 +601,14 @@ export function ColumnSection() {
                         >
                           <span>詳しく見る</span>
                           <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
-                        </div>
+          </div>
 
                         {/* Bottom accent */}
                         <div 
                           className="absolute bottom-0 left-0 right-0 h-0.5 opacity-50 group-hover:opacity-100 transition-opacity"
                           style={{ background: colors.solidBg }}
                         />
-                      </motion.div>
+        </motion.div>
                     );
                   })}
                 </div>
@@ -619,7 +619,7 @@ export function ColumnSection() {
                     <p className="text-white/50 font-mono">このカテゴリの記事はまだありません</p>
                   </div>
                 )}
-              </div>
+      </div>
 
               {/* Bottom accent */}
               <div className="h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent" />

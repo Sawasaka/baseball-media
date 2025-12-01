@@ -18,7 +18,7 @@ const subChannels = [
   {
     id: "academy",
     label: "ITアカデミー",
-    shortLabel: "IT",
+    shortLabel: "ITアカデミー",
     url: "https://academy.rookiesmart-jp.com/",
     icon: IoCode,
     color: "#FF00AA",
@@ -55,13 +55,13 @@ const subChannels = [
 
 export const Navbar = () => {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 overflow-hidden">
       {/* Top neon line */}
       <div className="h-[2px] bg-gradient-to-r from-transparent via-red-500 to-transparent shadow-[0_0_20px_rgba(255,42,68,0.8)]" />
       
       {/* Main navbar */}
       <div className="bg-black/95 backdrop-blur-xl border-b border-red-500/30">
-        <div className="container mx-auto px-3 md:px-4 flex items-center justify-between py-2 md:py-3">
+        <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between py-2 md:py-3">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 md:gap-4 group shrink-0">
             <div className="relative">
@@ -87,7 +87,7 @@ export const Navbar = () => {
                   href={channel.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative px-4 py-2 font-mono group overflow-hidden flex items-center gap-2 transition-all duration-300"
+                  className="relative px-4 py-2 font-mono group overflow-hidden flex items-center justify-center gap-2 transition-all duration-300 min-w-[120px]"
                   style={{ 
                     background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.2), rgba(${channel.shadowColor},0.05))`,
                     border: `2px solid ${channel.color}60`,
@@ -145,7 +145,7 @@ export const Navbar = () => {
               className="ml-3 px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white text-sm font-bold font-mono transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] flex items-center gap-2 relative overflow-hidden group"
             >
               <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-              無料相談
+              日程調整
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </a>
           </div>
@@ -156,11 +156,11 @@ export const Navbar = () => {
               href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-bold font-mono flex items-center gap-1"
+              className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-bold font-mono flex items-center gap-1.5"
               style={{ boxShadow: '0 0 15px rgba(34,197,94,0.4)' }}
             >
               <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-              <span className="hidden sm:inline">無料相談</span>
+              日程調整
             </a>
           </div>
         </div>
@@ -168,22 +168,16 @@ export const Navbar = () => {
 
       {/* Mobile/Tablet サブチャンネルタブ - 常時表示 */}
       <div className="lg:hidden bg-black/90 backdrop-blur-md border-b border-cyan-400/20">
-        <div className="relative">
-          {/* グラデーションフェード（左右） */}
-          <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+        <div className="w-full max-w-7xl mx-auto px-4 py-2">
+          {/* SUB CHラベル */}
+          <div className="flex items-center gap-1 mb-1.5">
+            <IoSparkles className="text-[8px] text-cyan-400/70" />
+            <span className="text-[10px] text-cyan-400/70 font-mono">SUB_CHANNEL</span>
+          </div>
           
-          {/* スクロール可能なタブ */}
-          <div className="flex overflow-x-auto scrollbar-hide py-2 px-2 gap-2">
-            {/* SUB CHラベル */}
-            <div className="shrink-0 flex items-center px-2">
-              <span className="text-[10px] text-cyan-400/70 font-mono whitespace-nowrap flex items-center gap-1">
-                <IoSparkles className="text-[8px]" />
-                SUB
-              </span>
-            </div>
-            
-            {subChannels.map((channel) => {
+          {/* 上段3つ */}
+          <div className="grid grid-cols-3 gap-1.5 mb-1.5">
+            {subChannels.slice(0, 3).map((channel) => {
               const Icon = channel.icon;
               return (
                 <a
@@ -191,26 +185,63 @@ export const Navbar = () => {
                   href={channel.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 font-mono transition-all duration-300 active:scale-95"
+                  className="flex items-center justify-center gap-1 px-2 py-1.5 font-mono transition-all duration-300 active:scale-95"
                   style={{
                     background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.25), rgba(${channel.shadowColor},0.1))`,
                     border: `1.5px solid ${channel.color}`,
-                    boxShadow: `0 0 12px rgba(${channel.shadowColor},0.4)`,
-                    borderRadius: '2px',
+                    boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
                   }}
                 >
                   <Icon 
-                    size={14} 
+                    size={12} 
                     style={{ 
                       color: channel.color,
-                      filter: `drop-shadow(0 0 6px ${channel.color})`,
+                      filter: `drop-shadow(0 0 4px ${channel.color})`,
                     }} 
                   />
                   <span 
-                    className="text-[11px] font-bold whitespace-nowrap"
+                    className="text-[10px] font-bold whitespace-nowrap"
                     style={{ 
                       color: channel.color,
-                      textShadow: `0 0 8px rgba(${channel.shadowColor},0.6)`,
+                      textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
+                    }}
+                  >
+                    {channel.shortLabel}
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+          {/* 下段2つ - 上段と同じサイズで中央配置 */}
+          <div className="flex justify-center gap-1.5">
+            {subChannels.slice(3, 5).map((channel) => {
+              const Icon = channel.icon;
+              return (
+                <a
+                  key={channel.id}
+                  href={channel.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1 px-2 py-1.5 font-mono transition-all duration-300 active:scale-95"
+                  style={{
+                    background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.25), rgba(${channel.shadowColor},0.1))`,
+                    border: `1.5px solid ${channel.color}`,
+                    boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
+                    width: 'calc((100% - 0.375rem * 2) / 3)',
+                  }}
+                >
+                  <Icon 
+                    size={12} 
+                    style={{ 
+                      color: channel.color,
+                      filter: `drop-shadow(0 0 4px ${channel.color})`,
+                    }} 
+                  />
+                  <span 
+                    className="text-[10px] font-bold whitespace-nowrap"
+                    style={{ 
+                      color: channel.color,
+                      textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
                     }}
                   >
                     {channel.shortLabel}

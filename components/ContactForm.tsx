@@ -137,7 +137,7 @@ export function ContactForm() {
   };
 
   return (
-    <section className="py-28 px-4 relative" id="contact">
+    <section className="py-16 sm:py-28 px-3 sm:px-4 relative" id="contact">
       {/* Top neon line */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-green-400 to-transparent shadow-[0_0_20px_rgba(74,222,128,0.8)]" />
       
@@ -147,8 +147,8 @@ export function ContactForm() {
       
       {/* Background effects */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-cyan-400/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/4 right-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-green-500/10 rounded-full blur-[100px] sm:blur-[150px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-cyan-400/10 rounded-full blur-[80px] sm:blur-[120px]" />
       </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
@@ -157,17 +157,17 @@ export function ContactForm() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
-          <div className="inline-block mb-6">
-            <div className="flex items-center gap-4 px-6 py-3 border-2 border-green-400/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(74,222,128,0.4)]">
-              <span className="text-sm font-mono text-green-400 tracking-widest">◈ CONTACT_US ◈</span>
+          <div className="inline-block mb-4 sm:mb-6">
+            <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-green-400/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(74,222,128,0.4)]">
+              <span className="text-xs sm:text-sm font-mono text-green-400 tracking-widest">◈ CONTACT_US ◈</span>
             </div>
           </div>
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
             お問い<span className="text-green-400" style={{ textShadow: '0 0 30px rgba(74,222,128,0.8)' }}>合わせ</span>
           </h2>
-          <p className="text-white/50 max-w-lg mx-auto font-mono text-base">
+          <p className="text-white/50 max-w-lg mx-auto font-mono text-sm sm:text-base">
             <span className="text-cyan-400">&gt;</span> ご相談・ご質問はお気軽にどうぞ<span className="animate-pulse text-green-400">_</span>
           </p>
         </motion.div>
@@ -177,14 +177,14 @@ export function ContactForm() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-10 sm:mb-16"
         >
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <span className="text-yellow-400 text-sm">◈</span>
-            <span className="text-sm font-mono text-cyan-400 tracking-wider">ご相談いただける内容例</span>
-            <span className="text-yellow-400 text-sm">◈</span>
+          <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
+            <span className="text-yellow-400 text-xs sm:text-sm">◈</span>
+            <span className="text-xs sm:text-sm font-mono text-cyan-400 tracking-wider">ご相談いただける内容例</span>
+            <span className="text-yellow-400 text-xs sm:text-sm">◈</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
             {exampleConsultations.map((item, index) => {
               const Icon = item.icon;
               return (
@@ -194,24 +194,24 @@ export function ContactForm() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="p-5 border-2 bg-black/60 backdrop-blur-md group hover:scale-[1.02] transition-all duration-300"
+                  className="p-3 sm:p-5 border-2 bg-black/60 backdrop-blur-md group hover:scale-[1.02] transition-all duration-300"
                   style={{ 
                     borderColor: `${item.color}40`,
                     boxShadow: `0 0 20px ${item.color}20`,
                   }}
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
                     <div 
-                      className="p-3 shrink-0"
+                      className="p-2 sm:p-3 shrink-0"
                       style={{ 
                         background: `${item.color}20`,
                         border: `2px solid ${item.color}60`,
                       }}
                     >
-                      <Icon size={24} style={{ color: item.color }} />
+                      <Icon className="text-lg sm:text-2xl" style={{ color: item.color }} />
                     </div>
                     <h4 
-                      className="font-bold text-sm"
+                      className="font-bold text-xs sm:text-sm text-center sm:text-left"
                       style={{ color: item.color }}
                     >
                       {item.title}

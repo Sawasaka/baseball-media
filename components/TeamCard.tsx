@@ -119,7 +119,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
         <div className={`absolute bottom-3 right-3 w-5 h-5 border-r-2 border-b-2 ${style.borderColor}/30 group-hover:${style.borderColor} transition-all duration-300`} />
         
         {/* Header area */}
-        <div className="h-32 relative bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden">
+        <div className="h-28 sm:h-32 relative bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden">
           {/* Background grid */}
           <div 
             className="absolute inset-0 opacity-20"
@@ -133,21 +133,21 @@ export const TeamCard = ({ team }: { team: Team }) => {
           {/* League icon */}
           <div className="relative z-10 flex flex-col items-center">
             <div className="relative">
-              <IoBaseball className={`text-5xl ${style.textColor} opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500`} />
+              <IoBaseball className={`text-4xl sm:text-5xl ${style.textColor} opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500`} />
             </div>
           </div>
           
           {/* League & Branch badges - right corner */}
-          <div className="absolute top-3 right-3 flex flex-col items-end gap-1">
+          <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex flex-col items-end gap-0.5 sm:gap-1">
             <span 
-              className={`text-[9px] font-mono font-bold px-2 py-0.5 border ${style.borderColor}/50`}
+              className={`text-[8px] sm:text-[9px] font-mono font-bold px-1.5 sm:px-2 py-0.5 border ${style.borderColor}/50`}
               style={{ color: leagueId === 'boys' ? '#FF2A44' : leagueId === 'senior' ? '#00F0FF' : '#FACC15' }}
             >
               {leagueName || (leagueId === 'boys' ? 'ボーイズ' : leagueId === 'senior' ? 'シニア' : 'ヤング')}
             </span>
             {team.branch && (
               <span 
-                className="text-[9px] font-mono px-2 py-0.5 border border-white/30 bg-white/10 text-white/80"
+                className="text-[8px] sm:text-[9px] font-mono px-1.5 sm:px-2 py-0.5 border border-white/30 bg-white/10 text-white/80"
               >
                 {team.branch}
               </span>
@@ -156,43 +156,43 @@ export const TeamCard = ({ team }: { team: Team }) => {
         </div>
 
         {/* Content */}
-        <div className="p-5">
+        <div className="p-4 sm:p-5">
           {/* Location info */}
-          <div className="flex items-center gap-2 mb-3 flex-wrap">
-            <div className={`flex items-center text-xs font-mono px-2 py-1 border ${style.borderColor}/40 ${style.bgLight}`}>
-              <IoLocationSharp className={`mr-1 ${style.textColor}`} />
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
+            <div className={`flex items-center text-[10px] sm:text-xs font-mono px-1.5 sm:px-2 py-0.5 sm:py-1 border ${style.borderColor}/40 ${style.bgLight}`}>
+              <IoLocationSharp className={`mr-0.5 sm:mr-1 ${style.textColor}`} />
               <span className="text-white/80">{prefectureName}</span>
             </div>
             {team.area && (
-              <div className="text-xs font-mono px-2 py-1 border border-white/20 bg-white/5 text-white/60">
+              <div className="text-[10px] sm:text-xs font-mono px-1.5 sm:px-2 py-0.5 sm:py-1 border border-white/20 bg-white/5 text-white/60">
                 {team.area}
               </div>
             )}
           </div>
 
           {/* Team name */}
-          <h3 className={`text-xl font-bold text-white mb-3 group-hover:${style.textColor} transition-colors duration-300`}>
+          <h3 className={`text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:${style.textColor} transition-colors duration-300`}>
             {team.name}
           </h3>
           
           {/* Decorative line */}
           <div 
-            className={`w-10 h-[3px] ${style.bgColor} mb-4 group-hover:w-full transition-all duration-500`}
+            className={`w-8 sm:w-10 h-[2px] sm:h-[3px] ${style.bgColor} mb-3 sm:mb-4 group-hover:w-full transition-all duration-500`}
             style={{ boxShadow: `0 0 10px currentColor` }}
           />
           
           {/* Description / Catchcopy */}
-          <p className="text-white/50 text-sm line-clamp-2 mb-4 leading-relaxed font-mono">
+          <p className="text-white/50 text-xs sm:text-sm line-clamp-2 mb-3 sm:mb-4 leading-relaxed font-mono">
             {team.catchcopy || "チーム情報準備中"}
           </p>
 
           {/* Feature Tags */}
           {(team.feature1 || team.feature2 || team.feature3) && (
-            <div className="flex flex-wrap gap-1.5 mb-4">
+            <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-4">
               {[team.feature1, team.feature2, team.feature3].filter(Boolean).map((tag, index) => (
                 <span
                   key={index}
-                  className={`text-[10px] font-mono px-2 py-0.5 border ${style.borderColor}/30 ${style.textColor} bg-black/50`}
+                  className={`text-[9px] sm:text-[10px] font-mono px-1.5 sm:px-2 py-0.5 border ${style.borderColor}/30 ${style.textColor} bg-black/50`}
                 >
                   #{tag}
                 </span>
@@ -201,26 +201,26 @@ export const TeamCard = ({ team }: { team: Team }) => {
           )}
 
           {/* Actions */}
-          <div className="flex items-center pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors">
+          <div className="flex items-center pt-3 sm:pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors">
             {team.officialurl ? (
               <a
                 href={team.officialurl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center text-sm text-cyan-400 hover:text-white transition-all duration-300 font-mono"
+                className="flex items-center text-xs sm:text-sm text-cyan-400 hover:text-white transition-all duration-300 font-mono"
               >
-                <IoGlobeOutline className="mr-2" />
+                <IoGlobeOutline className="mr-1 sm:mr-2" />
                 <span>公式サイト</span>
-                <IoFlash className="ml-1 text-xs animate-pulse" />
+                <IoFlash className="ml-1 text-[10px] sm:text-xs animate-pulse" />
               </a>
             ) : (
-              <span className="text-xs text-white/25 font-mono">NO_LINK</span>
+              <span className="text-[10px] sm:text-xs text-white/25 font-mono">NO_LINK</span>
             )}
           </div>
         </div>
 
         {/* ID tag */}
-        <div className="absolute bottom-5 left-5 text-[10px] font-mono text-white/25">
+        <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-5 text-[8px] sm:text-[10px] font-mono text-white/25">
           ID_{team.id.slice(0, 6).toUpperCase()}
         </div>
       </div>

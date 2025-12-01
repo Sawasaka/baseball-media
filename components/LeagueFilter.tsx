@@ -50,7 +50,7 @@ const getLeagueStyle = (id: string, isActive: boolean) => {
 
 export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
   return (
-    <div className="flex flex-wrap justify-center gap-4 mb-12">
+    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12 px-2">
       {leagues.map((league, index) => {
         const isActive = currentLeague === league.id;
         const style = getLeagueStyle(league.id, isActive);
@@ -65,7 +65,7 @@ export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
             className={`
-              relative px-6 py-3 font-mono text-sm transition-all duration-300 border-2 overflow-hidden
+              relative px-3 sm:px-6 py-2 sm:py-3 font-mono text-xs sm:text-sm transition-all duration-300 border-2 overflow-hidden
               ${isActive ? `bg-gradient-to-r ${style.gradient}` : 'bg-transparent'}
               ${style.border}
               ${style.text}
@@ -77,27 +77,27 @@ export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
             {/* Corner dots for active */}
             {isActive && (
               <>
-                <div className="absolute -top-1 -left-1 w-2.5 h-2.5 bg-white" style={{ boxShadow: '0 0 10px #fff' }} />
-                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white" style={{ boxShadow: '0 0 10px #fff' }} />
-                <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 bg-white" style={{ boxShadow: '0 0 10px #fff' }} />
-                <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-white" style={{ boxShadow: '0 0 10px #fff' }} />
+                <div className="absolute -top-1 -left-1 w-1.5 sm:w-2.5 h-1.5 sm:h-2.5 bg-white" style={{ boxShadow: '0 0 10px #fff' }} />
+                <div className="absolute -top-1 -right-1 w-1.5 sm:w-2.5 h-1.5 sm:h-2.5 bg-white" style={{ boxShadow: '0 0 10px #fff' }} />
+                <div className="absolute -bottom-1 -left-1 w-1.5 sm:w-2.5 h-1.5 sm:h-2.5 bg-white" style={{ boxShadow: '0 0 10px #fff' }} />
+                <div className="absolute -bottom-1 -right-1 w-1.5 sm:w-2.5 h-1.5 sm:h-2.5 bg-white" style={{ boxShadow: '0 0 10px #fff' }} />
                 
                 {/* Animated shine */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-pulse" />
               </>
             )}
             
-            <span className="flex items-center gap-3 relative z-10">
-              <span className={`text-sm ${style.iconColor} ${isActive ? 'animate-pulse' : ''}`}>
+            <span className="flex items-center gap-1.5 sm:gap-3 relative z-10">
+              <span className={`text-xs sm:text-sm ${style.iconColor} ${isActive ? 'animate-pulse' : ''} hidden sm:inline`}>
                 {league.icon}
               </span>
               <span>
-                <span className={`block text-[10px] tracking-wider ${isActive ? 'text-white/80' : 'opacity-50'}`}>
+                <span className={`block text-[8px] sm:text-[10px] tracking-wider ${isActive ? 'text-white/80' : 'opacity-50'} hidden sm:block`}>
                   {league.labelEn}
                 </span>
-                <span className="block font-bold">{league.label}</span>
+                <span className="block font-bold text-xs sm:text-sm">{league.label}</span>
               </span>
-              <span className={`text-sm ${style.iconColor} ${isActive ? 'animate-pulse' : ''}`}>
+              <span className={`text-xs sm:text-sm ${style.iconColor} ${isActive ? 'animate-pulse' : ''} hidden sm:inline`}>
                 {league.icon}
               </span>
             </span>

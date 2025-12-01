@@ -95,7 +95,7 @@ export const SubServiceTabs = () => {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mb-12"
+        className="mb-8 sm:mb-12"
       >
         <div className="relative overflow-hidden border-2 border-yellow-400/60 bg-gradient-to-r from-yellow-400/10 via-orange-500/10 to-red-500/10">
           {/* Animated background */}
@@ -107,37 +107,37 @@ export const SubServiceTabs = () => {
           }} />
           
           {/* Corner accents */}
-          <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-yellow-400" />
-          <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-yellow-400" />
-          <div className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-yellow-400" />
-          <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-yellow-400" />
+          <div className="absolute top-0 left-0 w-4 sm:w-6 h-4 sm:h-6 border-l-2 border-t-2 border-yellow-400" />
+          <div className="absolute top-0 right-0 w-4 sm:w-6 h-4 sm:h-6 border-r-2 border-t-2 border-yellow-400" />
+          <div className="absolute bottom-0 left-0 w-4 sm:w-6 h-4 sm:h-6 border-l-2 border-b-2 border-yellow-400" />
+          <div className="absolute bottom-0 right-0 w-4 sm:w-6 h-4 sm:h-6 border-r-2 border-b-2 border-yellow-400" />
           
-          <div className="relative z-10 p-6 md:p-8">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="relative z-10 p-4 sm:p-6 md:p-8">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6">
               {/* Left: Price info */}
               <div className="text-center lg:text-left">
-                <div className="flex items-center justify-center lg:justify-start gap-3 mb-3">
-                  <IoSparkles className="text-yellow-400 text-2xl animate-pulse" />
-                  <span className="text-xs font-mono text-yellow-400/80 tracking-wider">ALL_ACCESS_PLAN</span>
+                <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 mb-2 sm:mb-3">
+                  <IoSparkles className="text-yellow-400 text-xl sm:text-2xl animate-pulse" />
+                  <span className="text-[10px] sm:text-xs font-mono text-yellow-400/80 tracking-wider">ALL_ACCESS_PLAN</span>
                 </div>
-                <div className="flex items-baseline justify-center lg:justify-start gap-2">
-                  <span className="text-white/60 text-sm font-mono">月額</span>
-                  <span className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400" style={{ textShadow: '0 0 40px rgba(250,204,21,0.5)' }}>
+                <div className="flex items-baseline justify-center lg:justify-start gap-1 sm:gap-2">
+                  <span className="text-white/60 text-xs sm:text-sm font-mono">月額</span>
+                  <span className="text-3xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400" style={{ textShadow: '0 0 40px rgba(250,204,21,0.5)' }}>
                     ¥9,800
                   </span>
-                  <span className="text-white/60 text-sm font-mono">(税込)</span>
+                  <span className="text-white/60 text-[10px] sm:text-sm font-mono">(税込)</span>
                 </div>
-                <p className="text-white/70 text-sm mt-3 font-mono">
+                <p className="text-white/70 text-xs sm:text-sm mt-2 sm:mt-3 font-mono">
                   <span className="text-cyan-400">▸</span> 全5つのサブチャンネルが<span className="text-yellow-400 font-bold">使い放題</span>
                 </p>
               </div>
               
               {/* Center: Features */}
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap justify-center gap-1.5 sm:gap-3">
                 {['英語学習', 'ITアカデミー', '野球塾', 'スカウト', 'キャリア'].map((item, i) => (
                   <span 
                     key={item}
-                    className="px-3 py-1.5 text-xs font-mono border border-white/30 text-white/80 bg-white/5"
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-mono border border-white/30 text-white/80 bg-white/5"
                   >
                     ✓ {item}
                   </span>
@@ -150,18 +150,18 @@ export const SubServiceTabs = () => {
                   <motion.div
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="px-6 py-4 border-2 border-red-500 bg-gradient-to-br from-red-500/30 to-red-600/20 relative overflow-hidden"
+                    className="px-4 sm:px-6 py-3 sm:py-4 border-2 border-red-500 bg-gradient-to-br from-red-500/30 to-red-600/20 relative overflow-hidden"
                     style={{ boxShadow: '0 0 30px rgba(239,68,68,0.4)' }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/20 to-transparent animate-pulse" />
                     <div className="relative z-10">
-                      <div className="text-red-400 text-xs font-mono mb-1">⚠ LIMITED</div>
-                      <div className="text-white font-black text-2xl">100名</div>
-                      <div className="text-white/70 text-xs font-mono">限定枠</div>
+                      <div className="text-red-400 text-[10px] sm:text-xs font-mono mb-1">⚠ LIMITED</div>
+                      <div className="text-white font-black text-xl sm:text-2xl">100名</div>
+                      <div className="text-white/70 text-[10px] sm:text-xs font-mono">限定枠</div>
                     </div>
                   </motion.div>
                 </div>
-                <p className="text-white/50 text-[10px] font-mono mt-2">
+                <p className="text-white/50 text-[8px] sm:text-[10px] font-mono mt-1 sm:mt-2">
                   ※ 定員以降は<span className="text-red-400">紹介制</span>となります
                 </p>
               </div>
@@ -174,7 +174,7 @@ export const SubServiceTabs = () => {
       </motion.div>
 
       {/* Service Grid - 超目立つカードデザイン */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-5 mb-8 sm:mb-10">
         {subServices.map((service, index) => {
           const Icon = service.icon;
           const isActive = activeTab === service.id;
@@ -282,15 +282,15 @@ export const SubServiceTabs = () => {
               </div>
 
               {/* Content */}
-              <div className="relative z-10 p-5">
+              <div className="relative z-10 p-3 sm:p-5">
                 {/* Icon - 大きく派手に */}
                 <motion.div 
-                  className="mb-4 relative"
+                  className="mb-2 sm:mb-4 relative"
                   whileHover={{ rotate: [0, -10, 10, 0] }}
                   transition={{ duration: 0.5 }}
                 >
                   <div 
-                    className="w-16 h-16 flex items-center justify-center relative"
+                    className="w-10 h-10 sm:w-16 sm:h-16 flex items-center justify-center relative"
                     style={{
                       background: `linear-gradient(135deg, ${service.borderColor}30, transparent)`,
                       border: `2px solid ${service.borderColor}`,
@@ -298,7 +298,7 @@ export const SubServiceTabs = () => {
                     }}
                   >
                     <Icon 
-                      size={32} 
+                      className="text-xl sm:text-3xl"
                       style={{ 
                         color: service.borderColor,
                         filter: `drop-shadow(0 0 15px ${service.borderColor})`,
@@ -307,7 +307,7 @@ export const SubServiceTabs = () => {
                   </div>
                   {/* Pulsing ring */}
                   <motion.div 
-                    className="absolute inset-0 w-16 h-16"
+                    className="absolute inset-0 w-10 h-10 sm:w-16 sm:h-16"
                     style={{ border: `2px solid ${service.borderColor}` }}
                     animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -315,9 +315,9 @@ export const SubServiceTabs = () => {
                 </motion.div>
                 
                 {/* Labels */}
-                <div className="mb-3">
+                <div className="mb-2 sm:mb-3">
                   <span 
-                    className="block text-[10px] font-mono mb-1 tracking-[0.2em]"
+                    className="block text-[8px] sm:text-[10px] font-mono mb-0.5 sm:mb-1 tracking-[0.1em] sm:tracking-[0.2em]"
                     style={{ 
                       color: service.borderColor,
                       textShadow: `0 0 10px ${service.borderColor}`,
@@ -326,7 +326,7 @@ export const SubServiceTabs = () => {
                     {service.labelEn}
                   </span>
                   <span 
-                    className="block text-xl font-black text-white"
+                    className="block text-sm sm:text-xl font-black text-white"
                     style={{ textShadow: `0 0 20px rgba(${service.shadowColor},0.5)` }}
                   >
                     {service.label}
@@ -335,25 +335,25 @@ export const SubServiceTabs = () => {
 
                 {/* Description */}
                 <p 
-                  className="text-sm font-bold mb-1"
+                  className="text-[10px] sm:text-sm font-bold mb-0.5 sm:mb-1"
                   style={{ color: service.borderColor }}
                 >
                   {service.description}
                 </p>
-                <p className="text-[11px] text-white/50 font-mono leading-relaxed mb-4">
+                <p className="text-[9px] sm:text-[11px] text-white/50 font-mono leading-relaxed mb-2 sm:mb-4 hidden sm:block">
                   {service.catchphrase}
                 </p>
                 
                 {/* CTA Button */}
                 <div 
-                  className="flex items-center justify-between pt-3 border-t"
+                  className="flex items-center justify-between pt-2 sm:pt-3 border-t"
                   style={{ borderColor: `${service.borderColor}40` }}
                 >
                   <span 
-                    className="text-xs font-mono font-bold"
+                    className="text-[9px] sm:text-xs font-mono font-bold"
                     style={{ color: service.borderColor }}
                   >
-                    {isActive ? '▶ VIEWING' : '▶ CHECK IT'}
+                    {isActive ? '▶ VIEWING' : '▶ CHECK'}
                   </span>
                   <motion.div
                     className="flex items-center gap-1"
@@ -361,7 +361,7 @@ export const SubServiceTabs = () => {
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
-                    <IoArrowForward size={16} />
+                    <IoArrowForward className="text-sm sm:text-base" />
                   </motion.div>
                 </div>
               </div>
