@@ -8,6 +8,8 @@ import {
   BASE_URL,
 } from "@/lib/microcms";
 
+export const runtime = 'edge';
+
 interface Props {
   params: { slug: string };
 }
