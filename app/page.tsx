@@ -295,31 +295,31 @@ export default function Home() {
             </motion.div>
 
             {/* Stats bar - ボタンの下に配置 */}
-            <motion.div
+          <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
               className="inline-block"
-            >
+          >
               <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-10 px-4 sm:px-6 md:px-10 py-3 sm:py-4 border-2 border-red-500/40 bg-black/80 backdrop-blur-md">
-                <div className="text-center">
+              <div className="text-center">
                   <div className="text-[10px] sm:text-xs text-red-500 font-mono mb-0.5 sm:mb-1 animate-pulse">▣</div>
                   <div className="text-xl sm:text-2xl md:text-3xl font-black text-red-500 font-mono">1400+</div>
                   <div className="text-[8px] sm:text-[10px] text-white/50 font-mono tracking-widest mt-0.5 sm:mt-1">チーム数</div>
-                </div>
-                <div className="text-center">
+              </div>
+              <div className="text-center">
                   <div className="text-[10px] sm:text-xs text-cyan-400 font-mono mb-0.5 sm:mb-1 animate-pulse">◎</div>
                   <div className="text-xl sm:text-2xl md:text-3xl font-black text-cyan-400 font-mono">47</div>
                   <div className="text-[8px] sm:text-[10px] text-white/50 font-mono tracking-widest mt-0.5 sm:mt-1">都道府県</div>
-                </div>
-                <div className="text-center">
+              </div>
+              <div className="text-center">
                   <div className="text-[10px] sm:text-xs text-yellow-400 font-mono mb-0.5 sm:mb-1 animate-pulse">◈</div>
                   <div className="text-xl sm:text-2xl md:text-3xl font-black text-yellow-400 font-mono">03</div>
                   <div className="text-[8px] sm:text-[10px] text-white/50 font-mono tracking-widest mt-0.5 sm:mt-1">リーグ数</div>
                 </div>
               </div>
             </motion.div>
-          </div>
+            </div>
 
           {/* Scroll indicator - デスクトップのみ表示 */}
           <motion.div
@@ -520,10 +520,10 @@ export default function Home() {
                   >
                     <span>お気軽にご依頼ください</span>
                     <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
-                  </a>
+                    </a>
                 </div>
-              </div>
-              
+            </div>
+            
               <div className="mt-3 sm:mt-4 flex items-center justify-center sm:justify-start gap-2 sm:gap-3">
                 <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-[8px] sm:text-[10px] text-green-400/70 font-mono">ACCEPTING_REQUESTS</span>

@@ -158,7 +158,7 @@ export const Navbar = () => {
               rel="noopener noreferrer"
               className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-bold font-mono flex items-center gap-1.5"
               style={{ boxShadow: '0 0 15px rgba(34,197,94,0.4)' }}
-            >
+          >
               <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
               日程調整
             </a>
@@ -251,7 +251,7 @@ export const Navbar = () => {
             })}
           </div>
         </div>
-      </div>
+            </div>
     </nav>
   );
 };

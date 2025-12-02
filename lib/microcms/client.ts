@@ -260,93 +260,59 @@ export async function getAllAuthorSlugs(): Promise<string[]> {
  * =====================
  * チーム (Team) 関連
  * =====================
+ * 
+ * NOTE: microCMS の teams API は削除済み
+ * 将来的にCSV/JSONベースのローカルデータに切り替え予定
+ * 現在は空データを返すスタブ実装
  */
 
-// チーム一覧を取得
+// チーム一覧を取得（スタブ - 空データを返す）
 export async function getTeams(
   query: TeamListQuery = {}
 ): Promise<MicroCMSListResponse<Team>> {
-  const { limit = 50, offset = 0, filters, orders = "createdAt", fields } = query;
-
-  try {
-    return await client.get<MicroCMSListResponse<Team>>({
-      endpoint: "teams",
-      queries: {
-        limit,
-        offset,
-        filters,
-        orders,
-        fields,
-      },
-    });
-  } catch {
-    // APIが未設定の場合は空配列を返す
-    return { contents: [], totalCount: 0, offset: 0, limit };
-  }
+  const { limit = 50, offset = 0 } = query;
+  // TODO: CSVデータからの読み込みに切り替え
+  return { contents: [], totalCount: 0, offset, limit };
 }
 
-// 全チームを取得
+// 全チームを取得（スタブ - 空配列を返す）
 export async function getAllTeams(): Promise<Team[]> {
-  const teams: Team[] = [];
-  let offset = 0;
-  const limit = 100;
-
-  while (true) {
-    const response = await getTeams({ limit, offset });
-    teams.push(...response.contents);
-    
-    if (teams.length >= response.totalCount) {
-      break;
-    }
-    offset += limit;
-  }
-
-  return teams;
+  // TODO: CSVデータからの読み込みに切り替え
+  return [];
 }
 
-// チームをIDで取得
+// チームをIDで取得（スタブ - nullを返す）
 export async function getTeamById(id: string): Promise<Team | null> {
-  try {
-    return client.get<Team>({
-      endpoint: "teams",
-      contentId: id,
-    });
-  } catch {
-    return null;
-  }
+  // TODO: CSVデータからの読み込みに切り替え
+  console.log(`getTeamById called with id: ${id}`);
+  return null;
 }
 
-// リーグ別のチーム一覧を取得
+// リーグ別のチーム一覧を取得（スタブ）
 export async function getTeamsByLeague(
   league: 'boys' | 'senior' | 'young',
   query: TeamListQuery = {}
 ): Promise<MicroCMSListResponse<Team>> {
-  return getTeams({
-    ...query,
-    filters: `league[equals]${league}`,
-  });
+  console.log(`getTeamsByLeague called with league: ${league}`);
+  return getTeams(query);
 }
 
-// 都道府県別のチーム一覧を取得
+// 都道府県別のチーム一覧を取得（スタブ）
 export async function getTeamsByPrefecture(
   prefecture: string,
   query: TeamListQuery = {}
 ): Promise<MicroCMSListResponse<Team>> {
-  return getTeams({
-    ...query,
-    filters: `prefecture[equals]${prefecture}`,
-  });
+  console.log(`getTeamsByPrefecture called with prefecture: ${prefecture}`);
+  return getTeams(query);
 }
 
-// リーグ＋都道府県でチーム一覧を取得
+// リーグ＋都道府県でチーム一覧を取得（スタブ）
 export async function getTeamsByLeagueAndPrefecture(
   league: 'boys' | 'senior' | 'young',
   prefecture: string,
   query: TeamListQuery = {}
 ): Promise<MicroCMSListResponse<Team>> {
-  return getTeams({
-    ...query,
-    filters: `league[equals]${league}[and]prefecture[equals]${prefecture}`,
-  });
+  console.log(`getTeamsByLeagueAndPrefecture called with league: ${league}, prefecture: ${prefecture}`);
+  return getTeams(query);
 }
 

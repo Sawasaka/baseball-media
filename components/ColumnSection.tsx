@@ -343,8 +343,8 @@ export function ColumnSection() {
                         <p className="text-white/60 text-xs sm:text-sm mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-3 leading-relaxed">
                           {extractPlainText(article.body)}
                         </p>
-
-                        {/* Footer */}
+                  
+                  {/* Footer */}
                         <div 
                           className="flex items-center justify-end pt-3 sm:pt-4 border-t-2 group-hover:border-opacity-50 transition-all"
                           style={{ borderColor: `${colors.solidBg}30` }}
@@ -434,7 +434,7 @@ export function ColumnSection() {
                         background: `${colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA"}20`,
                         border: `2px solid ${colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA"}`,
                       }}
-                    >
+        >
                       <span style={{ color: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA" }}>
                         {getArticleStyle(selectedArticle).icon}
                       </span>

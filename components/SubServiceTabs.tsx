@@ -262,7 +262,7 @@ export const SubServiceTabs = () => {
                   className="absolute bottom-0 right-0 h-full w-[3px]"
                   style={{ background: service.borderColor, boxShadow: `0 0 10px ${service.borderColor}` }}
                 />
-              </div>
+                  </div>
 
               {/* HOT badge */}
               <div className="absolute -top-0 -right-0 z-20">
@@ -313,8 +313,8 @@ export const SubServiceTabs = () => {
                     transition={{ duration: 2, repeat: Infinity }}
                   />
                 </motion.div>
-                
-                {/* Labels */}
+              
+              {/* Labels */}
                 <div className="mb-2 sm:mb-3">
                   <span 
                     className="block text-[8px] sm:text-[10px] font-mono mb-0.5 sm:mb-1 tracking-[0.1em] sm:tracking-[0.2em]"
@@ -323,16 +323,16 @@ export const SubServiceTabs = () => {
                       textShadow: `0 0 10px ${service.borderColor}`,
                     }}
                   >
-                    {service.labelEn}
-                  </span>
+                  {service.labelEn}
+                </span>
                   <span 
                     className="block text-sm sm:text-xl font-black text-white"
                     style={{ textShadow: `0 0 20px rgba(${service.shadowColor},0.5)` }}
                   >
-                    {service.label}
-                  </span>
-                </div>
-
+                  {service.label}
+                </span>
+              </div>
+              
                 {/* Description */}
                 <p 
                   className="text-[10px] sm:text-sm font-bold mb-0.5 sm:mb-1"
@@ -391,13 +391,13 @@ export const SubServiceTabs = () => {
                   >
                     <IoSparkles size={16} style={{ color: service.borderColor, filter: `drop-shadow(0 0 10px ${service.borderColor})` }} />
                   </motion.div>
-                  <motion.div 
+                <motion.div 
                     className="absolute top-1/2 left-3"
                     animate={{ scale: [0, 1, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, delay: 1 }}
                   >
                     <IoFlash size={12} style={{ color: service.borderColor }} />
-                  </motion.div>
+                </motion.div>
                 </>
               )}
             </motion.button>
@@ -520,8 +520,8 @@ export const SubServiceTabs = () => {
                       textShadow: `0 0 20px ${activeService.borderColor}`,
                     }}
                   >
-                    {activeService.label}
-                  </span>
+                  {activeService.label}
+                </span>
                   <span className="text-sm text-white/60 font-mono">{activeService.description}</span>
                 </div>
                 <motion.div

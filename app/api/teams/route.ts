@@ -1,20 +1,13 @@
 import { NextResponse } from "next/server";
-import { getTeams } from "@/lib/microcms/client";
+
+// TODO: 将来的にCSV/JSONベースのチームデータに切り替え予定
+// 現在はmicroCMS teams APIを削除したため、空データを返す
 
 export async function GET() {
-  try {
-    const teamsResponse = await getTeams({ limit: 100 });
-
-    return NextResponse.json({
-      teams: teamsResponse.contents,
-      totalCount: teamsResponse.totalCount,
-    });
-  } catch (error) {
-    console.error("Failed to fetch teams:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch data", teams: [] },
-      { status: 500 }
-    );
-  }
+  // 空のチームデータを返す（将来CSVデータに差し替え）
+  return NextResponse.json({
+    teams: [],
+    totalCount: 0,
+  });
 }
 
