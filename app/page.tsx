@@ -398,10 +398,13 @@ export default function Home() {
               {filteredTeams.map((team, index) => (
                 <motion.div
                   key={team.id}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ 
+                    duration: 0.3,
+                    delay: Math.min(index * 0.03, 0.15)
+                  }}
                 >
                   <TeamCard team={team} />
                 </motion.div>
