@@ -53,6 +53,8 @@ export const teams: Team[] = [
     area: '茨木市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '茨木市で活動。立浪和義（中日）、橋本清（巨人）らプロ野球選手を輩出した名門チーム。',
+    officialurl: 'https://naniwaboys.com/',
     representative: '福田 幸男',
   },
   {
@@ -62,6 +64,8 @@ export const teams: Team[] = [
     area: '交野市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '交野市を拠点に活動する中学硬式野球チーム。',
+    officialurl: 'http://osaka-katanoboys.com/',
     representative: '森本 誠',
   },
   {
@@ -71,6 +75,8 @@ export const teams: Team[] = [
     area: '大阪市北区',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '小学部・中学部を持つボーイズリーグチーム。多数の大会で優勝・準優勝の実績あり。',
+    officialurl: 'http://osakakita1.cloudfree.jp/',
     representative: '佐藤 義治',
   },
   {
@@ -80,6 +86,8 @@ export const teams: Team[] = [
     area: '大阪市東淀川区',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '大阪市東淀川区・柴島エリアを拠点に活動する中学硬式野球チーム。',
+    officialurl: 'http://ikz.jp/hp/osaka-/',
     representative: '上村 邦夫',
   },
   {
@@ -89,6 +97,8 @@ export const teams: Team[] = [
     area: '大阪市此花区',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '大阪市此花区を拠点に活動する中学硬式野球チーム。',
+    officialurl: 'https://www.netto.jp/konohana/',
     representative: '別所 伊織',
   },
   {
@@ -98,6 +108,8 @@ export const teams: Team[] = [
     area: '大阪市東成区',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '大阪市東成区を拠点に活動する中学硬式野球チーム。',
+    officialurl: 'https://osakahigashi.jimdofree.com/',
     representative: '関 克実',
   },
   {
@@ -107,6 +119,8 @@ export const teams: Team[] = [
     area: '大阪市東淀川区',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '大阪市東淀川区を拠点に活動する中学硬式野球チーム。',
+    officialurl: 'https://higashiyodogawa-boys.jimdofree.com/',
     representative: '岩曽 貴史',
   },
   {
@@ -125,6 +139,8 @@ export const teams: Team[] = [
     area: '箕面市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '平成3年創部。村上奉斗(ソフトバンク1位)らプロ選手を輩出。甲子園出場者多数の強豪。',
+    officialurl: 'https://www.osakaminoboys.com/',
     representative: '山﨑 和喜心',
   },
   {
@@ -134,6 +150,8 @@ export const teams: Team[] = [
     area: '大阪市都島区',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '大阪市都島区を拠点に活動する中学硬式野球チーム。',
+    officialurl: 'https://miyakojima-boys.jimdofree.com/',
     representative: '浜野 裕康',
   },
   {
@@ -143,6 +161,8 @@ export const teams: Team[] = [
     area: '大阪市北区',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: 'ジャイアンツカップ出場実績あり。勝田成(広島)らプロ選手を輩出。専用球場を保有。',
+    officialurl: 'https://www.oyodoboys.com/',
     representative: '荒 彰慶',
   },
   {
@@ -163,6 +183,8 @@ export const teams: Team[] = [
     area: '吹田市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '北摂地区を中心に活動。「文武両道」を基本とし、野球・勉強・学校生活をサポート。',
+    officialurl: 'https://senriyamaboys.89dream.jp/',
     representative: '前澤 秀和',
   },
   {
@@ -172,6 +194,8 @@ export const teams: Team[] = [
     area: '大東市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '大東市・四條畷市エリアを拠点に活動する中学硬式野球チーム。',
+    officialurl: 'https://www.instagram.com/daito_nawate_baseball/',
     representative: '西村 豪',
   },
   {
@@ -181,6 +205,8 @@ export const teams: Team[] = [
     area: '高槻市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '高槻市萩谷総合公園野球場を拠点に活動。「自分を試す チャンスは今！」',
+    officialurl: 'https://www.takatsuki-boys.com/',
     representative: '横山 雅人',
   },
   {
@@ -212,6 +238,8 @@ export const teams: Team[] = [
     area: '大阪市西淀川区',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '1993年創部。矢倉グラウンドを拠点に活動。スローガンは「継続は力」。',
+    officialurl: 'https://www.nishiyodoboys.jp/',
     representative: '林 春雄',
   },
   {
@@ -221,6 +249,8 @@ export const teams: Team[] = [
     area: '寝屋川市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '寝屋川市・四條畷市エリアを拠点に活動する中学硬式野球チーム。',
+    officialurl: 'https://www.netto.jp/neyagawanawate/',
     representative: '深田 暁生',
   },
   {
@@ -230,6 +260,8 @@ export const teams: Team[] = [
     area: '枚方市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '日本一14回の超名門。ジャイアンツカップ4回、全国大会10回優勝。佐々木泰(ドラ1)ら輩出。',
+    officialurl: 'https://www.all-hirakata.com/',
     representative: '堀田 稔',
   },
   {
@@ -239,6 +271,8 @@ export const teams: Team[] = [
     area: '箕面市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '箕面市を拠点に活動する中学硬式野球チーム。',
+    officialurl: 'http://minohboys.com/',
     representative: '岡島 裕明',
   },
   {
@@ -248,6 +282,8 @@ export const teams: Team[] = [
     area: '守口市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '守口市を拠点に活動する中学硬式野球チーム。',
+    officialurl: 'https://mb-mb-mb.jimdofree.com/',
   },
 ];
 
