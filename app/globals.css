@@ -105,3 +105,120 @@ a:hover {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* microCMS リッチテキスト用スタイル */
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FF2A44;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(255, 42, 68, 0.3);
+  text-shadow: 0 0 10px rgba(255, 42, 68, 0.5);
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #00F0FF;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.prose h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #FACC15;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose ul {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+.prose ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #FF2A44;
+  text-shadow: 0 0 8px rgba(255, 42, 68, 0.8);
+}
+
+.prose ol {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+  counter-reset: item;
+}
+
+.prose ol li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+  counter-increment: item;
+}
+
+.prose ol li::before {
+  content: counter(item) ".";
+  position: absolute;
+  left: 0;
+  color: #00F0FF;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.8);
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.prose strong {
+  color: #FACC15;
+  font-weight: 600;
+}
+
+.prose em {
+  color: #FF00AA;
+  font-style: italic;
+}
+
+.prose a {
+  color: #00F0FF;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #00F0FF;
+}
+
+.prose blockquote {
+  border-left: 4px solid #FF2A44;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  background: rgba(255, 42, 68, 0.1);
+  padding: 1rem;
+}
+
+.prose hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FF2A44, transparent);
+  margin: 2rem 0;
+}
