@@ -42,6 +42,8 @@ export const teams: Team[] = [
     area: '池田市',
     league: ['ボーイズ'],
     branch: '大阪北支部',
+    catchcopy: '池田市を拠点に活動。団結・友情・勇気・規律・忍耐力の養成を目指す中学硬式野球チーム。',
+    officialurl: 'https://www.ikedaboysbaseball.com/',
     representative: '川井 雅廣',
   },
   {

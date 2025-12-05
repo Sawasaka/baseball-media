@@ -85,7 +85,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
     <motion.div
       whileHover={{ y: -12, scale: 1.03 }}
       transition={{ duration: 0.3 }}
-      className="group relative"
+      className="group relative h-full"
     >
       {/* Glow effect on hover */}
       <div 
@@ -95,7 +95,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
       
       {/* Card */}
       <div 
-        className="relative bg-black/80 border-2 border-white/10 overflow-hidden transition-all duration-500 group-hover:border-opacity-70"
+        className="relative h-full flex flex-col bg-black/80 border-2 border-white/10 overflow-hidden transition-all duration-500 group-hover:border-opacity-70"
         style={{ 
           borderColor: leagueId === 'boys' ? 'rgba(255,42,68,0.2)' : leagueId === 'senior' ? 'rgba(0,240,255,0.2)' : 'rgba(255,255,0,0.2)'
         }}
@@ -156,7 +156,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
         </div>
 
         {/* Content */}
-        <div className="p-4 sm:p-5">
+        <div className="p-4 sm:p-5 flex-1 flex flex-col">
           {/* Location info */}
           <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
             <div className={`flex items-center text-[10px] sm:text-xs font-mono px-1.5 sm:px-2 py-0.5 sm:py-1 border ${style.borderColor}/40 ${style.bgLight}`}>
@@ -181,10 +181,12 @@ export const TeamCard = ({ team }: { team: Team }) => {
             style={{ boxShadow: `0 0 10px currentColor` }}
           />
           
-          {/* Description / Catchcopy */}
-          <p className="text-white/50 text-xs sm:text-sm line-clamp-2 mb-3 sm:mb-4 leading-relaxed font-mono">
-            {team.catchcopy || "チーム情報準備中"}
-          </p>
+          {/* Description / Catchcopy - 固定高さで統一 */}
+          <div className="min-h-[40px] sm:min-h-[48px] mb-3 sm:mb-4">
+            <p className="text-white/50 text-xs sm:text-sm line-clamp-2 leading-relaxed font-mono">
+              {team.catchcopy || "チーム情報準備中"}
+            </p>
+          </div>
 
           {/* Feature Tags */}
           {(team.feature1 || team.feature2 || team.feature3) && (
@@ -200,28 +202,29 @@ export const TeamCard = ({ team }: { team: Team }) => {
             </div>
           )}
 
+          {/* Spacer to push actions to bottom */}
+          <div className="flex-1" />
+
           {/* Actions */}
-          <div className="flex items-center pt-3 sm:pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors">
+          <div className="flex items-center pt-3 sm:pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors mt-auto">
             {team.officialurl ? (
               <a
                 href={team.officialurl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center text-xs sm:text-sm text-cyan-400 hover:text-white transition-all duration-300 font-mono"
+                className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 -ml-3 text-xs sm:text-sm text-cyan-400 hover:text-white hover:bg-cyan-400/10 rounded transition-all duration-300 font-mono cursor-pointer"
               >
-                <IoGlobeOutline className="mr-1 sm:mr-2" />
+                <IoGlobeOutline className="text-base sm:text-lg" />
                 <span>公式サイト</span>
-                <IoFlash className="ml-1 text-[10px] sm:text-xs animate-pulse" />
+                <IoFlash className="text-[10px] sm:text-xs animate-pulse" />
               </a>
             ) : (
-              <span className="text-[10px] sm:text-xs text-white/25 font-mono">NO_LINK</span>
+              <span className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-white/30 font-mono">
+                <IoGlobeOutline className="text-base sm:text-lg opacity-50" />
+                <span>サイト準備中</span>
+              </span>
             )}
           </div>
-        </div>
-
-        {/* ID tag */}
-        <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-5 text-[8px] sm:text-[10px] font-mono text-white/25">
-          ID_{team.id.slice(0, 6).toUpperCase()}
         </div>
       </div>
     </motion.div>
