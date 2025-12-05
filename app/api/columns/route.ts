@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { getArticles, getCategories } from "@/lib/microcms/client";
 
+// キャッシュを無効化し、常に最新データを取得
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const [articlesResponse, categoriesResponse] = await Promise.all([
