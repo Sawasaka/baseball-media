@@ -36,14 +36,6 @@ const categoryStyles: Record<string, { icon: React.ReactNode; color: string }> =
 const defaultCategoryTabs = [
   { key: "all", label: "すべて", color: "pink" },
   { key: "team", label: "チーム選び", color: "red" },
-  { key: "junior", label: "中学野球", color: "cyan" },
-  { key: "highschool", label: "高校野球", color: "yellow" },
-  { key: "university", label: "大学野球", color: "pink" },
-  { key: "shakaijin", label: "社会人野球", color: "green" },
-  { key: "overseas", label: "海外野球", color: "orange" },
-  { key: "pro", label: "プロ野球", color: "red" },
-  { key: "study", label: "勉強", color: "cyan" },
-  { key: "career", label: "仕事", color: "yellow" },
 ];
 
 const colorVariants: Record<string, { border: string; bg: string; text: string; shadow: string; glow: string; solidBg: string }> = {
@@ -129,15 +121,22 @@ export function ColumnSection() {
     fetchData();
   }, []);
 
-  // カテゴリータブを作成（microCMS のカテゴリを使用、なければデフォルト）
+  // 記事が存在するカテゴリIDを取得
+  const categoriesWithArticles = new Set(
+    articles.map(article => article.category?.id).filter(Boolean)
+  );
+
+  // カテゴリータブを作成（記事があるカテゴリのみ表示）
   const categoryTabs = categories.length > 0
     ? [
         { key: "all", label: "すべて", color: "pink" },
-        ...categories.map((cat) => ({
-          key: cat.id,
-          label: cat.name,
-          color: categoryStyles[cat.name]?.color || "pink",
-        })),
+        ...categories
+          .filter(cat => categoriesWithArticles.has(cat.id)) // 記事があるカテゴリのみ
+          .map((cat) => ({
+            key: cat.id,
+            label: cat.name,
+            color: categoryStyles[cat.name]?.color || "pink",
+          })),
       ]
     : defaultCategoryTabs;
 
@@ -406,7 +405,7 @@ export function ColumnSection() {
           initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-start sm:items-center justify-center pt-32 sm:pt-4 px-4 pb-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
             onClick={() => setSelectedArticle(null)}
           >
             <motion.div
@@ -414,7 +413,7 @@ export function ColumnSection() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative w-full max-w-2xl max-h-[85vh] overflow-hidden bg-black/95 border-2"
+              className="relative w-full max-w-2xl max-h-[75vh] sm:max-h-[85vh] overflow-y-auto bg-black/95 border-2"
               style={{ 
                 borderColor: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA",
                 boxShadow: `0 0 50px ${colorVariants[getArticleStyle(selectedArticle).color]?.glow || "rgba(255,0,170,0.6)"}`,
@@ -423,7 +422,7 @@ export function ColumnSection() {
             >
               {/* Header */}
               <div 
-                className="sticky top-0 z-10 p-4 border-b-2 bg-black/95"
+                className="sm:sticky sm:top-0 z-10 p-4 border-b-2 bg-black/95"
                 style={{ borderColor: `${colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA"}40` }}
               >
                 <div className="flex items-start justify-between gap-4">
@@ -461,7 +460,7 @@ export function ColumnSection() {
               </div>
 
               {/* Content */}
-              <div className="p-6 overflow-y-auto max-h-[calc(85vh-100px)]">
+              <div className="p-4 sm:p-6">
                 <div 
                   className="text-white/80 font-mono text-sm leading-relaxed prose prose-invert max-w-none"
                   dangerouslySetInnerHTML={{ __html: selectedArticle.body }}
@@ -485,7 +484,7 @@ export function ColumnSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-start sm:items-center justify-center pt-24 sm:pt-4 px-4 pb-4 bg-black/90 backdrop-blur-md overflow-y-auto"
             onClick={() => setShowAllColumnsModal(false)}
           >
             <motion.div
@@ -493,7 +492,7 @@ export function ColumnSection() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative w-full max-w-6xl max-h-[90vh] overflow-hidden bg-black/95 border-2 border-pink-500/50"
+              className="relative w-full max-w-6xl max-h-[80vh] sm:max-h-[90vh] overflow-hidden bg-black/95 border-2 border-pink-500/50"
               style={{ boxShadow: '0 0 80px rgba(255,0,170,0.3)' }}
               onClick={(e) => e.stopPropagation()}
             >

@@ -181,9 +181,9 @@ export const TeamCard = ({ team }: { team: Team }) => {
             style={{ boxShadow: `0 0 10px currentColor` }}
           />
           
-          {/* Description / Catchcopy - 固定高さで統一 */}
-          <div className="min-h-[40px] sm:min-h-[48px] mb-3 sm:mb-4">
-            <p className="text-white/50 text-xs sm:text-sm line-clamp-2 leading-relaxed font-mono">
+          {/* Description / Catchcopy - 2行で統一（line-clamp） */}
+          <div className="min-h-[48px] sm:min-h-[52px] mb-3 sm:mb-4">
+            <p className="text-white/50 text-xs sm:text-sm line-clamp-2 leading-relaxed">
               {team.catchcopy || "チーム情報準備中"}
             </p>
           </div>

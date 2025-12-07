@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { IoBaseball, IoFlash, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoMail } from "react-icons/io5";
 import { motion } from 'framer-motion';
 
-// サブチャンネルのデータ
+// サブコミュニティのデータ
 const subChannels = [
   {
     id: "english",
@@ -77,7 +77,7 @@ export const Navbar = () => {
             </div>
           </Link>
           
-          {/* Desktop Navigation - サブチャンネル */}
+          {/* Desktop Navigation - サブコミュニティ */}
           <div className="hidden lg:flex items-center gap-2">
             {subChannels.map((channel, index) => {
               const Icon = channel.icon;
@@ -166,13 +166,13 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile/Tablet サブチャンネルタブ - 常時表示 */}
+      {/* Mobile/Tablet サブコミュニティタブ - 常時表示 */}
       <div className="lg:hidden bg-black/90 backdrop-blur-md border-b border-cyan-400/20">
         <div className="w-full max-w-7xl mx-auto px-4 py-2">
           {/* SUB CHラベル */}
           <div className="flex items-center gap-1 mb-1.5">
             <IoSparkles className="text-[8px] text-cyan-400/70" />
-            <span className="text-[10px] text-cyan-400/70 font-mono">SUB_CHANNEL</span>
+            <span className="text-[10px] text-cyan-400/70 font-mono">SUB_COMMUNITY</span>
           </div>
           
           {/* 上段3つ */}

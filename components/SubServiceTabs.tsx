@@ -128,7 +128,7 @@ export const SubServiceTabs = () => {
                   <span className="text-white/60 text-[10px] sm:text-sm font-mono">(税込)</span>
                 </div>
                 <p className="text-white/70 text-xs sm:text-sm mt-2 sm:mt-3 font-mono">
-                  <span className="text-cyan-400">▸</span> 全5つのサブチャンネルが<span className="text-yellow-400 font-bold">使い放題</span>
+                  <span className="text-cyan-400">▸</span> 全5つのサブコミュニティが<span className="text-yellow-400 font-bold">使い放題</span>
                 </p>
               </div>
               
@@ -453,7 +453,7 @@ export const SubServiceTabs = () => {
                 🎯 無料カウンセリング予約
               </p>
               <p className="text-white/60 text-xs font-mono">
-                サブチャンネルについてお気軽にご相談ください
+                サブコミュニティについてお気軽にご相談ください
               </p>
               <div className="mt-3 flex items-center justify-center gap-2 text-green-400 text-sm font-mono font-bold">
                 <span>日程を予約する</span>

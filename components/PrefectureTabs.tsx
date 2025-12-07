@@ -1,79 +1,201 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { IoChevronDown, IoGlobeOutline, IoMapOutline } from "react-icons/io5";
 
 interface Props {
   currentPrefecture: string;
   onSelect: (pref: string) => void;
+  teamCounts?: Record<string, number>; // 都道府県ごとのチーム数
 }
 
-const prefectures = [
-  { id: "大阪府", label: "大阪", labelEn: "OSAKA", code: "027", icon: "◈" },
-  { id: "兵庫県", label: "兵庫", labelEn: "HYOGO", code: "028", icon: "◆" },
+type Region = "kansai" | "kanto";
+
+const regions = [
+  { id: "kansai" as Region, label: "関西", labelEn: "KANSAI" },
+  { id: "kanto" as Region, label: "関東", labelEn: "KANTO" },
 ];
 
-export const PrefectureTabs = ({ currentPrefecture, onSelect }: Props) => {
+const prefecturesByRegion: Record<Region, { id: string; label: string; labelEn: string; code: string; icon: string }[]> = {
+  kansai: [
+    { id: "大阪府", label: "大阪", labelEn: "OSAKA", code: "027", icon: "🏯" },      // 大阪城
+    { id: "兵庫県", label: "兵庫", labelEn: "HYOGO", code: "028", icon: "🐯" },      // 阪神タイガース
+    { id: "京都府", label: "京都", labelEn: "KYOTO", code: "026", icon: "⛩️" },     // 鳥居
+    { id: "滋賀県", label: "滋賀", labelEn: "SHIGA", code: "025", icon: "🌊" },      // 琵琶湖
+    { id: "奈良県", label: "奈良", labelEn: "NARA", code: "029", icon: "🦌" },       // 鹿
+    { id: "和歌山県", label: "和歌山", labelEn: "WAKAYAMA", code: "030", icon: "🍊" }, // みかん
+  ],
+  kanto: [
+    { id: "東京都", label: "東京", labelEn: "TOKYO", code: "013", icon: "🗼" },      // 東京タワー
+    { id: "神奈川県", label: "神奈川", labelEn: "KANAGAWA", code: "014", icon: "🌉" }, // 横浜ベイブリッジ
+    { id: "埼玉県", label: "埼玉", labelEn: "SAITAMA", code: "011", icon: "🏟️" },    // スタジアム
+    { id: "千葉県", label: "千葉", labelEn: "CHIBA", code: "012", icon: "🥜" },      // 落花生
+    { id: "茨城県", label: "茨城", labelEn: "IBARAKI", code: "008", icon: "🚀" },    // JAXA
+    { id: "栃木県", label: "栃木", labelEn: "TOCHIGI", code: "009", icon: "🍓" },    // いちご
+    { id: "群馬県", label: "群馬", labelEn: "GUNMA", code: "010", icon: "♨️" },      // 温泉
+  ],
+};
+
+export const PrefectureTabs = ({ currentPrefecture, onSelect, teamCounts = {} }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [region, setRegion] = useState<Region>("kansai");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const prefectures = prefecturesByRegion[region];
+
+  // 外側クリックで閉じる
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // 地域が変わったら最初の都道府県を選択
+  const handleRegionChange = (newRegion: Region) => {
+    setRegion(newRegion);
+    const firstPref = prefecturesByRegion[newRegion][0];
+    if (firstPref) {
+      onSelect(firstPref.id);
+    }
+  };
+
+  const currentPref = prefectures.find(p => p.id === currentPrefecture) || prefectures[0];
+
   return (
-    <div className="flex justify-center mb-6 sm:mb-10 px-2">
-      <div className="inline-flex bg-black/80 border-2 border-cyan-400/30 p-1 sm:p-2 relative overflow-hidden">
-        {/* Background scan effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent" />
-        
-        {/* Corner decorations */}
-        <div className="absolute -top-1 -left-1 w-3 sm:w-5 h-3 sm:h-5 border-t-2 border-l-2 border-cyan-400" style={{ boxShadow: '0 0 10px #00F0FF' }} />
-        <div className="absolute -top-1 -right-1 w-3 sm:w-5 h-3 sm:h-5 border-t-2 border-r-2 border-pink-500" style={{ boxShadow: '0 0 10px #FF00AA' }} />
-        <div className="absolute -bottom-1 -left-1 w-3 sm:w-5 h-3 sm:h-5 border-b-2 border-l-2 border-pink-500" style={{ boxShadow: '0 0 10px #FF00AA' }} />
-        <div className="absolute -bottom-1 -right-1 w-3 sm:w-5 h-3 sm:h-5 border-b-2 border-r-2 border-cyan-400" style={{ boxShadow: '0 0 10px #00F0FF' }} />
-        
-        {prefectures.map((pref, index) => {
-          const isActive = currentPrefecture === pref.id;
-          
-          return (
+    <div className="flex flex-col items-center mb-6 sm:mb-10 px-2">
+      {/* Region Tabs */}
+      <div className="flex flex-col items-center mb-4">
+        <div className="flex items-center gap-2 mb-2">
+          <IoMapOutline className="text-yellow-400 text-sm" />
+          <span className="text-[10px] sm:text-xs font-mono text-white/50 tracking-wider">
+            地域選択
+          </span>
+        </div>
+        <div className="flex bg-black/60 border border-yellow-400/30 p-1">
+          {regions.map((r) => (
             <button
-              key={pref.id}
-              onClick={() => onSelect(pref.id)}
-              className={`relative px-4 sm:px-10 py-2 sm:py-4 transition-all duration-400 ${
-                isActive ? "text-white" : "text-white/50 hover:text-white/80"
-              }`}
+              key={r.id}
+              onClick={() => handleRegionChange(r.id)}
+              className={`
+                px-4 sm:px-6 py-1.5 sm:py-2 font-mono text-xs sm:text-sm transition-all duration-300
+                ${region === r.id 
+                  ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-bold shadow-[0_0_15px_rgba(255,200,0,0.4)]' 
+                  : 'text-white/50 hover:text-white hover:bg-white/5'
+                }
+              `}
             >
-              {/* Active background with glow */}
-              {isActive && (
-                <motion.div
-                  layoutId="activePref"
-                  className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-red-600"
-                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                  style={{
-                    boxShadow: '0 0 30px rgba(255,42,68,0.5), inset 0 0 20px rgba(255,42,68,0.2)'
-                  }}
-                />
-              )}
-              
-              {/* Hover effect for inactive */}
-              {!isActive && (
-                <div className="absolute inset-0 bg-red-500/0 hover:bg-red-500/10 transition-colors" />
-              )}
-              
-              {/* Content */}
-              <div className="relative z-10 flex flex-col items-center font-mono">
-                <span className={`text-[8px] sm:text-[10px] mb-0.5 sm:mb-1 ${isActive ? 'text-cyan-400' : 'text-white/40'} hidden sm:block`}>
-                  [{pref.code}]
+              {r.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative" ref={dropdownRef}>
+        {/* Prefecture Label */}
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <IoGlobeOutline className="text-cyan-400 text-sm" />
+          <span className="text-[10px] sm:text-xs font-mono text-white/50 tracking-wider">
+            都道府県選択
+          </span>
+        </div>
+
+        {/* Dropdown Button */}
+        <motion.button
+          onClick={() => setIsOpen(!isOpen)}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className={`
+            relative min-w-[200px] sm:min-w-[280px] px-4 sm:px-6 py-3 sm:py-4
+            bg-black/80 border-2 transition-all duration-300
+            ${isOpen ? 'border-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.4)]' : 'border-cyan-400/30 hover:border-cyan-400/60'}
+          `}
+        >
+          {/* Corner decorations */}
+          <div className="absolute -top-1 -left-1 w-2 sm:w-3 h-2 sm:h-3 border-t-2 border-l-2 border-cyan-400" />
+          <div className="absolute -top-1 -right-1 w-2 sm:w-3 h-2 sm:h-3 border-t-2 border-r-2 border-red-500" />
+          <div className="absolute -bottom-1 -left-1 w-2 sm:w-3 h-2 sm:h-3 border-b-2 border-l-2 border-red-500" />
+          <div className="absolute -bottom-1 -right-1 w-2 sm:w-3 h-2 sm:h-3 border-b-2 border-r-2 border-cyan-400" />
+
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="text-cyan-400 text-base sm:text-lg">{currentPref.icon}</span>
+              <div className="text-left">
+                <span className="block text-[10px] sm:text-xs text-yellow-400 font-mono font-bold">
+                  {teamCounts[currentPref.id] || 0} チーム
                 </span>
-                <span className={`text-sm sm:text-xl font-bold tracking-wider flex items-center gap-1 sm:gap-2`}>
-                  <span className="text-[10px] sm:text-xs hidden sm:inline">{pref.icon}</span>
-                  {pref.labelEn}
+                <span className="block text-white font-mono text-sm sm:text-lg font-bold tracking-wider">
+                  {currentPref.labelEn}
                 </span>
-                <span className={`text-[10px] sm:text-xs mt-0.5 sm:mt-1 ${isActive ? 'text-cyan-400' : 'text-white/50'}`}>
-                  {pref.label}
+                <span className="block text-[10px] sm:text-xs text-cyan-400 font-mono">
+                  {currentPref.label}
                 </span>
               </div>
-              
-              {/* Separator line */}
-              {index < prefectures.length - 1 && (
-                <div className="absolute right-0 top-1/4 bottom-1/4 w-[2px] bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent" />
-              )}
-            </button>
-          );
-        })}
+            </div>
+            <motion.div
+              animate={{ rotate: isOpen ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <IoChevronDown className="text-cyan-400 text-lg sm:text-xl" />
+            </motion.div>
+          </div>
+        </motion.button>
+
+        {/* Dropdown Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scaleY: 0.8 }}
+              animate={{ opacity: 1, y: 0, scaleY: 1 }}
+              exit={{ opacity: 0, y: -10, scaleY: 0.8 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 right-0 mt-2 z-50 origin-top"
+            >
+              <div className="bg-black/95 border-2 border-cyan-400/50 backdrop-blur-md overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+                {/* Scan line effect */}
+                <div className="absolute inset-0 bg-gradient-to-b from-cyan-400/5 via-transparent to-red-500/5 pointer-events-none" />
+                
+                {/* Prefecture options */}
+                {prefectures.map((pref, index) => (
+                  <motion.button
+                    key={pref.id}
+                    onClick={() => {
+                      onSelect(pref.id);
+                      setIsOpen(false);
+                    }}
+                    whileHover={{ x: 5 }}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.03 }}
+                    className={`
+                      w-full px-4 sm:px-6 py-3 text-left font-mono text-sm transition-all duration-200
+                      flex items-center justify-between
+                      ${currentPrefecture === pref.id 
+                        ? 'bg-gradient-to-r from-red-500/20 to-cyan-400/10 text-white border-l-4 border-red-500' 
+                        : 'text-white/60 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                      }
+                    `}
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className="text-base">{pref.icon}</span>
+                      <span>
+                        <span className="block font-bold">{pref.labelEn}</span>
+                        <span className="block text-[10px] text-white/40">{pref.label}</span>
+                      </span>
+                    </span>
+                    <span className="text-[10px] sm:text-xs text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded">
+                      {teamCounts[pref.id] || 0} チーム
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { PrefectureTabs } from "@/components/PrefectureTabs";
 import { LeagueFilter } from "@/components/LeagueFilter";
+import { BranchFilter } from "@/components/BranchFilter";
 import { TeamCard } from "@/components/TeamCard";
 import { SubServiceTabs } from "@/components/SubServiceTabs";
 import { ColumnSection } from "@/components/ColumnSection";
@@ -40,9 +41,16 @@ function useTypewriter(text: string, speed: number = 80) {
 export default function Home() {
   const [prefecture, setPrefecture] = useState("大阪府");
   const [league, setLeague] = useState("boys");
+  const [branch, setBranch] = useState("all");
   const [teams, setTeams] = useState<Team[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const typedText = useTypewriter("NEXT STAGE", 100);
+
+  // 都道府県が変わったら支部をリセット
+  const handlePrefectureChange = (newPrefecture: string) => {
+    setPrefecture(newPrefecture);
+    setBranch("all");
+  };
 
   // microCMS からチームデータを取得
   useEffect(() => {
@@ -70,11 +78,54 @@ export default function Home() {
     return 'boys';
   };
 
+  // 都道府県ごとのチーム数を計算
+  const teamCountsByPrefecture = (() => {
+    const counts: Record<string, number> = {};
+    teams.forEach(team => {
+      const pref = team.prefecture?.[0] || '';
+      if (pref) {
+        counts[pref] = (counts[pref] || 0) + 1;
+      }
+    });
+    return counts;
+  })();
+
+  // 現在の都道府県・リーグに対応する支部一覧を計算
+  const availableBranches = (() => {
+    const branchMap = new Map<string, { name: string; count: number }>();
+    
+    teams.forEach(team => {
+      const teamPrefecture = team.prefecture?.[0] || '';
+      const teamLeagueId = getLeagueIdFromName(team.league?.[0] || '');
+      const teamBranch = team.branch || '';
+      
+      // 都道府県とリーグでフィルタ
+      if (teamPrefecture === prefecture && (league === "all" || teamLeagueId === league) && teamBranch) {
+        const existing = branchMap.get(teamBranch);
+        if (existing) {
+          existing.count++;
+        } else {
+          branchMap.set(teamBranch, { name: teamBranch, count: 1 });
+        }
+      }
+    });
+
+    return Array.from(branchMap.entries())
+      .map(([id, data]) => ({ id, name: data.name, count: data.count }))
+      .sort((a, b) => a.name.localeCompare(b.name, 'ja'));
+  })();
+
   const filteredTeams = teams.filter(
     (team) => {
       const teamPrefecture = team.prefecture?.[0] || '';
       const teamLeagueId = getLeagueIdFromName(team.league?.[0] || '');
-      return teamPrefecture === prefecture && (league === "all" || teamLeagueId === league);
+      const teamBranch = team.branch || '';
+      
+      const prefectureMatch = teamPrefecture === prefecture;
+      const leagueMatch = league === "all" || teamLeagueId === league;
+      const branchMatch = branch === "all" || teamBranch === branch;
+      
+      return prefectureMatch && leagueMatch && branchMatch;
     }
   );
 
@@ -172,7 +223,7 @@ export default function Home() {
 
           {/* Hero Content */}
           <div className="w-full max-w-7xl mx-auto px-4 text-center relative z-20">
-            {/* Terminal-style badge - モバイルでサブチャンネルと被らないよう上マージン追加 */}
+            {/* Terminal-style badge - モバイルでサブコミュニティと被らないよう上マージン追加 */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -290,7 +341,7 @@ export default function Home() {
                 className="flex items-center justify-center w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-5 border-2 border-cyan-400/60 text-cyan-400 hover:bg-cyan-400/20 font-bold text-base sm:text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.4)]"
               >
                 <IoSparkles className="mr-2" />
-                サブチャンネル
+                サブコミュニティ
               </a>
             </motion.div>
 
@@ -375,8 +426,18 @@ export default function Home() {
             </motion.div>
 
             {/* Filters */}
-            <PrefectureTabs currentPrefecture={prefecture} onSelect={setPrefecture} />
+            <PrefectureTabs 
+              currentPrefecture={prefecture} 
+              onSelect={handlePrefectureChange} 
+              teamCounts={teamCountsByPrefecture}
+            />
             <LeagueFilter currentLeague={league} onSelect={setLeague} />
+            <BranchFilter 
+              currentBranch={branch} 
+              currentPrefecture={prefecture}
+              branches={availableBranches} 
+              onSelect={setBranch} 
+            />
 
             {/* Results Info */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-6 sm:mb-10 px-2 py-3 sm:py-4 border-y-2 border-red-500/20">
@@ -390,6 +451,7 @@ export default function Home() {
               </div>
               <span className="text-xs sm:text-sm text-cyan-400 font-mono px-3 sm:px-4 py-1.5 sm:py-2 border border-cyan-400/30 bg-cyan-400/5">
                 {prefecture}/{league === 'boys' ? 'ボーイズ' : league === 'senior' ? 'シニア' : league === 'young' ? 'ヤング' : '全て'}
+                {branch !== 'all' && <span className="text-pink-500">/{branch}</span>}
               </span>
             </div>
 
@@ -447,11 +509,11 @@ export default function Home() {
             >
               <div className="inline-block mb-4 sm:mb-6">
                 <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-                  <span className="text-xs sm:text-sm font-mono text-cyan-400 tracking-widest">◈ SUB_CHANNEL ◈</span>
+                  <span className="text-xs sm:text-sm font-mono text-cyan-400 tracking-widest">◈ SUB_COMMUNITY ◈</span>
                 </div>
               </div>
               <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
-                サブ<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>チャンネル</span>
+                サブ<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>コミュニティ</span>
               </h2>
               <p className="text-white/50 max-w-md mx-auto font-mono text-sm sm:text-base">
                 <span className="text-pink-500">&gt;</span> 野球少年の未来を広げる関連サービス<span className="animate-pulse text-cyan-400">_</span>
