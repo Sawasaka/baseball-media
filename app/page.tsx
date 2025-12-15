@@ -62,6 +62,13 @@ const mobileSubChannels = [
   },
 ];
 
+// リーグの表示順序（ボーイズ → シニア → ヤング）
+const leagueOrder: Record<string, number> = {
+  'boys': 1,
+  'senior': 2,
+  'young': 3,
+};
+
 // Typing effect hook
 function useTypewriter(text: string, speed: number = 80) {
   const [displayText, setDisplayText] = useState("");
@@ -180,13 +187,6 @@ export default function Home() {
       .map(([id, data]) => ({ id, name: data.name, count: data.count }))
       .sort((a, b) => a.name.localeCompare(b.name, 'ja'));
   })();
-
-  // リーグの表示順序（ボーイズ → シニア → ヤング）
-  const leagueOrder: Record<string, number> = {
-    'boys': 1,
-    'senior': 2,
-    'young': 3,
-  };
 
   const filteredTeams = teams
     .filter((team) => {
