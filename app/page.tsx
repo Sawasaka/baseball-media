@@ -181,8 +181,15 @@ export default function Home() {
       .sort((a, b) => a.name.localeCompare(b.name, 'ja'));
   })();
 
-  const filteredTeams = teams.filter(
-    (team) => {
+  // リーグの表示順序（ボーイズ → シニア → ヤング）
+  const leagueOrder: Record<string, number> = {
+    'boys': 1,
+    'senior': 2,
+    'young': 3,
+  };
+
+  const filteredTeams = teams
+    .filter((team) => {
       const teamPrefecture = team.prefecture?.[0] || '';
       const teamLeagueId = getLeagueIdFromName(team.league?.[0] || '');
       const teamBranch = team.branch || '';
@@ -195,8 +202,13 @@ export default function Home() {
       const branchMatch = branch === "all" || teamBranch === branch;
       
       return prefectureMatch && leagueMatch && branchMatch;
-    }
-  );
+    })
+    .sort((a, b) => {
+      // リーグ順でソート（ボーイズ → シニア → ヤング）
+      const aLeagueId = getLeagueIdFromName(a.league?.[0] || '');
+      const bLeagueId = getLeagueIdFromName(b.league?.[0] || '');
+      return (leagueOrder[aLeagueId] || 99) - (leagueOrder[bLeagueId] || 99);
+    });
 
   return (
     <div className="w-full max-w-full bg-cyber-bg overflow-x-hidden">
