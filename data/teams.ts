@@ -1892,7 +1892,8 @@ export const teams: Team[] = [
     area: '鳥取市',
     league: ['シニア'],
     branch: '西部ブロック',
-    catchcopy: '鳥取市内を拠点に活動する中学硬式野球チーム。',
+    catchcopy: '2025年ジャイアンツカップ出場。食育推進で身体づくりに注力。',
+    officialUrl: 'http://tottorichuo.com/',
     representative: '岡山直樹',
   },
   {
