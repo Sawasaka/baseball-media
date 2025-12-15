@@ -14,7 +14,7 @@ interface Team {
   league: string[];      // 配列
   branch?: string;
   catchcopy?: string;
-  officialurl?: string;
+  officialUrl?: string;
   feature1?: string;
   feature2?: string;
   feature3?: string;
@@ -207,9 +207,9 @@ export const TeamCard = ({ team }: { team: Team }) => {
 
           {/* Actions */}
           <div className="flex items-center pt-3 sm:pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors mt-auto">
-            {team.officialurl ? (
+            {team.officialUrl ? (
               <a
-                href={team.officialurl}
+                href={team.officialUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 -ml-3 text-xs sm:text-sm text-cyan-400 hover:text-white hover:bg-cyan-400/10 rounded transition-all duration-300 font-mono cursor-pointer"

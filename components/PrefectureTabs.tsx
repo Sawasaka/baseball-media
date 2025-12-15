@@ -102,8 +102,11 @@ const otherPrefectures = [
   ...kyushuOkinawaPrefectures,
 ];
 
+// 「全国」オプション（全地域タブ用）
+const allJapanOption = { id: "全国", label: "全国", labelEn: "ALL_JAPAN", code: "000", icon: "🗾" };
+
 const prefecturesByRegion: Record<Region, { id: string; label: string; labelEn: string; code: string; icon: string }[]> = {
-  all: otherPrefectures,
+  all: [allJapanOption, ...otherPrefectures],
   kansai: kansaiPrefectures,
   kanto: kantoPrefectures,
 };

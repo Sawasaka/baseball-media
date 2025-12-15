@@ -49,7 +49,7 @@ const exampleConsultations = [
   },
   {
     icon: IoApps,
-    title: "サブコミュニティ",
+    title: "サブチャンネル",
     color: "#22C55E",
   },
 ];

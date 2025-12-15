@@ -180,7 +180,7 @@ export function SupervisorSection() {
                       父は20年以上にわたり中学硬式野球チームの監督を務めており、私自身も野球人生を通じて、現場のリアルと業界構造を深く理解しています。
                     </p>
                     <p className="text-white/80 leading-relaxed text-xs sm:text-sm md:text-base mt-2 sm:mt-3">
-                      ここでは、現場のリアルな情報と、多彩な「サブコミュニティ」や「コンテンツ」を皆様にお届けしていきます。
+                      ここでは、現場のリアルな情報と、多彩な「サブチャンネル」や「コンテンツ」を皆様にお届けしていきます。
                     </p>
                     <span className="absolute -bottom-2 sm:-bottom-3 right-3 sm:right-4 text-2xl sm:text-3xl text-cyan-400">"</span>
                   </div>

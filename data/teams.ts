@@ -1728,7 +1728,7 @@ export const teams: Team[] = [
     league: ['シニア'],
     branch: '西部ブロック',
     catchcopy: '元ロッテ・サブロー監督就任。関西春季大会準優勝の強豪。',
-    officialUrl: 'https://www.netto.jp/okayama/',
+    officialurl: 'https://www.netto.jp/okayama/',
     representative: '宗延智',
   },
   {
@@ -1772,7 +1772,7 @@ export const teams: Team[] = [
     league: ['シニア'],
     branch: '西部ブロック',
     catchcopy: '1988年創部。専用グラウンド2面完備。日本選手権ベスト16。',
-    officialUrl: 'https://www.netto.jp/tamano/',
+    officialurl: 'https://www.netto.jp/tamano/',
     representative: '宮本和好',
   },
   {
@@ -1849,7 +1849,7 @@ export const teams: Team[] = [
     league: ['シニア'],
     branch: '西部ブロック',
     catchcopy: '2006年創部。女子選手も募集中。基礎練習を重視。',
-    officialUrl: 'https://www.ikz.jp/hp/okayamawest/',
+    officialurl: 'https://www.ikz.jp/hp/okayamawest/',
     representative: '山口',
   },
   {
@@ -1871,7 +1871,7 @@ export const teams: Team[] = [
     league: ['シニア'],
     branch: '西部ブロック',
     catchcopy: '故障予防を重視した育成指導。野球をもっと好きになる。',
-    officialUrl: 'https://www.ikz.jp/hp/8989/',
+    officialurl: 'https://www.ikz.jp/hp/8989/',
     representative: '加藤孝志',
   },
   {
@@ -1893,7 +1893,7 @@ export const teams: Team[] = [
     league: ['シニア'],
     branch: '西部ブロック',
     catchcopy: '2025年ジャイアンツカップ出場。食育推進で身体づくりに注力。',
-    officialUrl: 'http://tottorichuo.com/',
+    officialurl: 'http://tottorichuo.com/',
     representative: '岡山直樹',
   },
   {

@@ -13,10 +13,54 @@ import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
 import type { Team } from "@/lib/microcms/types";
-import { IoChevronDown, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles } from "react-icons/io5";
+import { IoChevronDown, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase } from "react-icons/io5";
 
 // Import 3D scene dynamically
 const Scene3D = dynamic(() => import("@/components/Scene3D"), { ssr: false });
+
+// サブチャンネルのデータ（モバイル表示用）
+const mobileSubChannels = [
+  {
+    id: "english",
+    label: "英語学習",
+    url: "https://english.rookiesmart-jp.com/",
+    icon: IoLanguage,
+    color: "#00F0FF",
+    shadowColor: "0,240,255",
+  },
+  {
+    id: "academy",
+    label: "ITアカデミー",
+    url: "https://academy.rookiesmart-jp.com/",
+    icon: IoCode,
+    color: "#FF00AA",
+    shadowColor: "255,0,170",
+  },
+  {
+    id: "yakyu-juku",
+    label: "野球塾",
+    url: "https://yakyu-juku.rookiesmart-jp.com/",
+    icon: IoBaseball,
+    color: "#FF6B35",
+    shadowColor: "255,107,53",
+  },
+  {
+    id: "scout",
+    label: "スカウト",
+    url: "https://koko-yakyu-agent.rookiesmart-jp.com/",
+    icon: IoTrophy,
+    color: "#FACC15",
+    shadowColor: "250,204,21",
+  },
+  {
+    id: "career",
+    label: "キャリア",
+    url: "https://agent.rookiesmart-jp.com/",
+    icon: IoBriefcase,
+    color: "#22C55E",
+    shadowColor: "34,197,94",
+  },
+];
 
 // Typing effect hook
 function useTypewriter(text: string, speed: number = 80) {
@@ -78,15 +122,33 @@ export default function Home() {
     return 'boys';
   };
 
+  // 地域別都道府県リスト
+  const kansaiPrefectures = ["大阪府", "兵庫県", "京都府", "滋賀県", "奈良県", "和歌山県"];
+  const kantoPrefectures = ["東京都", "神奈川県", "埼玉県", "千葉県", "茨城県", "栃木県", "群馬県"];
+  const otherPrefectures = [
+    "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
+    "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県",
+    "鳥取県", "島根県", "岡山県", "広島県", "山口県",
+    "徳島県", "香川県", "愛媛県", "高知県",
+    "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"
+  ];
+
   // 都道府県ごとのチーム数を計算
   const teamCountsByPrefecture = (() => {
     const counts: Record<string, number> = {};
+    let otherTotal = 0;
     teams.forEach(team => {
       const pref = team.prefecture?.[0] || '';
       if (pref) {
         counts[pref] = (counts[pref] || 0) + 1;
+        // 関西・関東以外の都道府県の合計
+        if (otherPrefectures.includes(pref)) {
+          otherTotal++;
+        }
       }
     });
+    // 「全国」オプション用の合計
+    counts["全国"] = otherTotal;
     return counts;
   })();
 
@@ -99,8 +161,12 @@ export default function Home() {
       const teamLeagueId = getLeagueIdFromName(team.league?.[0] || '');
       const teamBranch = team.branch || '';
       
-      // 都道府県とリーグでフィルタ
-      if (teamPrefecture === prefecture && (league === "all" || teamLeagueId === league) && teamBranch) {
+      // 都道府県とリーグでフィルタ（「全国」の場合はotherPrefecturesでフィルタ）
+      const prefectureMatch = prefecture === "全国" 
+        ? otherPrefectures.includes(teamPrefecture)
+        : teamPrefecture === prefecture;
+      
+      if (prefectureMatch && (league === "all" || teamLeagueId === league) && teamBranch) {
         const existing = branchMap.get(teamBranch);
         if (existing) {
           existing.count++;
@@ -121,7 +187,10 @@ export default function Home() {
       const teamLeagueId = getLeagueIdFromName(team.league?.[0] || '');
       const teamBranch = team.branch || '';
       
-      const prefectureMatch = teamPrefecture === prefecture;
+      // 「全国」が選択された場合は関西・関東以外の全都道府県を表示
+      const prefectureMatch = prefecture === "全国" 
+        ? otherPrefectures.includes(teamPrefecture)
+        : teamPrefecture === prefecture;
       const leagueMatch = league === "all" || teamLeagueId === league;
       const branchMatch = branch === "all" || teamBranch === branch;
       
@@ -137,7 +206,88 @@ export default function Home() {
       {/* Navigation */}
       <Navbar />
       
-      <main className="relative z-10 pt-44 sm:pt-48 lg:pt-24 w-full overflow-x-hidden">
+      <main className="relative z-10 pt-14 sm:pt-16 lg:pt-24 w-full overflow-x-hidden">
+        {/* Mobile/Tablet サブチャンネルタブ - 固定なしでページと一緒にスクロール */}
+        <div className="lg:hidden bg-black/90 backdrop-blur-md border-b border-cyan-400/20">
+          <div className="w-full max-w-7xl mx-auto px-4 py-2">
+            {/* 上段3つ */}
+            <div className="grid grid-cols-3 gap-1.5 mb-1.5">
+              {mobileSubChannels.slice(0, 3).map((channel) => {
+                const Icon = channel.icon;
+                return (
+                  <a
+                    key={channel.id}
+                    href={channel.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1 px-2 py-1.5 font-mono transition-all duration-300 active:scale-95"
+                    style={{
+                      background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.25), rgba(${channel.shadowColor},0.1))`,
+                      border: `1.5px solid ${channel.color}`,
+                      boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
+                    }}
+                  >
+                    <Icon 
+                      size={12} 
+                      style={{ 
+                        color: channel.color,
+                        filter: `drop-shadow(0 0 4px ${channel.color})`,
+                      }} 
+                    />
+                    <span 
+                      className="text-[10px] font-bold whitespace-nowrap"
+                      style={{ 
+                        color: channel.color,
+                        textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
+                      }}
+                    >
+                      {channel.label}
+                    </span>
+                  </a>
+                );
+              })}
+            </div>
+            {/* 下段2つ - 上段と同じサイズで中央配置 */}
+            <div className="flex justify-center gap-1.5">
+              {mobileSubChannels.slice(3, 5).map((channel) => {
+                const Icon = channel.icon;
+                return (
+                  <a
+                    key={channel.id}
+                    href={channel.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1 px-2 py-1.5 font-mono transition-all duration-300 active:scale-95"
+                    style={{
+                      background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.25), rgba(${channel.shadowColor},0.1))`,
+                      border: `1.5px solid ${channel.color}`,
+                      boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
+                      width: 'calc((100% - 0.375rem * 2) / 3)',
+                    }}
+                  >
+                    <Icon 
+                      size={12} 
+                      style={{ 
+                        color: channel.color,
+                        filter: `drop-shadow(0 0 4px ${channel.color})`,
+                      }} 
+                    />
+                    <span 
+                      className="text-[10px] font-bold whitespace-nowrap"
+                      style={{ 
+                        color: channel.color,
+                        textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
+                      }}
+                    >
+                      {channel.label}
+                    </span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
         {/* Hero Section */}
         <section className="w-full flex flex-col lg:min-h-[100vh] lg:justify-center relative pb-6 sm:pb-10 lg:pb-0 overflow-hidden">
           {/* Animated background gradients */}
@@ -223,7 +373,7 @@ export default function Home() {
 
           {/* Hero Content */}
           <div className="w-full max-w-7xl mx-auto px-4 text-center relative z-20">
-            {/* Terminal-style badge - モバイルでサブコミュニティと被らないよう上マージン追加 */}
+            {/* Terminal-style badge - モバイルでサブチャンネルと被らないよう上マージン追加 */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -341,7 +491,7 @@ export default function Home() {
                 className="flex items-center justify-center w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-5 border-2 border-cyan-400/60 text-cyan-400 hover:bg-cyan-400/20 font-bold text-base sm:text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.4)]"
               >
                 <IoSparkles className="mr-2" />
-                サブコミュニティ
+                サブチャンネル
               </a>
             </motion.div>
 
@@ -510,11 +660,11 @@ export default function Home() {
             >
               <div className="inline-block mb-4 sm:mb-6">
                 <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-                  <span className="text-xs sm:text-sm font-mono text-cyan-400 tracking-widest">◈ SUB_COMMUNITY ◈</span>
+                  <span className="text-xs sm:text-sm font-mono text-cyan-400 tracking-widest">◈ SUB_CHANNEL ◈</span>
                 </div>
               </div>
               <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
-                サブ<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>コミュニティ</span>
+                サブ<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>チャンネル</span>
               </h2>
               <p className="text-white/50 max-w-md mx-auto font-mono text-sm sm:text-base">
                 <span className="text-pink-500">&gt;</span> 野球少年の未来を広げる関連サービス<span className="animate-pulse text-cyan-400">_</span>

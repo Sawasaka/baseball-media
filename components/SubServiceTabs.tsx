@@ -18,6 +18,7 @@ const subServices = [
     bgGradient: "from-cyan-500/30 via-blue-600/20 to-cyan-400/30",
     borderColor: "#00F0FF",
     shadowColor: "0,240,255",
+    showHot: true,
   },
   {
     id: "academy",
@@ -32,6 +33,7 @@ const subServices = [
     bgGradient: "from-pink-500/30 via-purple-600/20 to-fuchsia-500/30",
     borderColor: "#FF00AA",
     shadowColor: "255,0,170",
+    showHot: true,
   },
   {
     id: "yakyu-juku",
@@ -46,6 +48,7 @@ const subServices = [
     bgGradient: "from-red-500/30 via-orange-600/20 to-red-600/30",
     borderColor: "#FF2A44",
     shadowColor: "255,42,68",
+    showHot: true,
   },
   {
     id: "scout",
@@ -60,6 +63,7 @@ const subServices = [
     bgGradient: "from-yellow-400/30 via-amber-500/20 to-orange-500/30",
     borderColor: "#FACC15",
     shadowColor: "250,204,21",
+    showHot: false,
   },
   {
     id: "career",
@@ -74,6 +78,7 @@ const subServices = [
     bgGradient: "from-green-400/30 via-emerald-500/20 to-teal-500/30",
     borderColor: "#22C55E",
     shadowColor: "34,197,94",
+    showHot: false,
   },
 ];
 
@@ -128,18 +133,29 @@ export const SubServiceTabs = () => {
                   <span className="text-white/60 text-[10px] sm:text-sm font-mono">(税込)</span>
                 </div>
                 <p className="text-white/70 text-xs sm:text-sm mt-2 sm:mt-3 font-mono">
-                  <span className="text-cyan-400">▸</span> 全5つのサブコミュニティが<span className="text-yellow-400 font-bold">使い放題</span>
+                  <span className="text-cyan-400">▸</span> 全5つのサブチャンネルが<span className="text-yellow-400 font-bold">使い放題</span>
                 </p>
               </div>
               
               {/* Center: Features */}
               <div className="flex flex-wrap justify-center gap-1.5 sm:gap-3">
-                {['英語学習', 'ITアカデミー', '野球塾', 'スカウト', 'キャリア'].map((item, i) => (
+                {[
+                  { label: '英語学習', color: '#00F0FF' },
+                  { label: 'ITアカデミー', color: '#FF00AA' },
+                  { label: '野球塾', color: '#FF2A44' },
+                  { label: 'スカウト', color: '#FACC15' },
+                  { label: 'キャリア', color: '#22C55E' },
+                ].map((item) => (
                   <span 
-                    key={item}
-                    className="px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-mono border border-white/30 text-white/80 bg-white/5"
+                    key={item.label}
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-mono border bg-black/30"
+                    style={{ 
+                      borderColor: `${item.color}60`,
+                      color: item.color,
+                      textShadow: `0 0 10px ${item.color}40`,
+                    }}
                   >
-                    ✓ {item}
+                    ✓ {item.label}
                   </span>
                 ))}
               </div>
@@ -265,21 +281,23 @@ export const SubServiceTabs = () => {
                   </div>
 
               {/* HOT badge */}
-              <div className="absolute -top-0 -right-0 z-20">
-                <motion.div 
-                  className="px-3 py-1.5 text-[11px] font-mono font-black tracking-wider flex items-center gap-1"
-                  style={{
-                    background: `linear-gradient(135deg, ${service.borderColor}, ${service.borderColor}aa)`,
-                    color: service.color === 'yellow' ? '#000' : '#fff',
-                    boxShadow: `0 0 20px ${service.borderColor}`,
-                  }}
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <IoStar className="text-xs" />
-                  HOT
-                </motion.div>
-              </div>
+              {service.showHot && (
+                <div className="absolute -top-0 -right-0 z-20">
+                  <motion.div 
+                    className="px-3 py-1.5 text-[11px] font-mono font-black tracking-wider flex items-center gap-1"
+                    style={{
+                      background: `linear-gradient(135deg, ${service.borderColor}, ${service.borderColor}aa)`,
+                      color: service.color === 'yellow' ? '#000' : '#fff',
+                      boxShadow: `0 0 20px ${service.borderColor}`,
+                    }}
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <IoStar className="text-xs" />
+                    HOT
+                  </motion.div>
+                </div>
+              )}
 
               {/* Content */}
               <div className="relative z-10 p-3 sm:p-5">
@@ -453,7 +471,7 @@ export const SubServiceTabs = () => {
                 🎯 無料カウンセリング予約
               </p>
               <p className="text-white/60 text-xs font-mono">
-                サブコミュニティについてお気軽にご相談ください
+                サブチャンネルについてお気軽にご相談ください
               </p>
               <div className="mt-3 flex items-center justify-center gap-2 text-green-400 text-sm font-mono font-bold">
                 <span>日程を予約する</span>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { IoBaseball, IoFlash, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoMail } from "react-icons/io5";
 import { motion } from 'framer-motion';
 
-// サブコミュニティのデータ
+// サブチャンネルのデータ
 const subChannels = [
   {
     id: "english",
@@ -77,7 +77,7 @@ export const Navbar = () => {
             </div>
           </Link>
           
-          {/* Desktop Navigation - サブコミュニティ */}
+          {/* Desktop Navigation - サブチャンネル */}
           <div className="hidden lg:flex items-center gap-2">
             {subChannels.map((channel, index) => {
               const Icon = channel.icon;
@@ -158,100 +158,13 @@ export const Navbar = () => {
               rel="noopener noreferrer"
               className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-bold font-mono flex items-center gap-1.5"
               style={{ boxShadow: '0 0 15px rgba(34,197,94,0.4)' }}
-          >
+            >
               <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
               日程調整
             </a>
           </div>
         </div>
       </div>
-
-      {/* Mobile/Tablet サブコミュニティタブ - 常時表示 */}
-      <div className="lg:hidden bg-black/90 backdrop-blur-md border-b border-cyan-400/20">
-        <div className="w-full max-w-7xl mx-auto px-4 py-2">
-          {/* SUB CHラベル */}
-          <div className="flex items-center gap-1 mb-1.5">
-            <IoSparkles className="text-[8px] text-cyan-400/70" />
-            <span className="text-[10px] text-cyan-400/70 font-mono">SUB_COMMUNITY</span>
-          </div>
-          
-          {/* 上段3つ */}
-          <div className="grid grid-cols-3 gap-1.5 mb-1.5">
-            {subChannels.slice(0, 3).map((channel) => {
-              const Icon = channel.icon;
-              return (
-                <a
-                  key={channel.id}
-                  href={channel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1 px-2 py-1.5 font-mono transition-all duration-300 active:scale-95"
-                  style={{
-                    background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.25), rgba(${channel.shadowColor},0.1))`,
-                    border: `1.5px solid ${channel.color}`,
-                    boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
-                  }}
-                >
-                  <Icon 
-                    size={12} 
-                    style={{ 
-                      color: channel.color,
-                      filter: `drop-shadow(0 0 4px ${channel.color})`,
-                    }} 
-                  />
-                  <span 
-                    className="text-[10px] font-bold whitespace-nowrap"
-                    style={{ 
-                      color: channel.color,
-                      textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
-                    }}
-                  >
-                    {channel.shortLabel}
-                  </span>
-                </a>
-              );
-            })}
-          </div>
-          {/* 下段2つ - 上段と同じサイズで中央配置 */}
-          <div className="flex justify-center gap-1.5">
-            {subChannels.slice(3, 5).map((channel) => {
-              const Icon = channel.icon;
-              return (
-                <a
-                  key={channel.id}
-                  href={channel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1 px-2 py-1.5 font-mono transition-all duration-300 active:scale-95"
-                  style={{
-                    background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.25), rgba(${channel.shadowColor},0.1))`,
-                    border: `1.5px solid ${channel.color}`,
-                    boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
-                    width: 'calc((100% - 0.375rem * 2) / 3)',
-                  }}
-                >
-                  <Icon 
-                    size={12} 
-                    style={{ 
-                      color: channel.color,
-                      filter: `drop-shadow(0 0 4px ${channel.color})`,
-                    }} 
-                  />
-                  <span 
-                    className="text-[10px] font-bold whitespace-nowrap"
-                    style={{ 
-                      color: channel.color,
-                      textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
-                    }}
-                  >
-                    {channel.shortLabel}
-                  </span>
-                </a>
-              );
-            })}
-          </div>
-        </div>
-            </div>
     </nav>
   );
 };
