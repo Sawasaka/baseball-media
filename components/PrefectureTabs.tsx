@@ -10,31 +10,102 @@ interface Props {
   teamCounts?: Record<string, number>; // 都道府県ごとのチーム数
 }
 
-type Region = "kansai" | "kanto";
+type Region = "all" | "kansai" | "kanto";
 
 const regions = [
+  { id: "all" as Region, label: "全国", labelEn: "ALL" },
   { id: "kansai" as Region, label: "関西", labelEn: "KANSAI" },
   { id: "kanto" as Region, label: "関東", labelEn: "KANTO" },
 ];
 
+// 北海道・東北
+const hokkaidoTohokuPrefectures = [
+  { id: "北海道", label: "北海道", labelEn: "HOKKAIDO", code: "001", icon: "🐻" },
+  { id: "青森県", label: "青森", labelEn: "AOMORI", code: "002", icon: "🍎" },
+  { id: "岩手県", label: "岩手", labelEn: "IWATE", code: "003", icon: "🏔️" },
+  { id: "宮城県", label: "宮城", labelEn: "MIYAGI", code: "004", icon: "🌾" },
+  { id: "秋田県", label: "秋田", labelEn: "AKITA", code: "005", icon: "🐶" },
+  { id: "山形県", label: "山形", labelEn: "YAMAGATA", code: "006", icon: "🍒" },
+  { id: "福島県", label: "福島", labelEn: "FUKUSHIMA", code: "007", icon: "🍑" },
+];
+
+// 関東
+const kantoPrefectures = [
+  { id: "東京都", label: "東京", labelEn: "TOKYO", code: "013", icon: "🗼" },
+  { id: "神奈川県", label: "神奈川", labelEn: "KANAGAWA", code: "014", icon: "🌉" },
+  { id: "埼玉県", label: "埼玉", labelEn: "SAITAMA", code: "011", icon: "🏟️" },
+  { id: "千葉県", label: "千葉", labelEn: "CHIBA", code: "012", icon: "🥜" },
+  { id: "茨城県", label: "茨城", labelEn: "IBARAKI", code: "008", icon: "🚀" },
+  { id: "栃木県", label: "栃木", labelEn: "TOCHIGI", code: "009", icon: "🍓" },
+  { id: "群馬県", label: "群馬", labelEn: "GUNMA", code: "010", icon: "♨️" },
+];
+
+// 中部（北陸・甲信越・東海）
+const chubuPrefectures = [
+  { id: "新潟県", label: "新潟", labelEn: "NIIGATA", code: "015", icon: "🌾" },
+  { id: "富山県", label: "富山", labelEn: "TOYAMA", code: "016", icon: "🏔️" },
+  { id: "石川県", label: "石川", labelEn: "ISHIKAWA", code: "017", icon: "🦀" },
+  { id: "福井県", label: "福井", labelEn: "FUKUI", code: "018", icon: "🦖" },
+  { id: "山梨県", label: "山梨", labelEn: "YAMANASHI", code: "019", icon: "🍇" },
+  { id: "長野県", label: "長野", labelEn: "NAGANO", code: "020", icon: "⛷️" },
+  { id: "岐阜県", label: "岐阜", labelEn: "GIFU", code: "021", icon: "🏯" },
+  { id: "静岡県", label: "静岡", labelEn: "SHIZUOKA", code: "022", icon: "🗻" },
+  { id: "愛知県", label: "愛知", labelEn: "AICHI", code: "023", icon: "🐉" },
+  { id: "三重県", label: "三重", labelEn: "MIE", code: "024", icon: "🦐" },
+];
+
+// 関西
+const kansaiPrefectures = [
+  { id: "大阪府", label: "大阪", labelEn: "OSAKA", code: "027", icon: "🏯" },
+  { id: "兵庫県", label: "兵庫", labelEn: "HYOGO", code: "028", icon: "🐯" },
+  { id: "京都府", label: "京都", labelEn: "KYOTO", code: "026", icon: "⛩️" },
+  { id: "滋賀県", label: "滋賀", labelEn: "SHIGA", code: "025", icon: "🌊" },
+  { id: "奈良県", label: "奈良", labelEn: "NARA", code: "029", icon: "🦌" },
+  { id: "和歌山県", label: "和歌山", labelEn: "WAKAYAMA", code: "030", icon: "🍊" },
+];
+
+// 中国
+const chugokuPrefectures = [
+  { id: "鳥取県", label: "鳥取", labelEn: "TOTTORI", code: "031", icon: "🏜️" },
+  { id: "島根県", label: "島根", labelEn: "SHIMANE", code: "032", icon: "⛩️" },
+  { id: "岡山県", label: "岡山", labelEn: "OKAYAMA", code: "033", icon: "🍑" },
+  { id: "広島県", label: "広島", labelEn: "HIROSHIMA", code: "034", icon: "🦪" },
+  { id: "山口県", label: "山口", labelEn: "YAMAGUCHI", code: "035", icon: "🐡" },
+];
+
+// 四国
+const shikokuPrefectures = [
+  { id: "徳島県", label: "徳島", labelEn: "TOKUSHIMA", code: "036", icon: "🌀" },
+  { id: "香川県", label: "香川", labelEn: "KAGAWA", code: "037", icon: "🍜" },
+  { id: "愛媛県", label: "愛媛", labelEn: "EHIME", code: "038", icon: "🍊" },
+  { id: "高知県", label: "高知", labelEn: "KOCHI", code: "039", icon: "🐋" },
+];
+
+// 九州・沖縄
+const kyushuOkinawaPrefectures = [
+  { id: "福岡県", label: "福岡", labelEn: "FUKUOKA", code: "040", icon: "🍜" },
+  { id: "佐賀県", label: "佐賀", labelEn: "SAGA", code: "041", icon: "🎈" },
+  { id: "長崎県", label: "長崎", labelEn: "NAGASAKI", code: "042", icon: "⛪" },
+  { id: "熊本県", label: "熊本", labelEn: "KUMAMOTO", code: "043", icon: "🐻" },
+  { id: "大分県", label: "大分", labelEn: "OITA", code: "044", icon: "♨️" },
+  { id: "宮崎県", label: "宮崎", labelEn: "MIYAZAKI", code: "045", icon: "🌴" },
+  { id: "鹿児島県", label: "鹿児島", labelEn: "KAGOSHIMA", code: "046", icon: "🌋" },
+  { id: "沖縄県", label: "沖縄", labelEn: "OKINAWA", code: "047", icon: "🏝️" },
+];
+
+// 全国（関東・関西以外の都道府県）
+const otherPrefectures = [
+  ...hokkaidoTohokuPrefectures,
+  ...chubuPrefectures,
+  ...chugokuPrefectures,
+  ...shikokuPrefectures,
+  ...kyushuOkinawaPrefectures,
+];
+
 const prefecturesByRegion: Record<Region, { id: string; label: string; labelEn: string; code: string; icon: string }[]> = {
-  kansai: [
-    { id: "大阪府", label: "大阪", labelEn: "OSAKA", code: "027", icon: "🏯" },      // 大阪城
-    { id: "兵庫県", label: "兵庫", labelEn: "HYOGO", code: "028", icon: "🐯" },      // 阪神タイガース
-    { id: "京都府", label: "京都", labelEn: "KYOTO", code: "026", icon: "⛩️" },     // 鳥居
-    { id: "滋賀県", label: "滋賀", labelEn: "SHIGA", code: "025", icon: "🌊" },      // 琵琶湖
-    { id: "奈良県", label: "奈良", labelEn: "NARA", code: "029", icon: "🦌" },       // 鹿
-    { id: "和歌山県", label: "和歌山", labelEn: "WAKAYAMA", code: "030", icon: "🍊" }, // みかん
-  ],
-  kanto: [
-    { id: "東京都", label: "東京", labelEn: "TOKYO", code: "013", icon: "🗼" },      // 東京タワー
-    { id: "神奈川県", label: "神奈川", labelEn: "KANAGAWA", code: "014", icon: "🌉" }, // 横浜ベイブリッジ
-    { id: "埼玉県", label: "埼玉", labelEn: "SAITAMA", code: "011", icon: "🏟️" },    // スタジアム
-    { id: "千葉県", label: "千葉", labelEn: "CHIBA", code: "012", icon: "🥜" },      // 落花生
-    { id: "茨城県", label: "茨城", labelEn: "IBARAKI", code: "008", icon: "🚀" },    // JAXA
-    { id: "栃木県", label: "栃木", labelEn: "TOCHIGI", code: "009", icon: "🍓" },    // いちご
-    { id: "群馬県", label: "群馬", labelEn: "GUNMA", code: "010", icon: "♨️" },      // 温泉
-  ],
+  all: otherPrefectures,
+  kansai: kansaiPrefectures,
+  kanto: kantoPrefectures,
 };
 
 export const PrefectureTabs = ({ currentPrefecture, onSelect, teamCounts = {} }: Props) => {
@@ -129,10 +200,10 @@ export const PrefectureTabs = ({ currentPrefecture, onSelect, teamCounts = {} }:
                   {teamCounts[currentPref.id] || 0} チーム
                 </span>
                 <span className="block text-white font-mono text-sm sm:text-lg font-bold tracking-wider">
-                  {currentPref.labelEn}
+                  {currentPref.label}
                 </span>
                 <span className="block text-[10px] sm:text-xs text-cyan-400 font-mono">
-                  {currentPref.label}
+                  {currentPref.labelEn}
                 </span>
               </div>
             </div>
@@ -155,7 +226,7 @@ export const PrefectureTabs = ({ currentPrefecture, onSelect, teamCounts = {} }:
               transition={{ duration: 0.2 }}
               className="absolute top-full left-0 right-0 mt-2 z-50 origin-top"
             >
-              <div className="bg-black/95 border-2 border-cyan-400/50 backdrop-blur-md overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+              <div className="bg-black/95 border-2 border-cyan-400/50 backdrop-blur-md overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] max-h-[60vh] overflow-y-auto">
                 {/* Scan line effect */}
                 <div className="absolute inset-0 bg-gradient-to-b from-cyan-400/5 via-transparent to-red-500/5 pointer-events-none" />
                 
@@ -183,8 +254,8 @@ export const PrefectureTabs = ({ currentPrefecture, onSelect, teamCounts = {} }:
                     <span className="flex items-center gap-3">
                       <span className="text-base">{pref.icon}</span>
                       <span>
-                        <span className="block font-bold">{pref.labelEn}</span>
-                        <span className="block text-[10px] text-white/40">{pref.label}</span>
+                        <span className="block font-bold">{pref.label}</span>
+                        <span className="block text-[10px] text-white/40">{pref.labelEn}</span>
                       </span>
                     </span>
                     <span className="text-[10px] sm:text-xs text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded">

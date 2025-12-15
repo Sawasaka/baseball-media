@@ -123,7 +123,7 @@ export const SubServiceTabs = () => {
                 <div className="flex items-baseline justify-center lg:justify-start gap-1 sm:gap-2">
                   <span className="text-white/60 text-xs sm:text-sm font-mono">月額</span>
                   <span className="text-3xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400" style={{ textShadow: '0 0 40px rgba(250,204,21,0.5)' }}>
-                    ¥9,800
+                    ¥29,800
                   </span>
                   <span className="text-white/60 text-[10px] sm:text-sm font-mono">(税込)</span>
                 </div>
@@ -156,7 +156,7 @@ export const SubServiceTabs = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/20 to-transparent animate-pulse" />
                     <div className="relative z-10">
                       <div className="text-red-400 text-[10px] sm:text-xs font-mono mb-1">⚠ LIMITED</div>
-                      <div className="text-white font-black text-xl sm:text-2xl">100名</div>
+                      <div className="text-white font-black text-xl sm:text-2xl">10名</div>
                       <div className="text-white/70 text-[10px] sm:text-xs font-mono">限定枠</div>
                     </div>
                   </motion.div>

@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const BranchFilter = ({ currentBranch, currentPrefecture, branches, onSelect }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // 外側クリックで閉じる
@@ -35,8 +35,26 @@ export const BranchFilter = ({ currentBranch, currentPrefecture, branches, onSel
   const displayName = currentBranch === "all" ? "すべての支部" : currentBranchData?.name || "支部を選択";
   const totalCount = branches.reduce((sum, b) => sum + b.count, 0);
 
-  if (branches.length <= 1) {
-    return null; // 支部が1つ以下なら表示しない
+  if (branches.length === 0) {
+    return null; // 支部がない場合のみ非表示
+  }
+
+  // 支部が1つだけの場合はシンプル表示
+  if (branches.length === 1) {
+    const singleBranch = branches[0];
+    return (
+      <div className="flex justify-center mb-6 sm:mb-10 px-2">
+        <div className="flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-black/60 border border-pink-500/30">
+          <IoLocationSharp className="text-pink-500 text-base sm:text-lg" />
+          <span className="text-white font-mono text-sm sm:text-base font-bold">
+            {singleBranch.name}
+          </span>
+          <span className="text-yellow-400 font-mono text-xs sm:text-sm bg-yellow-400/10 px-2 py-0.5 rounded">
+            {singleBranch.count} チーム
+          </span>
+        </div>
+      </div>
+    );
   }
 
   return (

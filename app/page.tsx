@@ -452,6 +452,7 @@ export default function Home() {
               <span className="text-xs sm:text-sm text-cyan-400 font-mono px-3 sm:px-4 py-1.5 sm:py-2 border border-cyan-400/30 bg-cyan-400/5">
                 {prefecture}/{league === 'boys' ? 'ボーイズ' : league === 'senior' ? 'シニア' : league === 'young' ? 'ヤング' : '全て'}
                 {branch !== 'all' && <span className="text-pink-500">/{branch}</span>}
+                {branch === 'all' && availableBranches.length === 1 && <span className="text-pink-500">/{availableBranches[0].name}</span>}
               </span>
             </div>
 
