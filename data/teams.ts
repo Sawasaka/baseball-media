@@ -1946,7 +1946,7 @@ export const teams: Team[] = [
     area: '芦屋市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '元オリックス東弘明監督が動作解析で個別指導。1000人以上の指導実績を持つプロの技術指導。',
+    catchcopy: '元オリックス東弘明監督が動作解析で個別指導。',
     officialurl: 'https://www.bb-revolution2018.com/kobehigashinada/',
   },
   {
@@ -1956,7 +1956,7 @@ export const teams: Team[] = [
     area: '伊丹市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '野球少年のためのチーム。高校・大学野球で活躍できる知識と技術を体得。',
+    catchcopy: '野球少年のためのチーム。高校野球で活躍できる技術指導。',
     officialurl: 'https://itamiboys.iocl.jp/',
   },
   {
@@ -1966,7 +1966,7 @@ export const teams: Team[] = [
     area: '小野市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '創部25年目。元神港学園監督が特別講師。中川圭太選手(オリックス)の野球教室も開催。',
+    catchcopy: '元神港学園監督が特別講師。中川圭太の野球教室開催。',
     officialurl: 'http://ono-boys.org/',
   },
   {
@@ -1976,7 +1976,7 @@ export const teams: Team[] = [
     area: '神戸市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: 'NPO法人。選手権・春季全国大会・ジャイアンツカップ出場。兵庫県東支部予選優勝多数の強豪。',
+    catchcopy: 'ジャイアンツカップ・選手権全国大会出場の強豪。',
     officialurl: 'https://www.eonet.ne.jp/~kobeboys/',
   },
   {
@@ -1986,7 +1986,7 @@ export const teams: Team[] = [
     area: '神戸市北区',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '神戸市北区で活動。保護者負担軽減に配慮。神戸弘陵・滝川など強豪校へ進路実績あり。',
+    catchcopy: '保護者負担軽減。神戸弘陵・滝川など強豪校へ進路実績。',
     officialurl: 'https://kobehokushin.wixsite.com/mysite',
   },
   {
@@ -1996,7 +1996,7 @@ export const teams: Team[] = [
     area: '神戸市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '文武不岐の指導方針。学業・トレーニング・原田メソッドの3本柱。馬場敏史氏が総合アドバイザー。',
+    catchcopy: '文武不岐の方針。学業・トレーニング・原田メソッド。',
     officialurl: 'https://www.hkb-bc.jp/',
   },
   {
@@ -2006,7 +2006,7 @@ export const teams: Team[] = [
     area: '西宮市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '専用グラウンド・送迎バス完備。ジャイアンツカップ・選手権全国大会出場。甲子園球児多数輩出。',
+    catchcopy: '専用グラウンド・送迎バス完備。全国大会出場の強豪。',
     officialurl: 'https://nishinomiya.boy.jp/',
   },
   {
@@ -2026,7 +2026,7 @@ export const teams: Team[] = [
     area: '伊丹市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '新春恒例の武庫川12キロランで心身を鍛錬。選抜甲子園出場OBを輩出。',
+    catchcopy: '武庫川12キロランで心身鍛錬。選抜甲子園OB輩出。',
     officialurl: 'https://itamichuoboys.com/',
   },
   {
@@ -2036,7 +2036,7 @@ export const teams: Team[] = [
     area: '西宮市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '野球×コーチングで日本一を目指す。認知科学に基づく指導と栄養サポート。兵庫1年生大会準優勝。',
+    catchcopy: '野球×コーチングで日本一を目指す。兵庫1年生大会準優勝。',
     officialurl: 'https://limitlessboyz.com/',
   },
   {
@@ -2046,7 +2046,7 @@ export const teams: Team[] = [
     area: '神戸市東灘区',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '兵庫のじぎく大会1年生二連覇。大津びわこ大会ベスト8。チーム一丸で戦う。',
+    catchcopy: 'のじぎく大会1年生二連覇。大津びわこ大会ベスト8。',
     officialurl: 'https://www.netto.jp/kobekounan-boys/',
   },
   {
@@ -2056,7 +2056,7 @@ export const teams: Team[] = [
     area: '兵庫県',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '「結果より経験！人生変えようぜ！」実力講師陣が指導。軟式小学部(Jr.)も運営。',
+    catchcopy: '「結果より経験！」実力講師陣。軟式小学部も運営。',
     officialurl: 'https://hanshinboys.jp/',
   },
   {
@@ -2066,7 +2066,7 @@ export const teams: Team[] = [
     area: '西宮市',
     league: ['ボーイズ'],
     branch: '兵庫県東支部',
-    catchcopy: '元近鉄・水口栄二がGM兼総合アドバイザー。兵庫県中学生硬式野球大会ベスト4。',
+    catchcopy: '元近鉄・水口栄二がGM。兵庫県硬式野球大会ベスト4。',
     officialurl: 'https://h-shukugawaboys.com/',
   },
 ];
