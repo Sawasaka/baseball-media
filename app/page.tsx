@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
+import Script from "next/script";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { PrefectureTabs } from "@/components/PrefectureTabs";
@@ -12,6 +14,7 @@ import { SubServiceTabs } from "@/components/SubServiceTabs";
 import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
+import { SEOPrefectureLinks } from "@/components/SEOPrefectureLinks";
 import type { Team } from "@/lib/microcms/types";
 import { IoChevronDown, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase } from "react-icons/io5";
 
@@ -89,13 +92,130 @@ function useTypewriter(text: string, speed: number = 80) {
   return displayText;
 }
 
-export default function Home() {
+// JSON-LD構造化データ
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://rookiesmart-jp.com/#website",
+      "url": "https://rookiesmart-jp.com",
+      "name": "ROOKIE SMART",
+      "description": "全国の中学硬式野球チーム（ボーイズリーグ・シニアリーグ・ヤングリーグ）を都道府県・リーグ・支部から検索・比較できるプラットフォーム",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ROOKIE SMART",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://rookiesmart-jp.com/logo.png"
+        }
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://rookiesmart-jp.com/?prefecture={prefecture}&league={league}"
+        },
+        "query-input": "required name=prefecture,league"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://rookiesmart-jp.com/#organization",
+      "name": "ROOKIE SMART",
+      "url": "https://rookiesmart-jp.com",
+      "description": "中学硬式野球チームの検索・比較プラットフォーム。ボーイズリーグ・シニアリーグ・ヤングリーグ対応。"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://rookiesmart-jp.com/#webpage",
+      "url": "https://rookiesmart-jp.com",
+      "name": "全国の中学硬式野球チーム検索・比較サイト｜ボーイズ・シニア・ヤング対応｜ROOKIE SMART",
+      "description": "北海道から沖縄まで、全国47都道府県の中学硬式野球チーム（ボーイズリーグ・シニアリーグ・ヤングリーグ）を検索。大阪・兵庫・東京・神奈川・愛知・福岡など、各地域のチーム情報を網羅。",
+      "isPartOf": { "@id": "https://rookiesmart-jp.com/#website" },
+      "about": { "@id": "https://rookiesmart-jp.com/#organization" },
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "中学硬式野球チーム一覧",
+        "description": "全国のボーイズリーグ・シニアリーグ・ヤングリーグのチーム一覧",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "大阪府の中学硬式野球チーム" },
+          { "@type": "ListItem", "position": 2, "name": "兵庫県の中学硬式野球チーム" },
+          { "@type": "ListItem", "position": 3, "name": "東京都の中学硬式野球チーム" },
+          { "@type": "ListItem", "position": 4, "name": "神奈川県の中学硬式野球チーム" },
+          { "@type": "ListItem", "position": 5, "name": "愛知県の中学硬式野球チーム" }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "ボーイズリーグとシニアリーグの違いは？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ボーイズリーグは日本少年野球連盟が運営し全国最大規模。シニアリーグは日本リトルシニア中学硬式野球協会が運営し関東を中心に展開。どちらも中学生の硬式野球リーグで、甲子園球児やプロ野球選手を多数輩出しています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "中学硬式野球チームの選び方は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "お住まいの地域、通いやすさ、チームの方針（勝利志向・育成志向）、進学実績、費用などを総合的に比較することが大切です。体験会に参加して雰囲気を確認することをおすすめします。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ヤングリーグとは？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ヤングリーグは全日本少年硬式野球連盟が運営する中学硬式野球リーグです。関西を中心に活動し、野球を通じた青少年育成に注力。アットホームな雰囲気のチームが多いのが特徴です。"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+function HomeContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const [prefecture, setPrefecture] = useState("大阪府");
   const [league, setLeague] = useState("boys");
   const [branch, setBranch] = useState("all");
   const [teams, setTeams] = useState<Team[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
   const typedText = useTypewriter("NEXT STAGE", 100);
+
+  // 初回ロード時にURLパラメータから状態を復元
+  useEffect(() => {
+    const prefParam = searchParams.get("prefecture");
+    const leagueParam = searchParams.get("league");
+    const branchParam = searchParams.get("branch");
+
+    if (prefParam) setPrefecture(prefParam);
+    if (leagueParam) setLeague(leagueParam);
+    if (branchParam) setBranch(branchParam);
+    
+    setIsInitialized(true);
+  }, [searchParams]);
+
+  // フィルタ変更時にURLを更新（履歴は追加しない）
+  useEffect(() => {
+    if (!isInitialized) return;
+    
+    const params = new URLSearchParams();
+    params.set("prefecture", prefecture);
+    params.set("league", league);
+    if (branch !== "all") params.set("branch", branch);
+
+    const newUrl = `/?${params.toString()}#search`;
+    router.replace(newUrl, { scroll: false });
+  }, [prefecture, league, branch, isInitialized, router]);
 
   // 都道府県が変わったら支部をリセット
   const handlePrefectureChange = (newPrefecture: string) => {
@@ -211,7 +331,15 @@ export default function Home() {
     });
 
   return (
-    <div className="w-full max-w-full bg-cyber-bg overflow-x-hidden">
+    <>
+      {/* JSON-LD 構造化データ */}
+      <Script
+        id="json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
+      <div className="w-full max-w-full bg-cyber-bg overflow-x-hidden">
       {/* 3D Background */}
       <Scene3D />
       
@@ -692,6 +820,12 @@ export default function Home() {
 
         {/* Contact Form Section */}
         <ContactForm />
+
+        {/* SEO Prefecture Links Section */}
+        <SEOPrefectureLinks 
+          onPrefectureSelect={handlePrefectureChange}
+          teamCounts={teamCountsByPrefecture}
+        />
       </main>
 
       {/* Footer */}
@@ -773,5 +907,22 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    </>
+  );
+}
+
+// useSearchParamsをSuspenseでラップ
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="w-full h-screen bg-cyber-bg flex items-center justify-center">
+        <div className="text-center">
+          <IoBaseball className="text-5xl text-red-500 animate-pulse mx-auto mb-4" />
+          <p className="text-white/50 font-mono">Loading...</p>
+        </div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   );
 }
