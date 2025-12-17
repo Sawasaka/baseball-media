@@ -85,7 +85,6 @@ const subServices = [
 export const SubServiceTabs = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
   const [iframeError, setIframeError] = useState<string | null>(null);
-  const stripePaymentLink = process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_URL;
 
   const handleTabClick = (serviceId: string) => {
     setActiveTab(activeTab === serviceId ? null : serviceId);
@@ -147,34 +146,6 @@ export const SubServiceTabs = () => {
                 <p className="text-white/50 text-[10px] sm:text-xs mt-1 font-mono">
                   🤝 家族・兄弟・友達とシェアOK！
                 </p>
-
-                <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row gap-2 sm:gap-3 items-center lg:items-start">
-                  <a
-                    href={stripePaymentLink || "#"}
-                    target={stripePaymentLink ? "_blank" : undefined}
-                    rel={stripePaymentLink ? "noopener noreferrer" : undefined}
-                    aria-disabled={!stripePaymentLink}
-                    className={`inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 font-mono text-xs sm:text-sm font-bold border-2 transition-all duration-300 ${
-                      stripePaymentLink
-                        ? "border-yellow-400 bg-gradient-to-r from-yellow-400/20 via-orange-500/15 to-red-500/15 text-white hover:bg-yellow-400/25 hover:shadow-[0_0_25px_rgba(250,204,21,0.35)]"
-                        : "border-white/20 bg-white/5 text-white/30 cursor-not-allowed"
-                    }`}
-                    onClick={(e) => {
-                      if (!stripePaymentLink) {
-                        e.preventDefault();
-                      }
-                    }}
-                  >
-                    <IoRocket className="text-yellow-400" />
-                    Stripeで申し込む
-                    <IoArrowForward className="text-white/70" />
-                  </a>
-                  {!stripePaymentLink && (
-                    <span className="text-[9px] sm:text-[10px] text-white/40 font-mono">
-                      ※ `NEXT_PUBLIC_STRIPE_PAYMENT_LINK_URL` を設定してください
-                    </span>
-                  )}
-                </div>
               </div>
               
               {/* Center: Features */}
