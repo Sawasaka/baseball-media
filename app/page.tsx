@@ -14,7 +14,6 @@ import { SubServiceTabs } from "@/components/SubServiceTabs";
 import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
-import { SEOPrefectureLinks } from "@/components/SEOPrefectureLinks";
 import type { Team } from "@/lib/microcms/types";
 import { IoChevronDown, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase } from "react-icons/io5";
 
@@ -221,6 +220,14 @@ function HomeContent() {
   const handlePrefectureChange = (newPrefecture: string) => {
     setPrefecture(newPrefecture);
     setBranch("all");
+  };
+
+  // リーグが「全て」になったら支部をリセット
+  const handleLeagueChange = (newLeague: string) => {
+    setLeague(newLeague);
+    if (newLeague === "all") {
+      setBranch("all");
+    }
   };
 
   // microCMS からチームデータを取得
@@ -721,7 +728,7 @@ function HomeContent() {
               onSelect={handlePrefectureChange} 
               teamCounts={teamCountsByPrefecture}
             />
-            <LeagueFilter currentLeague={league} onSelect={setLeague} />
+            <LeagueFilter currentLeague={league} onSelect={handleLeagueChange} />
             <BranchFilter 
               currentBranch={branch} 
               currentPrefecture={prefecture}
@@ -820,12 +827,6 @@ function HomeContent() {
 
         {/* Contact Form Section */}
         <ContactForm />
-
-        {/* SEO Prefecture Links Section */}
-        <SEOPrefectureLinks 
-          onPrefectureSelect={handlePrefectureChange}
-          teamCounts={teamCountsByPrefecture}
-        />
       </main>
 
       {/* Footer */}

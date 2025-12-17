@@ -85,6 +85,7 @@ const subServices = [
 export const SubServiceTabs = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
   const [iframeError, setIframeError] = useState<string | null>(null);
+  const stripePaymentLink = process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_URL;
 
   const handleTabClick = (serviceId: string) => {
     setActiveTab(activeTab === serviceId ? null : serviceId);
@@ -128,13 +129,52 @@ export const SubServiceTabs = () => {
                 <div className="flex items-baseline justify-center lg:justify-start gap-1 sm:gap-2">
                   <span className="text-white/60 text-xs sm:text-sm font-mono">月額</span>
                   <span className="text-3xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400" style={{ textShadow: '0 0 40px rgba(250,204,21,0.5)' }}>
-                    ¥29,800
+                    ¥29,400
                   </span>
                   <span className="text-white/60 text-[10px] sm:text-sm font-mono">(税込)</span>
                 </div>
                 <p className="text-white/70 text-xs sm:text-sm mt-2 sm:mt-3 font-mono">
                   <span className="text-cyan-400">▸</span> 全5つのサブチャンネルが<span className="text-yellow-400 font-bold">使い放題</span>
                 </p>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 mt-1">
+                  <p className="text-white/60 text-[10px] sm:text-xs font-mono">
+                    <span className="text-pink-400">▸</span> 2人シェア → <span className="text-cyan-400 font-bold">¥14,700/人</span>
+                  </p>
+                  <p className="text-white/60 text-[10px] sm:text-xs font-mono">
+                    <span className="text-pink-400">▸</span> 3人シェア → <span className="text-green-400 font-bold">¥9,800/人</span>
+                  </p>
+                </div>
+                <p className="text-white/50 text-[10px] sm:text-xs mt-1 font-mono">
+                  🤝 家族・兄弟・友達とシェアOK！
+                </p>
+
+                <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row gap-2 sm:gap-3 items-center lg:items-start">
+                  <a
+                    href={stripePaymentLink || "#"}
+                    target={stripePaymentLink ? "_blank" : undefined}
+                    rel={stripePaymentLink ? "noopener noreferrer" : undefined}
+                    aria-disabled={!stripePaymentLink}
+                    className={`inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 font-mono text-xs sm:text-sm font-bold border-2 transition-all duration-300 ${
+                      stripePaymentLink
+                        ? "border-yellow-400 bg-gradient-to-r from-yellow-400/20 via-orange-500/15 to-red-500/15 text-white hover:bg-yellow-400/25 hover:shadow-[0_0_25px_rgba(250,204,21,0.35)]"
+                        : "border-white/20 bg-white/5 text-white/30 cursor-not-allowed"
+                    }`}
+                    onClick={(e) => {
+                      if (!stripePaymentLink) {
+                        e.preventDefault();
+                      }
+                    }}
+                  >
+                    <IoRocket className="text-yellow-400" />
+                    Stripeで申し込む
+                    <IoArrowForward className="text-white/70" />
+                  </a>
+                  {!stripePaymentLink && (
+                    <span className="text-[9px] sm:text-[10px] text-white/40 font-mono">
+                      ※ `NEXT_PUBLIC_STRIPE_PAYMENT_LINK_URL` を設定してください
+                    </span>
+                  )}
+                </div>
               </div>
               
               {/* Center: Features */}

@@ -44,8 +44,8 @@ Next.js 14, Tailwind CSS, Framer Motion, Three.js, microCMS を使用してい�
 
 2. **環境変数の設定**
    ```bash
-   cp .env.local.example .env.local
-   # .env.local を編集して microCMS の情報を入力
+   # .env.local を作成して microCMS の情報を入力
+   # 設定例は docs/ENV_SETUP.md を参照
    ```
 
 3. **開発サーバー起動**
