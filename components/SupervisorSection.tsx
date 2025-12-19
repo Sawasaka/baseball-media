@@ -305,7 +305,7 @@ export function SupervisorSection() {
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
-                                    <span>IT開発会社の事業立ち上げ<span className="text-white/50 text-[9px] sm:text-[10px]">（受託企業）</span></span>
+                                    <span>新規事業立ち上げ<span className="text-white/50 text-[9px] sm:text-[10px]">（IT開発企業）</span></span>
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
