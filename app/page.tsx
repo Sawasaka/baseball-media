@@ -525,7 +525,7 @@ function HomeContent() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/90 backdrop-blur-md mb-6 sm:mb-10 shadow-[0_0_30px_rgba(0,240,255,0.3)]"
+              className="inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/90 backdrop-blur-md mt-6 sm:mt-0 mb-6 sm:mb-10 shadow-[0_0_30px_rgba(0,240,255,0.3)]"
             >
               <IoTerminal className="text-cyan-400 text-lg sm:text-xl animate-pulse shrink-0" />
               <span className="font-mono text-xs sm:text-sm text-cyan-400 tracking-wider">

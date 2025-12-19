@@ -63,16 +63,19 @@ export const Navbar = () => {
       <div className="bg-black/95 backdrop-blur-xl border-b border-red-500/30">
         <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between py-2 md:py-3">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 md:gap-4 group shrink-0">
+          <Link href="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
             <div className="relative">
-              <IoBaseball className="text-2xl md:text-4xl text-red-500 group-hover:scale-125 transition-all duration-300 group-hover:rotate-180" style={{ filter: 'drop-shadow(0 0 20px rgba(255,42,68,0.8))' }} />
+              <IoBaseball className="text-2xl md:text-3xl text-red-500 group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 15px rgba(255,42,68,0.8))' }} />
             </div>
-            <div className="flex flex-col">
-              <span className="font-mono text-sm md:text-xl font-black text-white tracking-wider">
-                ROOKIE<span className="text-red-500 animate-pulse">_</span>SMART
-              </span>
-              <span className="text-[8px] md:text-[10px] text-cyan-400 tracking-[0.2em] md:tracking-[0.3em] font-mono">
-                BASEBALL_MEDIA
+            <div className="flex flex-col justify-center">
+              <span className="text-xs md:text-base font-bold tracking-wide">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-white" style={{ textShadow: '0 0 20px rgba(0,240,255,0.3)' }}>
+                  中学硬式野球
+                </span>
+                <span className="text-cyan-400 mx-0.5">／</span>
+                <span className="text-red-400 font-black" style={{ textShadow: '0 0 15px rgba(255,42,68,0.5)' }}>
+                  チーム検索・比較
+                </span>
               </span>
             </div>
           </Link>
@@ -156,10 +159,9 @@ export const Navbar = () => {
               href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-bold font-mono flex items-center gap-1.5"
+              className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-bold font-mono flex items-center"
               style={{ boxShadow: '0 0 15px rgba(34,197,94,0.4)' }}
             >
-              <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
               日程調整
             </a>
           </div>
