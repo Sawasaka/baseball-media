@@ -425,12 +425,156 @@ export const SubServiceTabs = () => {
         })}
       </div>
 
-      {/* Free Counseling Button - カードの下に1つ */}
+      {/* Content Modal - コラムと同じモーダル表示 */}
+      <AnimatePresence>
+        {activeTab && activeService && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-start sm:items-center justify-center pt-20 sm:pt-4 px-3 sm:px-4 pb-4 bg-black/90 backdrop-blur-md overflow-y-auto"
+            onClick={() => setActiveTab(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25 }}
+              className="relative w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] overflow-hidden bg-black/95"
+              style={{ 
+                boxShadow: `0 0 60px rgba(${activeService.shadowColor},0.5)`,
+                border: `3px solid ${activeService.borderColor}`,
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div 
+                className="sticky top-0 z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-5 border-b-2 bg-black/95 gap-3"
+                style={{
+                  background: `linear-gradient(90deg, rgba(${activeService.shadowColor},0.3), transparent)`,
+                  borderColor: `${activeService.borderColor}60`,
+                }}
+              >
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div 
+                    className="p-2 sm:p-3"
+                    style={{ 
+                      background: `${activeService.borderColor}30`,
+                      border: `2px solid ${activeService.borderColor}`,
+                      boxShadow: `0 0 20px ${activeService.borderColor}40`,
+                    }}
+                  >
+                    <activeService.icon 
+                      className="text-xl sm:text-2xl"
+                      style={{ 
+                        color: activeService.borderColor,
+                        filter: `drop-shadow(0 0 10px ${activeService.borderColor})`,
+                      }} 
+                    />
+                  </div>
+                  <div>
+                    <span 
+                      className="font-mono text-base sm:text-xl font-black block"
+                      style={{ 
+                        color: activeService.borderColor,
+                        textShadow: `0 0 20px ${activeService.borderColor}`,
+                      }}
+                    >
+                      {activeService.label}
+                    </span>
+                    <span className="text-xs sm:text-sm text-white/60 font-mono">{activeService.description}</span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                  <a
+                    href={activeService.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 sm:flex-none flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-black transition-all duration-300 hover:scale-105"
+                    style={{
+                      background: `linear-gradient(135deg, ${activeService.borderColor}, ${activeService.borderColor}aa)`,
+                      color: activeService.color === 'yellow' ? '#000' : '#fff',
+                      boxShadow: `0 0 30px ${activeService.borderColor}60`,
+                    }}
+                  >
+                    <IoRocket className="mr-2" />
+                    サイトを開く
+                  </a>
+                  <button
+                    onClick={() => setActiveTab(null)}
+                    className="p-2 sm:p-2.5 text-white/50 hover:text-white transition-all duration-300"
+                    style={{
+                      border: `2px solid ${activeService.borderColor}40`,
+                      background: `${activeService.borderColor}10`,
+                    }}
+                  >
+                    <IoCloseOutline className="text-xl sm:text-2xl" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Iframe */}
+              <div className="relative h-[60vh] sm:h-[70vh]">
+                {iframeError ? (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 sm:p-10 bg-black/70">
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      <IoGlobeOutline 
+                        className="text-5xl sm:text-7xl mb-4 sm:mb-6" 
+                        style={{ 
+                          color: activeService.borderColor,
+                          filter: `drop-shadow(0 0 20px ${activeService.borderColor})`,
+                        }} 
+                      />
+                    </motion.div>
+                    <p className="text-white/60 mb-4 sm:mb-6 text-center font-mono text-sm sm:text-lg">
+                      {iframeError}
+                    </p>
+                    <a
+                      href={activeService.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center px-6 sm:px-10 py-3 sm:py-5 font-black text-sm sm:text-lg transition-all duration-300 hover:scale-105"
+                      style={{
+                        background: `linear-gradient(135deg, ${activeService.borderColor}, ${activeService.borderColor}aa)`,
+                        color: activeService.color === 'yellow' ? '#000' : '#fff',
+                        boxShadow: `0 0 40px ${activeService.borderColor}60`,
+                      }}
+                    >
+                      <IoRocket className="mr-2 sm:mr-3 text-lg sm:text-xl" />
+                      サイトを開く
+                      <IoChevronForward className="ml-2" />
+                    </a>
+                  </div>
+                ) : (
+                  <iframe
+                    src={activeService.url}
+                    className="w-full h-full border-0"
+                    onError={() => setIframeError("このサイトは埋め込み表示に対応していません。")}
+                    title={activeService.label}
+                  />
+                )}
+              </div>
+              
+              {/* Bottom accent */}
+              <div 
+                className="h-1"
+                style={{ background: `linear-gradient(90deg, transparent, ${activeService.borderColor}, transparent)` }}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Free Counseling Button - コンテンツパネルの下に配置 */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mb-10"
+        className="mt-8 sm:mt-10"
       >
         <a
           href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
@@ -490,142 +634,6 @@ export const SubServiceTabs = () => {
           </motion.div>
         </a>
       </motion.div>
-
-      {/* Content Panel */}
-      <AnimatePresence mode="wait">
-        {activeTab && activeService && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.98 }}
-            transition={{ duration: 0.4 }}
-            className="overflow-hidden"
-            style={{ 
-              boxShadow: `0 0 60px rgba(${activeService.shadowColor},0.4)`,
-              border: `3px solid ${activeService.borderColor}`,
-              background: `linear-gradient(135deg, rgba(${activeService.shadowColor},0.1), rgba(0,0,0,0.95))`,
-            }}
-          >
-            {/* Header */}
-            <div 
-              className="flex items-center justify-between p-5 border-b-2"
-              style={{
-                background: `linear-gradient(90deg, rgba(${activeService.shadowColor},0.3), transparent)`,
-                borderColor: `${activeService.borderColor}60`,
-              }}
-            >
-              <div className="flex items-center gap-4">
-                <div 
-                  className="p-3"
-                  style={{ 
-                    background: `${activeService.borderColor}30`,
-                    border: `2px solid ${activeService.borderColor}`,
-                    boxShadow: `0 0 20px ${activeService.borderColor}40`,
-                  }}
-                >
-                  <activeService.icon 
-                    size={28} 
-                    style={{ 
-                      color: activeService.borderColor,
-                      filter: `drop-shadow(0 0 10px ${activeService.borderColor})`,
-                    }} 
-                  />
-                </div>
-                <div>
-                  <span 
-                    className="font-mono text-xl font-black block"
-                    style={{ 
-                      color: activeService.borderColor,
-                      textShadow: `0 0 20px ${activeService.borderColor}`,
-                    }}
-                  >
-                  {activeService.label}
-                </span>
-                  <span className="text-sm text-white/60 font-mono">{activeService.description}</span>
-                </div>
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                >
-                  <IoFlash className="text-xl ml-2" style={{ color: activeService.borderColor }} />
-                </motion.div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <a
-                  href={activeService.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center px-6 py-3 text-sm font-black transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: `linear-gradient(135deg, ${activeService.borderColor}, ${activeService.borderColor}aa)`,
-                    color: activeService.color === 'yellow' ? '#000' : '#fff',
-                    boxShadow: `0 0 30px ${activeService.borderColor}60`,
-                  }}
-                >
-                  <IoRocket className="mr-2" />
-                  サイトを開く
-                </a>
-                <button
-                  onClick={() => setActiveTab(null)}
-                  className="p-2.5 text-white/50 hover:text-white transition-all duration-300"
-                  style={{
-                    border: `2px solid ${activeService.borderColor}40`,
-                    background: `${activeService.borderColor}10`,
-                  }}
-                >
-                  <IoCloseOutline size={24} />
-                </button>
-              </div>
-            </div>
-
-            {/* Iframe */}
-            <div className="relative" style={{ height: "550px" }}>
-              {iframeError ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-10 bg-black/70">
-                  <motion.div
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <IoGlobeOutline 
-                      className="text-7xl mb-6" 
-                      style={{ 
-                        color: activeService.borderColor,
-                        filter: `drop-shadow(0 0 20px ${activeService.borderColor})`,
-                      }} 
-                    />
-                  </motion.div>
-                  <p className="text-white/60 mb-6 text-center font-mono text-lg">
-                    {iframeError}
-                  </p>
-                  <a
-                    href={activeService.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center px-10 py-5 font-black text-lg transition-all duration-300 hover:scale-105"
-                    style={{
-                      background: `linear-gradient(135deg, ${activeService.borderColor}, ${activeService.borderColor}aa)`,
-                      color: activeService.color === 'yellow' ? '#000' : '#fff',
-                      boxShadow: `0 0 40px ${activeService.borderColor}60`,
-                    }}
-                  >
-                    <IoRocket className="mr-3 text-xl" />
-                    サイトを開く
-                    <IoChevronForward className="ml-2" />
-                  </a>
-                </div>
-              ) : (
-                <iframe
-                  src={activeService.url}
-                  className="w-full h-full border-0"
-                  onError={() => setIframeError("このサイトは埋め込み表示に対応していません。")}
-                  title={activeService.label}
-                />
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

@@ -68,7 +68,7 @@ export const Navbar = () => {
               <IoBaseball className="text-2xl md:text-3xl text-red-500 group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 15px rgba(255,42,68,0.8))' }} />
             </div>
             <div className="flex flex-col justify-center">
-              <span className="text-xs md:text-base font-bold tracking-wide">
+              <span className="text-[11px] sm:text-sm md:text-base font-bold tracking-wide">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-white" style={{ textShadow: '0 0 20px rgba(0,240,255,0.3)' }}>
                   中学硬式野球
                 </span>
@@ -160,10 +160,11 @@ export const Navbar = () => {
               href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-bold font-mono flex items-center"
+              className="px-2 py-1.5 sm:px-3 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[10px] sm:text-xs md:text-sm font-bold font-mono flex items-center"
               style={{ boxShadow: '0 0 15px rgba(34,197,94,0.4)' }}
             >
-              日程調整
+              <span className="sm:hidden">相談</span>
+              <span className="hidden sm:inline">日程調整</span>
             </a>
           </div>
         </div>
