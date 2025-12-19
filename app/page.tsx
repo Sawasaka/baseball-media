@@ -485,39 +485,6 @@ function HomeContent() {
             ))}
           </div>
 
-          {/* Status bar */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute top-28 left-8 hidden lg:block"
-          >
-            <div className="font-mono text-xs space-y-2 p-4 border border-cyan-400/30 bg-black/80 backdrop-blur-md rounded">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-cyan-400">SYSTEM_ONLINE</span>
-              </div>
-              <div className="text-pink-500">VER_2026</div>
-              <div className="text-yellow-400">SECTOR_JAPAN</div>
-              <div className="text-white/50">UPLINK: <span className="text-green-400">ACTIVE</span></div>
-            </div>
-          </motion.div>
-
-          {/* Right side data stream */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="absolute top-28 right-12 hidden lg:block"
-          >
-            <div className="font-mono text-xs space-y-2 p-4 border border-pink-500/30 bg-black/80 backdrop-blur-md rounded">
-              <div className="text-pink-500 animate-pulse">◈ SCANNING...</div>
-              <div className="text-cyan-400">TEAMS: <span className="text-white">1400+</span></div>
-              <div className="text-yellow-400">LEAGUES: <span className="text-white">03</span></div>
-              <div className="text-red-500">AREAS: <span className="text-white">47</span></div>
-            </div>
-          </motion.div>
-
           {/* Hero Content */}
           <div className="w-full max-w-7xl mx-auto px-4 text-center relative z-20">
             {/* Terminal-style badge - モバイルでサブチャンネルと被らないよう上マージン追加 */}
@@ -546,7 +513,7 @@ function HomeContent() {
               aria-hidden="true"
             >
               <span 
-                className="block mb-2 sm:mb-4 text-lg sm:text-2xl md:text-3xl font-bold tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-cyan-300"
+                className="block mt-1 sm:mt-2 mb-1 sm:mb-2 text-lg sm:text-2xl md:text-3xl font-bold tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-cyan-300"
                 style={{ 
                   textShadow: '0 0 30px rgba(0,240,255,0.5)',
                   WebkitBackgroundClip: 'text',
@@ -739,7 +706,7 @@ function HomeContent() {
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-2 sm:w-3 h-2 sm:h-3 bg-red-500 rounded-full animate-pulse" />
                   <span className="text-sm sm:text-base text-white/70 font-mono">
-                    FOUND: <span className="text-red-500 text-lg sm:text-xl font-bold">{filteredTeams.length}</span> TEAMS
+                    検索結果: <span className="text-red-500 text-lg sm:text-xl font-bold">{filteredTeams.length}</span> チーム
                   </span>
                 </div>
               </div>
@@ -831,9 +798,16 @@ function HomeContent() {
             <div className="text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <IoBaseball className="text-3xl sm:text-4xl text-red-500 animate-pulse" style={{ filter: 'drop-shadow(0 0 15px #FF2A44)' }} />
-                <div>
-                  <span className="font-mono text-lg sm:text-2xl font-black text-white block">ROOKIE<span className="text-red-500">_</span>SMART</span>
-                  <span className="text-[8px] sm:text-[10px] text-cyan-400 font-mono tracking-[0.2em] sm:tracking-[0.3em]">BASEBALL_MEDIA</span>
+                <div className="flex flex-col justify-center">
+                  <span className="text-xs md:text-base font-bold tracking-wide">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-white" style={{ textShadow: '0 0 20px rgba(0,240,255,0.3)' }}>
+                      中学硬式野球
+                    </span>
+                    <span className="text-cyan-400 mx-0.5">／</span>
+                    <span className="text-red-400 font-black" style={{ textShadow: '0 0 15px rgba(255,42,68,0.5)' }}>
+                      チーム検索・比較
+                    </span>
+                  </span>
                 </div>
               </div>
               <p className="text-white/50 text-xs sm:text-sm font-mono leading-relaxed">
@@ -844,7 +818,7 @@ function HomeContent() {
             
             {/* Free Interview CTA */}
             <div>
-              <h4 className="text-sm sm:text-base font-bold text-yellow-400 mb-4 sm:mb-6 font-mono text-center sm:text-left">// FREE_INTERVIEW</h4>
+              <h4 className="text-sm sm:text-base font-bold text-yellow-400 mb-4 sm:mb-6 font-mono text-center sm:text-left">// 無料インタビュー</h4>
               <div className="p-3 sm:p-4 border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-500/10 to-pink-500/10 relative overflow-hidden group hover:border-cyan-400 transition-all duration-300">
                 {/* Glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -879,22 +853,18 @@ function HomeContent() {
                 </div>
             </div>
             
-              <div className="mt-3 sm:mt-4 flex items-center justify-center sm:justify-start gap-2 sm:gap-3">
-                <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-[8px] sm:text-[10px] text-green-400/70 font-mono">ACCEPTING_REQUESTS</span>
-              </div>
             </div>
           </div>
           
           {/* Copyright */}
           <div className="border-t-2 border-red-500/20 pt-6 sm:pt-10 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
             <p className="text-white/30 text-[10px] sm:text-xs font-mono text-center md:text-left">
-              © 2026 <span className="text-red-500">ROOKIE_SMART</span> // ALL_RIGHTS_RESERVED
+              © <span className="text-red-500">株式会社ルーキースマートジャパン</span> // ALL_RIGHTS_RESERVED
             </p>
             <div className="text-[10px] sm:text-xs text-white/30 font-mono flex items-center gap-2 sm:gap-4">
-              <span className="text-cyan-400">BUILD_v2026</span>
+              <span className="text-cyan-400">株式会社ルーキースマートジャパン</span>
               <span className="text-pink-500">//</span>
-              <span className="text-yellow-400">SECTOR_JAPAN</span>
+              <span className="text-yellow-400">代表：沢坂弘樹</span>
             </div>
           </div>
         </div>

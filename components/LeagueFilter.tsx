@@ -91,12 +91,7 @@ export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
               <span className={`text-xs sm:text-sm ${style.iconColor} ${isActive ? 'animate-pulse' : ''} hidden sm:inline`}>
                 {league.icon}
               </span>
-              <span>
-                <span className={`block text-[8px] sm:text-[10px] tracking-wider ${isActive ? 'text-white/80' : 'opacity-50'} hidden sm:block`}>
-                  {league.labelEn}
-                </span>
-                <span className="block font-bold text-xs sm:text-sm">{league.label}</span>
-              </span>
+              <span className="block font-bold text-xs sm:text-sm">{league.label}</span>
               <span className={`text-xs sm:text-sm ${style.iconColor} ${isActive ? 'animate-pulse' : ''} hidden sm:inline`}>
                 {league.icon}
               </span>

@@ -123,7 +123,7 @@ export const SubServiceTabs = () => {
               <div className="text-center lg:text-left">
                 <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 mb-2 sm:mb-3">
                   <IoSparkles className="text-yellow-400 text-xl sm:text-2xl animate-pulse" />
-                  <span className="text-[10px] sm:text-xs font-mono text-yellow-400/80 tracking-wider">ALL_ACCESS_PLAN</span>
+                  <span className="text-[10px] sm:text-xs font-mono text-yellow-400/80 tracking-wider">全チャンネル利用プラン</span>
                 </div>
                 <div className="flex items-baseline justify-center lg:justify-start gap-1 sm:gap-2">
                   <span className="text-white/60 text-xs sm:text-sm font-mono">月額</span>
@@ -346,15 +346,6 @@ export const SubServiceTabs = () => {
               {/* Labels */}
                 <div className="mb-2 sm:mb-3">
                   <span 
-                    className="block text-[8px] sm:text-[10px] font-mono mb-0.5 sm:mb-1 tracking-[0.1em] sm:tracking-[0.2em]"
-                    style={{ 
-                      color: service.borderColor,
-                      textShadow: `0 0 10px ${service.borderColor}`,
-                    }}
-                  >
-                  {service.labelEn}
-                </span>
-                  <span 
                     className="block text-sm sm:text-xl font-black text-white"
                     style={{ textShadow: `0 0 20px rgba(${service.shadowColor},0.5)` }}
                   >
@@ -382,7 +373,7 @@ export const SubServiceTabs = () => {
                     className="text-[9px] sm:text-xs font-mono font-bold"
                     style={{ color: service.borderColor }}
                   >
-                    {isActive ? '▶ VIEWING' : '▶ CHECK'}
+                    {isActive ? '▶ 表示中' : '▶ 詳細を見る'}
                   </span>
                   <motion.div
                     className="flex items-center gap-1"

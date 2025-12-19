@@ -81,7 +81,7 @@ export const Navbar = () => {
           </Link>
           
           {/* Desktop Navigation - サブチャンネル */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2">
             {subChannels.map((channel, index) => {
               const Icon = channel.icon;
               return (
@@ -90,7 +90,7 @@ export const Navbar = () => {
                   href={channel.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative px-4 py-2 font-mono group overflow-hidden flex items-center justify-center gap-2 transition-all duration-300 min-w-[120px]"
+                  className="relative px-2 lg:px-3 xl:px-4 py-1.5 lg:py-2 font-mono group overflow-hidden flex items-center justify-center gap-1 xl:gap-2 transition-all duration-300"
                   style={{ 
                     background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.2), rgba(${channel.shadowColor},0.05))`,
                     border: `2px solid ${channel.color}60`,
@@ -105,20 +105,21 @@ export const Navbar = () => {
                   transition={{ delay: index * 0.1 }}
                 >
                   <Icon 
-                    size={18} 
+                    className="text-sm xl:text-base"
                     style={{ 
                       color: channel.color,
                       filter: `drop-shadow(0 0 8px ${channel.color})`,
                     }} 
                   />
                   <span 
-                    className="text-sm font-bold"
+                    className="text-xs xl:text-sm font-bold"
                     style={{ 
                       color: channel.color,
                       textShadow: `0 0 10px rgba(${channel.shadowColor},0.5)`,
                     }}
                   >
-                    {channel.label}
+                    <span className="hidden xl:inline">{channel.label}</span>
+                    <span className="xl:hidden">{channel.shortLabel}</span>
                   </span>
                   
                   <div 
@@ -145,7 +146,7 @@ export const Navbar = () => {
               href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-3 px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white text-sm font-bold font-mono transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] flex items-center gap-2 relative overflow-hidden group"
+              className="ml-2 xl:ml-3 px-3 xl:px-5 py-1.5 xl:py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white text-xs xl:text-sm font-bold font-mono transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] flex items-center gap-1 xl:gap-2 relative overflow-hidden group"
             >
               <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
               日程調整

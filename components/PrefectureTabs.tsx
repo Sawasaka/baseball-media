@@ -205,9 +205,6 @@ export const PrefectureTabs = ({ currentPrefecture, onSelect, teamCounts = {} }:
                 <span className="block text-white font-mono text-sm sm:text-lg font-bold tracking-wider">
                   {currentPref.label}
                 </span>
-                <span className="block text-[10px] sm:text-xs text-cyan-400 font-mono">
-                  {currentPref.labelEn}
-                </span>
               </div>
             </div>
             <motion.div
@@ -256,10 +253,7 @@ export const PrefectureTabs = ({ currentPrefecture, onSelect, teamCounts = {} }:
                   >
                     <span className="flex items-center gap-3">
                       <span className="text-base">{pref.icon}</span>
-                      <span>
-                        <span className="block font-bold">{pref.label}</span>
-                        <span className="block text-[10px] text-white/40">{pref.labelEn}</span>
-                      </span>
+                      <span className="font-bold">{pref.label}</span>
                     </span>
                     <span className="text-[10px] sm:text-xs text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded">
                       {teamCounts[pref.id] || 0} チーム

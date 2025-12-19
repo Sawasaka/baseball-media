@@ -185,7 +185,7 @@ export function ColumnSection() {
             お役立ち<span className="text-pink-500" style={{ textShadow: '0 0 30px rgba(255,0,170,0.8)' }}>コラム</span>
           </h2>
           <p className="text-white/50 max-w-lg mx-auto font-mono text-sm sm:text-base mb-6 sm:mb-10">
-            <span className="text-yellow-400">&gt;</span> 中学野球を頑張る選手と保護者のための情報メディア<span className="animate-pulse text-pink-500">_</span>
+            <span className="text-yellow-400">&gt;</span> 選手と保護者のための情報メディア<span className="animate-pulse text-pink-500">_</span>
           </p>
         </motion.div>
 
