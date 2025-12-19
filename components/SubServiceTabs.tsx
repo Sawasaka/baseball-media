@@ -470,7 +470,6 @@ export const SubServiceTabs = () => {
                   className="w-3 h-3 bg-green-400 rounded-full"
                   style={{ boxShadow: '0 0 15px rgba(34,197,94,0.8)' }}
                 />
-                <span className="text-green-400 text-xs font-mono tracking-wider">FREE_COUNSELING</span>
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}

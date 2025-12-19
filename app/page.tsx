@@ -188,7 +188,7 @@ function HomeContent() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
-  const typedText = useTypewriter("NEXT STAGE", 100);
+  const typedText = useTypewriter("チームを探せ", 120);
 
   // 初回ロード時にURLパラメータから状態を復元
   useEffect(() => {
@@ -542,11 +542,17 @@ function HomeContent() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl sm:text-6xl md:text-8xl font-black mb-6 sm:mb-10 tracking-tight"
+              className="text-3xl sm:text-5xl md:text-7xl font-black mb-6 sm:mb-10 tracking-tight"
               aria-hidden="true"
             >
-              <span className="block text-white/90 mb-1 sm:mb-2 text-3xl sm:text-5xl md:text-6xl font-medium tracking-wide">
-                FIND YOUR
+              <span 
+                className="block mb-2 sm:mb-4 text-lg sm:text-2xl md:text-3xl font-bold tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-cyan-300"
+                style={{ 
+                  textShadow: '0 0 30px rgba(0,240,255,0.5)',
+                  WebkitBackgroundClip: 'text',
+                }}
+              >
+                中学硬式野球
               </span>
               <span className="relative inline-block">
                 {/* Main gradient text */}
@@ -557,7 +563,6 @@ function HomeContent() {
                   }}
                 >
                   {typedText}
-                  <span className="text-white animate-pulse">|</span>
                 </span>
                 {/* Underline accent */}
                 <motion.span 
@@ -612,8 +617,7 @@ function HomeContent() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="text-white/70 max-w-md mx-auto text-sm sm:text-lg md:text-xl leading-relaxed mb-8 sm:mb-12 font-mono"
             >
-              <span className="text-cyan-400">&gt;</span> 全国の中学硬式野球チームの<br className="hidden sm:block" />
-              <span className="text-pink-500">検索</span>・<span className="text-yellow-400">比較</span>プラットフォーム<span className="animate-pulse text-red-500">_</span>
+              <span className="text-cyan-400">&gt;</span> 全国の中学硬式野球チームを<span className="text-pink-500">検索</span>・<span className="text-yellow-400">比較</span><span className="animate-pulse text-red-500">_</span>
             </motion.p>
 
             {/* CTA Buttons */}
@@ -707,18 +711,11 @@ function HomeContent() {
               viewport={{ once: true }}
               className="text-center mb-10 sm:mb-20"
             >
-              <div className="inline-block mb-4 sm:mb-6">
-                <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-red-500/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(255,42,68,0.4)]">
-                  <div className="w-2 sm:w-3 h-2 sm:h-3 bg-red-500 rounded-full animate-pulse" />
-                  <span className="text-xs sm:text-sm font-mono text-red-500 tracking-widest">◈ TEAM_SEARCH ◈</span>
-                  <div className="w-2 sm:w-3 h-2 sm:h-3 bg-red-500 rounded-full animate-pulse" />
-                </div>
-              </div>
               <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
                 チームを<span className="text-red-500" style={{ textShadow: '0 0 30px rgba(255,42,68,0.8)' }}>探す</span>
               </h2>
               <p className="text-white/50 max-w-md mx-auto font-mono text-sm sm:text-base px-2">
-                <span className="text-cyan-400">&gt;</span> エリアとリーグを選択して最適なチームを見つけよう<span className="animate-pulse text-pink-500">_</span>
+                <span className="text-cyan-400">&gt;</span> エリア・リーグで絞り込み検索<span className="animate-pulse text-pink-500">_</span>
               </p>
             </motion.div>
 
@@ -805,11 +802,6 @@ function HomeContent() {
               viewport={{ once: true }}
               className="text-center mb-10 sm:mb-20"
             >
-              <div className="inline-block mb-4 sm:mb-6">
-                <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-                  <span className="text-xs sm:text-sm font-mono text-cyan-400 tracking-widest">◈ SUB_CHANNEL ◈</span>
-                </div>
-              </div>
               <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
                 サブ<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>チャンネル</span>
               </h2>

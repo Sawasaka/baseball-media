@@ -37,11 +37,6 @@ export function SupervisorSection() {
           viewport={{ once: true }}
           className="text-center mb-8 sm:mb-12"
         >
-          <div className="inline-block mb-4 sm:mb-6">
-            <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-              <span className="text-xs sm:text-sm font-mono text-cyan-400 tracking-widest">◈ SUPERVISOR / EDITOR ◈</span>
-            </div>
-          </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">
             監修者・<span className="text-cyan-400" style={{ textShadow: '0 0 30px rgba(0,240,255,0.8)' }}>編集者</span>
           </h2>

@@ -159,11 +159,6 @@ export function ContactForm() {
           viewport={{ once: true }}
           className="text-center mb-10 sm:mb-16"
         >
-          <div className="inline-block mb-4 sm:mb-6">
-            <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-green-400/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(74,222,128,0.4)]">
-              <span className="text-xs sm:text-sm font-mono text-green-400 tracking-widest">◈ CONTACT_US ◈</span>
-            </div>
-          </div>
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
             お問い<span className="text-green-400" style={{ textShadow: '0 0 30px rgba(74,222,128,0.8)' }}>合わせ</span>
           </h2>

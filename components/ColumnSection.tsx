@@ -181,11 +181,6 @@ export function ColumnSection() {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <div className="inline-block mb-4 sm:mb-6">
-            <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 py-2 sm:py-3 border-2 border-pink-500/50 bg-black/70 backdrop-blur-md shadow-[0_0_15px_rgba(255,0,170,0.4)]">
-              <span className="text-xs sm:text-sm font-mono text-pink-500 tracking-widest">◈ COLUMN_DATABASE ◈</span>
-            </div>
-          </div>
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
             お役立ち<span className="text-pink-500" style={{ textShadow: '0 0 30px rgba(255,0,170,0.8)' }}>コラム</span>
           </h2>
