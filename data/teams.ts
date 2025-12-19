@@ -2322,7 +2322,7 @@ export const teams: Team[] = [
     area: '京都市南区',
     league: ['シニア'],
     branch: '京都ブロック',
-    catchcopy: '創立50周年の伝統チーム。保護者当番なし。',
+    catchcopy: '関西春季大会優勝。50年超の伝統、関西大会連続出場。',
     officialurl: 'https://www.netto.jp/kyoto/',
   },
   {
@@ -2332,7 +2332,7 @@ export const teams: Team[] = [
     area: '南丹市',
     league: ['シニア'],
     branch: '京都ブロック',
-    catchcopy: '美山長谷運動公園野球場を拠点に活動。',
+    catchcopy: '日台国際大会・石垣市長杯で活躍。OB整骨院の指導あり。',
     officialurl: 'https://www.netto.jp/kyotokita/',
   },
   {
@@ -2342,7 +2342,7 @@ export const teams: Team[] = [
     area: '八幡市',
     league: ['シニア'],
     branch: '京都ブロック',
-    catchcopy: 'かわきた自然運動公園を拠点に活動。',
+    catchcopy: '1988年創部。春季関西大会出場、ハワイ等海外交流も。',
     officialurl: 'https://www.netto.jp/kyotoyawata/',
   },
   {
@@ -2352,8 +2352,8 @@ export const teams: Team[] = [
     area: '綾部市',
     league: ['シニア'],
     branch: '京都ブロック',
-    catchcopy: '東部グランド（綾部市十倉町）を拠点に活動。',
-    officialurl: 'https://www.littlesenior.org/shop/team/',
+    catchcopy: '東部グランド拠点。関西連盟秋季京都大会出場。',
+    officialurl: 'https://www.netto.jp/ayabe/',
   },
   {
     id: 'senior-kyoto-tango',
@@ -2362,8 +2362,8 @@ export const teams: Team[] = [
     area: '京丹後市',
     league: ['シニア'],
     branch: '京都ブロック',
-    catchcopy: '丹後地域（京丹後・宮津・与謝野）で活動。',
-    officialurl: 'https://www.littlesenior.org/shop/team/',
+    catchcopy: '台湾国際大会に選手派遣。大山グランド拠点。',
+    officialurl: 'https://www.netto.jp/kyototango/',
   },
   {
     id: 'senior-kyoto-kizugawa',
@@ -2372,8 +2372,8 @@ export const teams: Team[] = [
     area: '京田辺市',
     league: ['シニア'],
     branch: '京都ブロック',
-    catchcopy: '京田辺・城陽・宇治・精華町で活動。',
-    officialurl: 'https://www.littlesenior.org/shop/team/',
+    catchcopy: '全国制覇を目指す。のびのび楽しく、丁寧な指導。',
+    officialurl: 'https://www.netto.jp/kizugawa/',
   },
   {
     id: 'senior-kyoto-chuo',
@@ -2382,7 +2382,7 @@ export const teams: Team[] = [
     area: '京都市',
     league: ['シニア'],
     branch: '京都ブロック',
-    catchcopy: '京都市を拠点に活動する中学硬式野球チーム。',
+    catchcopy: '自立と自律で人間力を育む。経験・性別不問。',
     officialurl: 'https://www.netto.jp/kyotochuo/',
   },
   {
@@ -2392,8 +2392,8 @@ export const teams: Team[] = [
     area: '亀岡市',
     league: ['シニア'],
     branch: '京都ブロック',
-    catchcopy: '京都先端科学大学・亀岡球場を拠点に活動。',
-    officialurl: 'https://www.littlesenior.org/shop/team/',
+    catchcopy: '西日本選手権・府知事杯優勝。甲子園OB多数輩出。',
+    officialurl: 'https://www.netto.jp/kameoka2018/',
   },
 ];
 

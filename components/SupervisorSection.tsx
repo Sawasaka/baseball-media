@@ -288,7 +288,7 @@ export function SupervisorSection() {
                               <div className="text-center md:text-left">
                                 <h4 className="text-cyan-400 font-bold mb-2 sm:mb-3 text-xs sm:text-sm">◈ キャリア幅</h4>
                                 <div className="flex flex-wrap justify-center md:justify-start gap-1 sm:gap-1.5">
-                                  {['エンジニア', 'ディレクター', '法人営業', 'マーケティング', 'コンサルティング'].map((item) => (
+                                  {['エンジニア', 'プロダクトマネージャー', '法人セールス', 'マーケティング', 'コンサルティング'].map((item) => (
                                     <span key={item} className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs bg-cyan-400/10 border border-cyan-400/30 text-cyan-400">
                                       {item}
                                     </span>
@@ -302,19 +302,19 @@ export function SupervisorSection() {
                                 <ul className="space-y-1 sm:space-y-1.5 text-[10px] sm:text-xs text-white/80">
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
-                                    <span>共同経営による事業立ち上げ<span className="text-yellow-400 text-[9px] sm:text-[10px]">（資金調達3,000万円）</span></span>
+                                    <span>IT事業立ち上げ<span className="text-yellow-400 text-[9px] sm:text-[10px]">（資金調達3,000万円）</span></span>
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
-                                    <span>外資系IT企業の日本法人立ち上げ</span>
+                                    <span>日本法人立ち上げ<span className="text-white/50 text-[9px] sm:text-[10px]">（外資IT企業）</span></span>
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
-                                    <span>IT受託開発会社の新規立ち上げ</span>
+                                    <span>IT開発会社の事業立ち上げ<span className="text-white/50 text-[9px] sm:text-[10px]">（受託企業）</span></span>
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
-                                    <span>人材会社にてメディア事業立ち上げ</span>
+                                    <span>メディア事業立ち上げ<span className="text-white/50 text-[9px] sm:text-[10px]">（人材会社）</span></span>
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
@@ -337,11 +337,15 @@ export function SupervisorSection() {
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
+                                    <span>大手学習塾講師 3年</span>
+                                  </li>
+                                  <li className="flex items-start gap-1.5">
+                                    <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
                                     <span>海外生活2年</span>
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <IoCheckmarkCircle className="text-cyan-400 mt-0.5 shrink-0 text-xs sm:text-sm" />
-                                    <span>外資系IT企業勤務</span>
+                                    <span>外資企業勤務経験</span>
                                   </li>
                                 </ul>
                               </div>
