@@ -2395,6 +2395,78 @@ export const teams: Team[] = [
     catchcopy: '西日本選手権・府知事杯優勝。甲子園OB多数輩出。',
     officialurl: 'https://www.netto.jp/kameoka2018/',
   },
+  // ========================================
+  // 京都府 ヤングリーグ 京滋支部
+  // ========================================
+  {
+    id: 'young-kyoto-kyoto-ybc',
+    name: '京都ヤングベースボールクラブ',
+    prefecture: ['京都府'],
+    league: ['ヤング'],
+    branch: '京滋支部',
+    catchcopy: '1978年設立。礼儀・感謝の心を大切に。甲子園出場選手輩出。',
+    officialurl: 'https://kyotobaseball.com/',
+  },
+  {
+    id: 'young-kyoto-kyo-souraku',
+    name: '京・相楽ヤング',
+    prefecture: ['京都府'],
+    area: '相楽郡',
+    league: ['ヤング'],
+    branch: '京滋支部',
+    catchcopy: '「三位一体！」人間性・技術面・精神面を鍛え、高校野球に繋がる選手の育成を目指す。',
+    officialurl: 'https://ks-yakyu.jimdofree.com/',
+  },
+  {
+    id: 'young-kyoto-all-yamashiro',
+    name: 'オール山城ヤング',
+    prefecture: ['京都府'],
+    area: '山城地域',
+    league: ['ヤング'],
+    branch: '京滋支部',
+    catchcopy: '全国大会出場の実績多数。各種大会で優勝・準優勝を重ねる強豪チーム。',
+    officialurl: 'https://allyamashiro.jimdofree.com/',
+  },
+  {
+    id: 'young-kyoto-friend',
+    name: '京都ヤングフレンド',
+    prefecture: ['京都府'],
+    league: ['ヤング'],
+    branch: '京滋支部',
+    catchcopy: '雑草精神。全国大会3年連続出場の強豪チーム。',
+    officialurl: 'https://kyoto-friend.jp/',
+  },
+  {
+    id: 'young-kyoto-puir',
+    name: '京都ピュールヤング',
+    prefecture: ['京都府'],
+    league: ['ヤング'],
+    branch: '京滋支部',
+    catchcopy: '純粋な心を育て人間力を高める。コミュニケーション重視の指導。',
+    officialurl: 'http://www.pur-bc.com/',
+  },
+  {
+    id: 'young-kyoto-blacks',
+    name: '京都ブラックスヤング',
+    prefecture: ['京都府'],
+    league: ['ヤング'],
+    branch: '京滋支部',
+    catchcopy: '「文武両道」を掲げ活動。個々の特性に応じた丁寧な指導。',
+    officialurl: 'https://kyoto-blacks.boy.jp/',
+  },
+  // ========================================
+  // 滋賀県 ヤングリーグ 京滋支部
+  // ========================================
+  {
+    id: 'young-shiga-stars',
+    name: '滋賀ヤングスターズ',
+    prefecture: ['滋賀県'],
+    area: '栗東市・草津市',
+    league: ['ヤング'],
+    branch: '京滋支部',
+    catchcopy: '専用グラウンド・屋内練習場完備。女子選手も歓迎。',
+    officialurl: 'https://shigayoung.com/',
+  },
 ];
 
 /**
