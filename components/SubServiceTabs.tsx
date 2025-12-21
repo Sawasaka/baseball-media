@@ -137,9 +137,6 @@ export const SubServiceTabs = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 mt-1">
                   <p className="text-white/60 text-[10px] sm:text-xs font-mono">
-                    <span className="text-pink-400">▸</span> 2人シェア → <span className="text-cyan-400 font-bold">¥14,700/人</span>
-                  </p>
-                  <p className="text-white/60 text-[10px] sm:text-xs font-mono">
                     <span className="text-pink-400">▸</span> 2人シェア → <span className="text-green-400 font-bold">¥9,800/人</span>
                   </p>
                 </div>
