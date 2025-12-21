@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ja_JP",
     siteName: "ROOKIE SMART",
-    url: "https://rookiesmart-jp.com",
+    url: "https://baseball.rookiesmart-jp.com",
   },
   twitter: {
     card: "summary_large_image",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     description: "全国47都道府県の中学硬式野球チーム（ボーイズ・シニア・ヤング）を都道府県から検索・比較できるプラットフォーム。",
   },
   alternates: {
-    canonical: "https://rookiesmart-jp.com",
+    canonical: "https://baseball.rookiesmart-jp.com",
   },
   robots: {
     index: true,
