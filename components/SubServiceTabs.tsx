@@ -128,7 +128,7 @@ export const SubServiceTabs = () => {
                 <div className="flex items-baseline justify-center lg:justify-start gap-1 sm:gap-2">
                   <span className="text-white/60 text-xs sm:text-sm font-mono">月額</span>
                   <span className="text-3xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400" style={{ textShadow: '0 0 40px rgba(250,204,21,0.5)' }}>
-                    ¥29,400
+                    ¥19,800
                   </span>
                   <span className="text-white/60 text-[10px] sm:text-sm font-mono">(税込)</span>
                 </div>
