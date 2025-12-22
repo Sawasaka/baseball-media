@@ -2578,6 +2578,70 @@ export const teams: Team[] = [
     catchcopy: '練習当番なし。保護者の負担を軽減した運営。',
     officialurl: 'https://www.netto.jp/ohs/',
   },
+  // ========================================
+  // 滋賀県 ボーイズリーグ 滋賀県支部
+  // ========================================
+  {
+    id: 'boys-shiga-otsu-seta',
+    name: '大津瀬田ボーイズ',
+    prefecture: ['滋賀県'],
+    area: '大津市',
+    league: ['ボーイズ'],
+    branch: '滋賀県支部',
+  },
+  {
+    id: 'boys-shiga-nango',
+    name: '滋賀南郷ボーイズ',
+    prefecture: ['滋賀県'],
+    league: ['ボーイズ'],
+    branch: '滋賀県支部',
+  },
+  {
+    id: 'boys-shiga-ritto',
+    name: '滋賀栗東ボーイズ',
+    prefecture: ['滋賀県'],
+    area: '栗東市',
+    league: ['ボーイズ'],
+    branch: '滋賀県支部',
+  },
+  {
+    id: 'boys-shiga-omi',
+    name: '近江ボーイズ',
+    prefecture: ['滋賀県'],
+    league: ['ボーイズ'],
+    branch: '滋賀県支部',
+  },
+  {
+    id: 'boys-shiga-konan',
+    name: '湖南ボーイズ',
+    prefecture: ['滋賀県'],
+    area: '湖南市',
+    league: ['ボーイズ'],
+    branch: '滋賀県支部',
+  },
+  {
+    id: 'boys-shiga-yasu',
+    name: '滋賀野洲ボーイズ',
+    prefecture: ['滋賀県'],
+    area: '野洲市',
+    league: ['ボーイズ'],
+    branch: '滋賀県支部',
+  },
+  {
+    id: 'boys-shiga-kohoku',
+    name: '湖北ボーイズ',
+    prefecture: ['滋賀県'],
+    league: ['ボーイズ'],
+    branch: '滋賀県支部',
+  },
+  {
+    id: 'boys-shiga-kusatsu',
+    name: '滋賀草津ボーイズ',
+    prefecture: ['滋賀県'],
+    area: '草津市',
+    league: ['ボーイズ'],
+    branch: '滋賀県支部',
+  },
 ];
 
 /**
