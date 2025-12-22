@@ -2588,6 +2588,8 @@ export const teams: Team[] = [
     area: '大津市',
     league: ['ボーイズ'],
     branch: '滋賀県支部',
+    officialurl: 'https://setalakers.web.fc2.com/',
+    catchcopy: '「硬球を友としよう！」をスローガンに専用グラウンドで活動。夢・友・汗を大切に選手を育成。',
   },
   {
     id: 'boys-shiga-nango',
@@ -2595,6 +2597,8 @@ export const teams: Team[] = [
     prefecture: ['滋賀県'],
     league: ['ボーイズ'],
     branch: '滋賀県支部',
+    officialurl: 'http://shiga-nangoboys.com/',
+    catchcopy: '随時体験練習受付中。個人・チーム単位でもOK。お気軽にお問い合わせください。',
   },
   {
     id: 'boys-shiga-ritto',
@@ -2603,6 +2607,8 @@ export const teams: Team[] = [
     area: '栗東市',
     league: ['ボーイズ'],
     branch: '滋賀県支部',
+    officialurl: 'https://rittoboys.wixsite.com/home',
+    catchcopy: '昭和63年創部の歴史あるチーム。全国大会出場・日本一を目指し日々練習に励んでいます。',
   },
   {
     id: 'boys-shiga-omi',
@@ -2610,6 +2616,8 @@ export const teams: Team[] = [
     prefecture: ['滋賀県'],
     league: ['ボーイズ'],
     branch: '滋賀県支部',
+    officialurl: 'https://ohmiboys-ohmi.jimdofree.com/',
+    catchcopy: '『不言実行』をモットーに活動。全国大会出場実績あり。',
   },
   {
     id: 'boys-shiga-konan',
@@ -2618,6 +2626,8 @@ export const teams: Team[] = [
     area: '湖南市',
     league: ['ボーイズ'],
     branch: '滋賀県支部',
+    officialurl: 'https://konanboys.com/',
+    catchcopy: '子供ファーストの指導方針。体験入部受付中。各種大会で活躍中のチームです。',
   },
   {
     id: 'boys-shiga-yasu',
@@ -2626,13 +2636,18 @@ export const teams: Team[] = [
     area: '野洲市',
     league: ['ボーイズ'],
     branch: '滋賀県支部',
+    officialurl: 'https://www.shigayasuboys.com/',
+    catchcopy: '人格形成・体力と技術の向上を図り、次のステージで求められる人材育成に取り組むチーム。',
   },
   {
     id: 'boys-shiga-kohoku',
     name: '湖北ボーイズ',
     prefecture: ['滋賀県'],
+    area: '長浜市',
     league: ['ボーイズ'],
     branch: '滋賀県支部',
+    officialurl: 'https://kohokuboysshiga.com/',
+    catchcopy: '滋賀県長浜市で活動する中学硬式野球チーム。体験入部随時受付中。',
   },
   {
     id: 'boys-shiga-kusatsu',
@@ -2641,6 +2656,8 @@ export const teams: Team[] = [
     area: '草津市',
     league: ['ボーイズ'],
     branch: '滋賀県支部',
+    officialurl: 'https://www.netto.jp/kusatsuboys_dream/',
+    catchcopy: '滋賀草津ボーイズドリーム。新入部員募集中。練習や試合の見学大歓迎です。',
   },
 ];
 
