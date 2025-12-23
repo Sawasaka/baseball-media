@@ -15,7 +15,8 @@ import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
 import type { Team } from "@/lib/microcms/types";
-import { IoChevronDown, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase } from "react-icons/io5";
+import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps } from "react-icons/io5";
+import { AnimatePresence } from "framer-motion";
 
 // Import 3D scene dynamically
 const Scene3D = dynamic(() => import("@/components/Scene3D"), { ssr: false });
@@ -188,6 +189,8 @@ function HomeContent() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [selectedSubChannel, setSelectedSubChannel] = useState<typeof mobileSubChannels[0] | null>(null);
+  const [iframeError, setIframeError] = useState(false);
   const typedText = useTypewriter("チームを探せ", 120);
 
   // 初回ロード時にURLパラメータから状態を復元
@@ -345,6 +348,7 @@ function HomeContent() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
       
       <div className="w-full max-w-full bg-cyber-bg overflow-x-hidden">
       {/* 3D Background */}
@@ -352,89 +356,8 @@ function HomeContent() {
       
       {/* Navigation */}
       <Navbar />
-      
-      <main className="relative z-10 pt-14 sm:pt-16 lg:pt-24 w-full overflow-x-hidden">
-        {/* Mobile/Tablet サブチャンネルタブ - 固定なしでページと一緒にスクロール */}
-        <div className="lg:hidden bg-black/90 backdrop-blur-md border-b border-cyan-400/20">
-          <div className="w-full max-w-7xl mx-auto px-4 py-2">
-            {/* 上段3つ */}
-            <div className="grid grid-cols-3 gap-1.5 mb-1.5">
-              {mobileSubChannels.slice(0, 3).map((channel) => {
-                const Icon = channel.icon;
-                return (
-                  <a
-                    key={channel.id}
-                    href={channel.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1 px-2 py-1.5 font-mono transition-all duration-300 active:scale-95"
-                    style={{
-                      background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.25), rgba(${channel.shadowColor},0.1))`,
-                      border: `1.5px solid ${channel.color}`,
-                      boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
-                    }}
-                  >
-                    <Icon 
-                      size={12} 
-                      style={{ 
-                        color: channel.color,
-                        filter: `drop-shadow(0 0 4px ${channel.color})`,
-                      }} 
-                    />
-                    <span 
-                      className="text-[10px] font-bold whitespace-nowrap"
-                      style={{ 
-                        color: channel.color,
-                        textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
-                      }}
-                    >
-                      {channel.label}
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
-            {/* 下段2つ - 上段と同じサイズで中央配置 */}
-            <div className="flex justify-center gap-1.5">
-              {mobileSubChannels.slice(3, 5).map((channel) => {
-                const Icon = channel.icon;
-                return (
-                  <a
-                    key={channel.id}
-                    href={channel.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1 px-2 py-1.5 font-mono transition-all duration-300 active:scale-95"
-                    style={{
-                      background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.25), rgba(${channel.shadowColor},0.1))`,
-                      border: `1.5px solid ${channel.color}`,
-                      boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
-                      width: 'calc((100% - 0.375rem * 2) / 3)',
-                    }}
-                  >
-                    <Icon 
-                      size={12} 
-                      style={{ 
-                        color: channel.color,
-                        filter: `drop-shadow(0 0 4px ${channel.color})`,
-                      }} 
-                    />
-                    <span 
-                      className="text-[10px] font-bold whitespace-nowrap"
-                      style={{ 
-                        color: channel.color,
-                        textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
-                      }}
-                    >
-                      {channel.label}
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </div>
 
+      <main className="relative z-10 pt-14 sm:pt-16 lg:pt-24 w-full overflow-x-hidden">
         {/* Hero Section */}
         <section className="w-full flex flex-col lg:min-h-[100vh] lg:justify-center relative pb-6 sm:pb-10 lg:pb-0 overflow-hidden">
           {/* Animated background gradients */}
@@ -487,12 +410,249 @@ function HomeContent() {
 
           {/* Hero Content */}
           <div className="w-full max-w-7xl mx-auto px-4 text-center relative z-20">
-            {/* Terminal-style badge - モバイルでサブチャンネルと被らないよう上マージン追加 */}
+            {/* Mobile/Tablet サブチャンネル - クリックでiframeモーダル表示 */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="lg:hidden mb-4 mt-4 px-2"
+            >
+              {/* 上段3つ */}
+              <div className="grid grid-cols-3 gap-1.5 mb-1.5">
+                {mobileSubChannels.slice(0, 3).map((channel) => {
+                  const Icon = channel.icon;
+                  return (
+                    <button
+                      key={channel.id}
+                      onClick={() => {
+                        setSelectedSubChannel(channel);
+                        setIframeError(false);
+                      }}
+                      className="flex items-center justify-center gap-1 py-2 font-mono transition-all duration-300 active:scale-95 rounded"
+                      style={{
+                        background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.2), rgba(${channel.shadowColor},0.05))`,
+                        border: `1.5px solid ${channel.color}`,
+                        boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
+                      }}
+                    >
+                      <Icon 
+                        size={14} 
+                        style={{ 
+                          color: channel.color,
+                          filter: `drop-shadow(0 0 4px ${channel.color})`,
+                        }} 
+                      />
+                      <span 
+                        className="text-[10px] font-bold whitespace-nowrap"
+                        style={{ 
+                          color: channel.color,
+                          textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
+                        }}
+                      >
+                        {channel.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              {/* 下段2つ - 中央配置 */}
+              <div className="flex justify-center gap-1.5">
+                {mobileSubChannels.slice(3, 5).map((channel) => {
+                  const Icon = channel.icon;
+                  return (
+                    <button
+                      key={channel.id}
+                      onClick={() => {
+                        setSelectedSubChannel(channel);
+                        setIframeError(false);
+                      }}
+                      className="flex items-center justify-center gap-1 py-2 font-mono transition-all duration-300 active:scale-95 rounded"
+                      style={{
+                        background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.2), rgba(${channel.shadowColor},0.05))`,
+                        border: `1.5px solid ${channel.color}`,
+                        boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
+                        width: 'calc((100% - 0.375rem) / 3)',
+                      }}
+                    >
+                      <Icon 
+                        size={14} 
+                        style={{ 
+                          color: channel.color,
+                          filter: `drop-shadow(0 0 4px ${channel.color})`,
+                        }} 
+                      />
+                      <span 
+                        className="text-[10px] font-bold whitespace-nowrap"
+                        style={{ 
+                          color: channel.color,
+                          textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
+                        }}
+                      >
+                        {channel.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+
+            {/* サブチャンネル iframeモーダル（PC表示と同じ） */}
+            <AnimatePresence>
+              {selectedSubChannel && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="lg:hidden fixed inset-0 z-[9998] flex items-start justify-center pt-16 px-3 pb-4 bg-black/90 backdrop-blur-md overflow-y-auto"
+                  onClick={() => setSelectedSubChannel(null)}
+                >
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                    transition={{ type: "spring", damping: 25 }}
+                    className="relative w-full max-w-lg overflow-hidden bg-black/95"
+                    style={{ 
+                      boxShadow: `0 0 60px rgba(${selectedSubChannel.shadowColor},0.5)`,
+                      border: `3px solid ${selectedSubChannel.color}`,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Header */}
+                    <div 
+                      className="sticky top-0 z-10 flex items-center justify-between p-3 border-b-2 bg-black/95"
+                      style={{
+                        background: `linear-gradient(90deg, rgba(${selectedSubChannel.shadowColor},0.3), transparent)`,
+                        borderColor: `${selectedSubChannel.color}60`,
+                      }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div 
+                          className="p-2"
+                          style={{ 
+                            background: `${selectedSubChannel.color}30`,
+                            border: `2px solid ${selectedSubChannel.color}`,
+                            boxShadow: `0 0 20px ${selectedSubChannel.color}40`,
+                          }}
+                        >
+                          {(() => {
+                            const Icon = selectedSubChannel.icon;
+                            return (
+                              <Icon 
+                                className="text-xl"
+                                style={{ 
+                                  color: selectedSubChannel.color,
+                                  filter: `drop-shadow(0 0 10px ${selectedSubChannel.color})`,
+                                }} 
+                              />
+                            );
+                          })()}
+                        </div>
+                        <span 
+                          className="font-mono text-base font-black"
+                          style={{ 
+                            color: selectedSubChannel.color,
+                            textShadow: `0 0 20px ${selectedSubChannel.color}`,
+                          }}
+                        >
+                          {selectedSubChannel.label}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={selectedSubChannel.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center px-3 py-1.5 text-xs font-black transition-all duration-300 active:scale-95"
+                          style={{
+                            background: `linear-gradient(135deg, ${selectedSubChannel.color}, ${selectedSubChannel.color}aa)`,
+                            color: '#fff',
+                            boxShadow: `0 0 20px ${selectedSubChannel.color}60`,
+                          }}
+                        >
+                          <IoRocket className="mr-1" />
+                          開く
+                        </a>
+                        <button
+                          onClick={() => setSelectedSubChannel(null)}
+                          className="p-1.5 text-white/50 hover:text-white transition-all duration-300"
+                          style={{
+                            border: `2px solid ${selectedSubChannel.color}40`,
+                            background: `${selectedSubChannel.color}10`,
+                          }}
+                        >
+                          <IoClose className="text-xl" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Iframe */}
+                    <div className="relative h-[70vh]">
+                      {iframeError ? (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-black/70">
+                          <motion.div
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          >
+                            {(() => {
+                              const Icon = selectedSubChannel.icon;
+                              return (
+                                <Icon 
+                                  className="text-5xl mb-4" 
+                                  style={{ 
+                                    color: selectedSubChannel.color,
+                                    filter: `drop-shadow(0 0 20px ${selectedSubChannel.color})`,
+                                  }} 
+                                />
+                              );
+                            })()}
+                          </motion.div>
+                          <p className="text-white/60 mb-4 text-center font-mono text-sm">
+                            このサイトは埋め込み表示に<br/>対応していません
+                          </p>
+                          <a
+                            href={selectedSubChannel.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center px-6 py-3 font-black text-sm transition-all duration-300 active:scale-95"
+                            style={{
+                              background: `linear-gradient(135deg, ${selectedSubChannel.color}, ${selectedSubChannel.color}aa)`,
+                              color: '#fff',
+                              boxShadow: `0 0 30px ${selectedSubChannel.color}60`,
+                            }}
+                          >
+                            <IoRocket className="mr-2" />
+                            サイトを開く
+                            <IoChevronForward className="ml-1" />
+                          </a>
+                        </div>
+                      ) : (
+                        <iframe
+                          src={selectedSubChannel.url}
+                          className="w-full h-full border-0"
+                          onError={() => setIframeError(true)}
+                          title={selectedSubChannel.label}
+                        />
+                      )}
+                    </div>
+                    
+                    {/* Bottom accent */}
+                    <div 
+                      className="h-1"
+                      style={{ background: `linear-gradient(90deg, transparent, ${selectedSubChannel.color}, transparent)` }}
+                    />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Terminal-style badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/90 backdrop-blur-md mt-8 sm:mt-6 lg:mt-0 mb-6 sm:mb-10 shadow-[0_0_30px_rgba(0,240,255,0.3)]"
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 border-2 border-cyan-400/50 bg-black/90 backdrop-blur-md mb-6 sm:mb-10 lg:mt-0 shadow-[0_0_30px_rgba(0,240,255,0.3)]"
             >
               <IoTerminal className="text-cyan-400 text-lg sm:text-xl animate-pulse shrink-0" />
               <span className="font-mono text-xs sm:text-sm text-cyan-400 tracking-wider">
