@@ -1016,8 +1016,20 @@ function HomeContent() {
             </div>
           </div>
           
+          {/* Legal Links */}
+          <div className="border-t-2 border-red-500/20 pt-6 sm:pt-8 mb-6">
+            <div className="flex justify-center">
+              <a 
+                href="/tokushoho"
+                className="text-white/50 hover:text-cyan-400 text-[10px] sm:text-xs font-mono transition-colors"
+              >
+                特定商取引法に基づく表記
+              </a>
+            </div>
+          </div>
+          
           {/* Copyright */}
-          <div className="border-t-2 border-red-500/20 pt-6 sm:pt-10 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
             <p className="text-white/30 text-[10px] sm:text-xs font-mono text-center md:text-left">
               © <span className="text-red-500">株式会社ルーキースマートジャパン</span> // ALL_RIGHTS_RESERVED
             </p>
