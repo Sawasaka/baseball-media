@@ -23,9 +23,17 @@ export default function TokushohoPage() {
             </Link>
             <div className="flex items-center gap-2">
               <IoBaseball className="text-xl text-red-500" />
-              <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-pink-500">
-                ROOKIE SMART
-              </span>
+              <div className="flex flex-col justify-center">
+                <span className="text-xs font-bold tracking-wide">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-white">
+                    中学硬式野球
+                  </span>
+                  <span className="text-cyan-400 mx-0.5">／</span>
+                  <span className="text-red-400 font-black">
+                    チーム検索・比較
+                  </span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
