@@ -44,9 +44,6 @@ export const metadata: Metadata = {
     title: "全国の中学硬式野球チーム検索・比較サイト｜ROOKIE SMART",
     description: "全国47都道府県の中学硬式野球チーム（ボーイズ・シニア・ヤング）を都道府県から検索・比較できるプラットフォーム。",
   },
-  alternates: {
-    canonical: "https://baseball.rookiesmart-jp.com",
-  },
   robots: {
     index: true,
     follow: true,
