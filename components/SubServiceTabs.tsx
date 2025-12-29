@@ -37,8 +37,8 @@ const subServices = [
   },
   {
     id: "yakyu-juku",
-    label: "野球塾",
-    labelEn: "BASEBALL SCHOOL",
+    label: "オンライン野球塾",
+    labelEn: "ONLINE BASEBALL SCHOOL",
     description: "元プロが直接指導",
     catchphrase: "技術を極める特別レッスン",
     url: "https://yakyu-juku.rookiesmart-jp.com/",
@@ -64,6 +64,7 @@ const subServices = [
     borderColor: "#FACC15",
     shadowColor: "250,204,21",
     showHot: false,
+    showFree: true,
   },
   {
     id: "career",
@@ -79,6 +80,7 @@ const subServices = [
     borderColor: "#22C55E",
     shadowColor: "34,197,94",
     showHot: false,
+    showFree: true,
   },
 ];
 
@@ -150,7 +152,7 @@ export const SubServiceTabs = () => {
                 {[
                   { label: '英語学習', color: '#00F0FF' },
                   { label: 'ITアカデミー', color: '#FF00AA' },
-                  { label: '野球塾', color: '#FF2A44' },
+                  { label: 'オンライン野球塾', color: '#FF2A44' },
                   { label: 'スカウト', color: '#FACC15' },
                   { label: 'キャリア', color: '#22C55E' },
                 ].map((item) => (
@@ -303,6 +305,24 @@ export const SubServiceTabs = () => {
                   >
                     <IoStar className="text-xs" />
                     HOT
+                  </motion.div>
+                </div>
+              )}
+
+              {/* 卒業生無料 badge */}
+              {service.showFree && (
+                <div className="absolute -top-0 -right-0 z-20">
+                  <motion.div 
+                    className="px-2 sm:px-3 py-1 sm:py-1.5 text-[9px] sm:text-[11px] font-mono font-black tracking-wider flex items-center gap-1"
+                    style={{
+                      background: 'linear-gradient(135deg, #10B981, #059669)',
+                      color: '#fff',
+                      boxShadow: '0 0 20px rgba(16,185,129,0.6)',
+                    }}
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    🎓 卒業生無料
                   </motion.div>
                 </div>
               )}

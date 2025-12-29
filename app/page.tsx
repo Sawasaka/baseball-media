@@ -41,7 +41,7 @@ const mobileSubChannels = [
   },
   {
     id: "yakyu-juku",
-    label: "野球塾",
+    label: "オンライン野球塾",
     url: "https://yakyu-juku.rookiesmart-jp.com/",
     icon: IoBaseball,
     color: "#FF6B35",

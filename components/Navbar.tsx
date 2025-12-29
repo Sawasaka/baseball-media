@@ -29,7 +29,7 @@ const subChannels = [
   },
   {
     id: "yakyu-juku",
-    label: "野球塾",
+    label: "オンライン野球塾",
     shortLabel: "野球塾",
     description: "元プロが直接指導",
     url: "https://yakyu-juku.rookiesmart-jp.com/",

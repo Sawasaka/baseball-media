@@ -209,7 +209,7 @@ export default function TokushohoPage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-orange-400">▸</span>
-                    <span>野球塾</span>
+                    <span>オンライン野球塾</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-yellow-400">▸</span>
