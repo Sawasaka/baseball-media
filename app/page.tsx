@@ -15,7 +15,7 @@ import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
 import type { Team } from "@/lib/microcms/types";
-import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps } from "react-icons/io5";
+import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps, IoOpenOutline } from "react-icons/io5";
 import { AnimatePresence } from "framer-motion";
 
 // Import 3D scene dynamically
@@ -1034,9 +1034,20 @@ function HomeContent() {
               © <span className="text-red-500">株式会社ルーキースマートジャパン</span> // ALL_RIGHTS_RESERVED
             </p>
             <div className="text-[10px] sm:text-xs text-white/30 font-mono flex items-center gap-2 sm:gap-4">
-              <span className="text-cyan-400">株式会社ルーキースマートジャパン</span>
+              <a 
+                href="https://portfolio.rookiesmart-jp.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-cyan-400 hover:text-cyan-300 transition-colors duration-300 flex items-center gap-1.5"
+              >
+                <IoOpenOutline 
+                  className="text-sm" 
+                  style={{ filter: 'drop-shadow(0 0 4px rgba(0,240,255,0.8))' }}
+                />
+                株式会社ルーキースマートジャパン
+              </a>
               <span className="text-pink-500">//</span>
-              <span className="text-yellow-400">代表：沢坂弘樹</span>
+              <span className="text-yellow-400">代表取締役：沢坂弘樹</span>
             </div>
           </div>
         </div>
