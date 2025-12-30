@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { IoGlobeOutline, IoCloseOutline, IoChevronForward, IoLanguage, IoCode, IoBaseball, IoTrophy, IoBriefcase, IoFlash, IoSparkles, IoRocket, IoStar, IoArrowForward } from "react-icons/io5";
+import { IoGlobeOutline, IoCloseOutline, IoChevronForward, IoLanguage, IoCode, IoBaseball, IoTrophy, IoBriefcase, IoFlash, IoSparkles, IoRocket, IoStar, IoArrowForward, IoDesktop } from "react-icons/io5";
 
 const subServices = [
   {
@@ -27,7 +27,7 @@ const subServices = [
     description: "野球引退後も安心",
     catchphrase: "プログラミングで第二の人生",
     url: "https://academy.rookiesmart-jp.com/",
-    icon: IoCode,
+    icon: IoDesktop,
     color: "pink",
     gradient: "from-pink-500 via-purple-500 to-fuchsia-500",
     bgGradient: "from-pink-500/30 via-purple-600/20 to-fuchsia-500/30",
@@ -64,7 +64,6 @@ const subServices = [
     borderColor: "#FACC15",
     shadowColor: "250,204,21",
     showHot: false,
-    showFree: true,
   },
   {
     id: "career",
@@ -150,9 +149,9 @@ export const SubServiceTabs = () => {
               {/* Center: Features */}
               <div className="flex flex-wrap justify-center gap-1.5 sm:gap-3">
                 {[
-                  { label: '英語学習', color: '#00F0FF' },
-                  { label: 'ITアカデミー', color: '#FF00AA' },
-                  { label: 'オンライン野球塾', color: '#FF2A44' },
+                  { label: '英語', color: '#00F0FF' },
+                  { label: 'IT', color: '#FF00AA' },
+                  { label: '野球塾', color: '#FF2A44' },
                   { label: 'スカウト', color: '#FACC15' },
                   { label: 'キャリア', color: '#22C55E' },
                 ].map((item) => (
