@@ -34,8 +34,8 @@ const subChannels = [
     description: "元プロが直接指導",
     url: "https://yakyu-juku.rookiesmart-jp.com/",
     icon: IoBaseball,
-    color: "#FF6B35",
-    shadowColor: "255,107,53",
+    color: "#FF2A44",
+    shadowColor: "255,42,68",
   },
   {
     id: "scout",
