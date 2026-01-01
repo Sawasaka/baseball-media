@@ -66,6 +66,8 @@ export interface Article extends MicroCMSBase {
   // published フィールド（手動指定の公開日、任意）
   // ※ システムの publishedAt（MicroCMSBase）も自動で入るので、どちらを使ってもOK
   published?: string;
+  thumbnail?: MicroCMSImage; // サムネイル画像
+  youtubeUrl?: string; // YouTube動画URL
   ogImage?: MicroCMSImage;
   metaDescription?: string;
   // 公開状態（microCMS の draftKey で判定）

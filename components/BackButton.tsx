@@ -1,0 +1,42 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { IoArrowBack } from "react-icons/io5";
+
+export function BackButton() {
+  const router = useRouter();
+
+  const handleBack = () => {
+    // リファラーを確認
+    const referrer = document.referrer;
+    const currentOrigin = window.location.origin;
+    
+    // トップページ（コラム一覧）から来た場合
+    if (referrer && referrer.startsWith(currentOrigin)) {
+      const referrerPath = new URL(referrer).pathname;
+      // トップページから来た場合はコラムセクションへ
+      if (referrerPath === "/" || referrerPath === "") {
+        router.push("/#columns");
+        return;
+      }
+    }
+    
+    // ブラウザ履歴があれば戻る、なければコラム一覧へ
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/#columns");
+    }
+  };
+
+  return (
+    <button
+      onClick={handleBack}
+      className="flex items-center gap-2 px-6 py-3 border-2 border-pink-500/50 text-pink-500 font-mono hover:bg-pink-500/20 transition-colors"
+    >
+      <IoArrowBack />
+      <span>前のページへ戻る</span>
+    </button>
+  );
+}
+

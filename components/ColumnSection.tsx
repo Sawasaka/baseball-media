@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   IoArrowForward,
@@ -14,7 +15,12 @@ import {
   IoStar,
   IoBook,
   IoBriefcase,
-  IoRefresh
+  IoRefresh,
+  IoLogoYoutube,
+  IoDocumentTextOutline,
+  IoCopyOutline,
+  IoOpenOutline,
+  IoCheckmarkCircle
 } from "react-icons/io5";
 import { BsPinAngleFill } from "react-icons/bs";
 import type { Article, Category } from "@/lib/microcms/types";
@@ -90,6 +96,8 @@ const colorVariants: Record<string, { border: string; bg: string; text: string; 
 };
 
 export function ColumnSection() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [articles, setArticles] = useState<Article[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -97,6 +105,45 @@ export function ColumnSection() {
   const [showAllColumnsModal, setShowAllColumnsModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // URLパラメータからカテゴリを読み取る
+  useEffect(() => {
+    const categoryParam = searchParams.get("category");
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [searchParams]);
+
+  // 記事URLを生成
+  const getArticleUrl = (article: Article) => {
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+    return `${baseUrl}/columns/${article.slug}`;
+  };
+
+  // URLをクリップボードにコピー
+  const handleCopyUrl = async (article: Article) => {
+    const url = getArticleUrl(article);
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy URL:', err);
+    }
+  };
+
+  // 別タブで開く
+  const handleOpenInNewTab = (article: Article) => {
+    const url = getArticleUrl(article);
+    window.open(url, '_blank');
+  };
+
+  // カテゴリ一覧に移動
+  const handleGoToCategory = (categoryId: string) => {
+    setSelectedArticle(null); // モーダルを閉じる
+    setSelectedCategory(categoryId); // カテゴリをフィルター
+  };
 
   // microCMS からデータを取得
   useEffect(() => {
@@ -244,7 +291,7 @@ export function ColumnSection() {
           </div>
         )}
 
-        {/* Articles Grid */}
+        {/* Articles - Featured Layout */}
         {!isLoading && !error && (
           <>
             <AnimatePresence mode="wait">
@@ -254,121 +301,93 @@ export function ColumnSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8"
+                className="space-y-4 sm:space-y-6"
               >
                 {filteredArticles.length === 0 ? (
-                  <div className="col-span-2 text-center py-12">
+                  <div className="text-center py-12">
                     <p className="text-white/50 font-mono">このカテゴリの記事はまだありません</p>
                   </div>
                 ) : (
-                  filteredArticles.slice(0, 6).map((article, index) => {
-                    const style = getArticleStyle(article);
-                    const colors = colorVariants[style.color] || colorVariants.pink;
-                    
-                    return (
-                      <motion.article
-                        key={article.id}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        onClick={() => setSelectedArticle(article)}
-                        className={`
-                          group relative cursor-pointer overflow-hidden
-                          border-2 ${colors.border} ${colors.bg}
-                          p-4 sm:p-6 transition-all duration-500
-                          hover:shadow-[0_0_40px_rgba(255,0,170,0.3)]
-                          hover:border-pink-500/70
-                        `}
-                  style={{ 
-                          background: `linear-gradient(135deg, ${colors.solidBg}15, ${colors.solidBg}05, transparent)`,
-                          boxShadow: `0 0 25px ${colors.solidBg}20, inset 0 0 30px ${colors.solidBg}05`,
-                  }}
-                      >
-                {/* Corner accents */}
-                        <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2" style={{ borderColor: colors.solidBg }} />
-                        <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2" style={{ borderColor: colors.solidBg }} />
-                        <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2" style={{ borderColor: colors.solidBg }} />
-                        <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2" style={{ borderColor: colors.solidBg }} />
-
-                        {/* Pinned indicator */}
-                        <div className="absolute top-3 right-3">
-                          <BsPinAngleFill 
-                            className="text-red-500 text-xl" 
-                            style={{ filter: 'drop-shadow(0 0 8px rgba(255,0,0,0.8))' }} 
-                          />
-                  </div>
-                  
-                        {/* Category & Icon */}
-                        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                          <div 
-                            className="p-2 sm:p-2.5 border-2"
-                            style={{ 
-                              borderColor: colors.solidBg,
-                              background: `${colors.solidBg}20`,
-                              boxShadow: `0 0 15px ${colors.solidBg}40`,
-                            }}
-                          >
-                            <span style={{ color: colors.solidBg, filter: `drop-shadow(0 0 8px ${colors.solidBg})` }}>
-                              {style.icon}
-                            </span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    {filteredArticles.slice(0, 3).map((article, index) => {
+                      const style = getArticleStyle(article);
+                      const colors = colorVariants[style.color] || colorVariants.pink;
+                      
+                      return (
+                        <motion.article
+                          key={article.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          onClick={() => setSelectedArticle(article)}
+                          className="group relative cursor-pointer bg-black border border-pink-500/30 hover:border-pink-500/60 transition-all duration-300"
+                          style={{ boxShadow: '0 0 25px rgba(255,0,170,0.15)' }}
+                        >
+                          {/* Corner decorations */}
+                          <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-pink-500" />
+                          <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-pink-500" />
+                          <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-pink-500" />
+                          <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-pink-500" />
+                          
+                          {/* Thumbnail */}
+                          <div className="relative aspect-video overflow-hidden">
+                            {article.thumbnail?.url ? (
+                              <div 
+                                className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                                style={{ backgroundImage: `url(${article.thumbnail.url}?w=400&q=80)` }}
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gradient-to-br from-pink-500/10 to-black flex items-center justify-center">
+                                <IoBaseball className="text-4xl text-pink-500/30" />
+                              </div>
+                            )}
                           </div>
-                          <span 
-                            className="px-3 py-1.5 text-xs font-mono font-bold border"
-                            style={{ 
-                              color: colors.solidBg,
-                              borderColor: `${colors.solidBg}60`,
-                              background: `${colors.solidBg}15`,
-                              textShadow: `0 0 10px ${colors.solidBg}`,
-                            }}
-                          >
-                            {article.category?.name || "未分類"}
-                    </span>
+                          
+                          {/* Content */}
+                          <div className="p-4">
+                            {/* Category badge - below image */}
+                            <span 
+                              className="inline-block px-2 py-1 text-[10px] font-mono font-bold bg-black border mb-3"
+                              style={{ color: colors.solidBg, borderColor: colors.solidBg }}
+                            >
+                              {article.category?.name || "コラム"}
+                            </span>
+                            <h3 className="text-sm sm:text-base font-bold text-white mb-4 line-clamp-2 group-hover:text-pink-300 transition-colors">
+                              {article.title}
+                            </h3>
+                            
+                            {/* Footer */}
+                            <div className="flex items-center justify-between pt-3 border-t border-pink-500/20">
+                              {/* YouTube button */}
+                              {article.youtubeUrl ? (
+                                <a
+                                  href={article.youtubeUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="flex items-center gap-1.5 text-red-500 text-xs font-mono font-bold hover:text-red-400 transition-colors"
+                                >
+                                  <IoLogoYoutube className="text-base" />
+                                  <span>動画解説</span>
+                                </a>
+                              ) : (
+                                <span className="text-[10px] text-white/40 font-mono">COLUMN</span>
+                              )}
+                              {/* Article button */}
+                              <div className="flex items-center gap-1.5 text-pink-500 text-xs font-mono font-bold group-hover:gap-2 transition-all">
+                                <IoDocumentTextOutline className="text-base" />
+                                <span>記事を見る</span>
+                                <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Hover glow */}
+                          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-[inset_0_0_30px_rgba(255,0,170,0.1)]" />
+                        </motion.article>
+                      );
+                    })}
                   </div>
-                  
-                  {/* Title */}
-                        <h3 
-                          className="text-base sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-opacity-90 transition-colors line-clamp-2"
-                          style={{ textShadow: `0 0 20px ${colors.solidBg}30` }}
-                        >
-                          {article.title}
-                  </h3>
-                  
-                  {/* Description */}
-                        <p className="text-white/60 text-xs sm:text-sm mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-3 leading-relaxed">
-                          {extractPlainText(article.body)}
-                        </p>
-                  
-                  {/* Footer */}
-                        <div 
-                          className="flex items-center justify-end pt-3 sm:pt-4 border-t-2 group-hover:border-opacity-50 transition-all"
-                          style={{ borderColor: `${colors.solidBg}30` }}
-                        >
-                          <div 
-                            className={`flex items-center gap-2 sm:gap-3 ${colors.text} font-mono text-xs sm:text-sm font-bold px-3 sm:px-4 py-1.5 sm:py-2 border ${colors.border} group-hover:gap-4 sm:group-hover:gap-5 transition-all duration-300`}
-                            style={{
-                              background: `linear-gradient(90deg, ${colors.solidBg}20, transparent)`,
-                              boxShadow: `0 0 15px ${colors.solidBg}20`,
-                            }}
-                          >
-                            <span>詳しく見る</span>
-                            <IoArrowForward className="group-hover:translate-x-2 transition-transform text-lg" />
-                  </div>
-                </div>
-                
-                {/* Bottom accent line */}
-                <div 
-                          className="absolute bottom-0 left-0 right-0 h-1 group-hover:h-1.5 transition-all duration-300"
-                          style={{
-                            background: `linear-gradient(90deg, transparent 0%, ${colors.solidBg} 50%, transparent 100%)`,
-                            boxShadow: `0 0 20px ${colors.solidBg}`,
-                          }}
-                        />
-
-                        {/* Floating particles effect on hover */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping" style={{ background: colors.solidBg }} />
-              </motion.article>
-            );
-                  })
                 )}
               </motion.div>
             </AnimatePresence>
@@ -400,7 +419,7 @@ export function ColumnSection() {
           initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-start sm:items-center justify-center pt-32 sm:pt-4 px-4 pb-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+            className="fixed inset-0 z-[200] flex items-start justify-center pt-20 sm:pt-24 px-4 pb-4 bg-black/95 backdrop-blur-lg overflow-y-auto"
             onClick={() => setSelectedArticle(null)}
           >
             <motion.div
@@ -408,51 +427,90 @@ export function ColumnSection() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative w-full max-w-2xl max-h-[75vh] sm:max-h-[85vh] overflow-y-auto bg-black/95 border-2"
+              className="relative w-full max-w-3xl max-h-[85vh] sm:max-h-[90vh] overflow-hidden bg-black/95 border-2"
               style={{ 
                 borderColor: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA",
                 boxShadow: `0 0 50px ${colorVariants[getArticleStyle(selectedArticle).color]?.glow || "rgba(255,0,170,0.6)"}`,
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header */}
+              {/* Fixed Toolbar at top */}
               <div 
-                className="sm:sticky sm:top-0 z-10 p-4 border-b-2 bg-black/95"
-                style={{ borderColor: `${colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA"}40` }}
+                className="sticky top-0 z-20 flex items-center justify-between px-4 py-3 bg-black border-b-2"
+                style={{ borderColor: `${colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA"}50` }}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="p-2"
-                      style={{ 
-                        background: `${colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA"}20`,
-                        border: `2px solid ${colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA"}`,
-                      }}
-        >
-                      <span style={{ color: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA" }}>
-                        {getArticleStyle(selectedArticle).icon}
-                      </span>
-                    </div>
-                    <div>
-                      <span 
-                        className="text-xs font-mono"
-                        style={{ color: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA" }}
-                      >
-                        {selectedArticle.category?.name || "未分類"}
-                      </span>
-                      <h3 className="text-lg font-bold text-white">
-                        {selectedArticle.title}
-                      </h3>
-                    </div>
-                  </div>
+                {/* Left: Category & Title */}
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <button 
+                    onClick={() => selectedArticle.category?.id && handleGoToCategory(selectedArticle.category.id)}
+                    className="px-2 py-1 text-xs font-mono font-bold border shrink-0 hover:bg-white/10 transition-colors cursor-pointer"
+                    style={{ 
+                      color: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA",
+                      borderColor: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA",
+                    }}
+                    title="このカテゴリの記事一覧を見る"
+                  >
+                    {selectedArticle.category?.name || "コラム"}
+                  </button>
+                  <span className="text-white text-sm font-mono line-clamp-2">
+                    {selectedArticle.title}
+                  </span>
+                </div>
+                
+                {/* Right: Action Buttons */}
+                <div className="flex items-center gap-2 shrink-0 ml-2">
+                  {/* Copy URL button */}
+                  <button
+                    onClick={() => handleCopyUrl(selectedArticle)}
+                    className="p-2 text-white/70 hover:text-cyan-400 transition-colors border border-white/30 hover:border-cyan-400 bg-black/50 group relative"
+                    title="URLをコピー"
+                  >
+                    {copied ? (
+                      <IoCheckmarkCircle size={20} className="text-green-400" />
+                    ) : (
+                      <IoCopyOutline size={20} />
+                    )}
+                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-[10px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border border-white/20 z-30">
+                      {copied ? 'コピー完了！' : 'URLコピー'}
+                    </span>
+                  </button>
+                  {/* Open in new tab button */}
+                  <button
+                    onClick={() => handleOpenInNewTab(selectedArticle)}
+                    className="p-2 text-white/70 hover:text-pink-400 transition-colors border border-white/30 hover:border-pink-400 bg-black/50 group relative"
+                    title="別タブで開く"
+                  >
+                    <IoOpenOutline size={20} />
+                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-[10px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border border-white/20 z-30">
+                      別タブで開く
+                    </span>
+                  </button>
+                  {/* Close button */}
                   <button
                     onClick={() => setSelectedArticle(null)}
-                    className="p-2 text-white/50 hover:text-white transition-colors border border-white/20 hover:border-white/40"
+                    className="p-2 text-white/70 hover:text-white transition-colors border border-white/30 hover:border-white/60 bg-black/50"
+                    title="閉じる"
                   >
-                    <IoClose size={24} />
+                    <IoClose size={22} />
                   </button>
                 </div>
               </div>
+
+              {/* Scrollable Content */}
+              <div className="overflow-y-auto max-h-[calc(85vh-60px)] sm:max-h-[calc(90vh-60px)]">
+              {/* Thumbnail Image */}
+              {selectedArticle.thumbnail?.url && (
+                <div className="relative w-full overflow-hidden">
+                  <div 
+                    className="w-full bg-cover bg-center"
+                    style={{ 
+                      backgroundImage: `url(${selectedArticle.thumbnail.url}?w=1200&q=95)`,
+                      aspectRatio: '16/9',
+                    }}
+                  />
+                </div>
+              )}
+
 
               {/* Content */}
               <div className="p-4 sm:p-6">
@@ -467,6 +525,7 @@ export function ColumnSection() {
                 className="h-1"
                 style={{ background: `linear-gradient(90deg, transparent, ${colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA"}, transparent)` }}
               />
+              </div>{/* End scrollable content */}
             </motion.div>
           </motion.div>
         )}
@@ -565,6 +624,24 @@ export function ColumnSection() {
                           boxShadow: `0 0 30px ${colors.glow}`,
                         }}
                       >
+                        {/* Thumbnail Image */}
+                        {article.thumbnail?.url && (
+                          <div className="relative -mx-4 -mt-4 mb-3 overflow-hidden">
+                            <div 
+                              className="aspect-video w-full bg-cover bg-center"
+                              style={{ 
+                                backgroundImage: `url(${article.thumbnail.url}?w=400&q=80)`,
+                              }}
+                            />
+                            <div 
+                              className="absolute inset-0"
+                              style={{
+                                background: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)`,
+                              }}
+                            />
+                          </div>
+                        )}
+
                         {/* Pinned Badge */}
                         <div className="absolute top-2 right-2">
                           <BsPinAngleFill className="text-red-500 text-sm" style={{ filter: 'drop-shadow(0 0 6px rgba(255,0,0,0.8))' }} />
