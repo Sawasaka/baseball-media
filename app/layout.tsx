@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP, Orbitron } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const notoSansJP = Noto_Sans_JP({ 
   subsets: ["latin"],
@@ -66,9 +68,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <html lang="ja">
       <body className={`${notoSansJP.variable} ${orbitron.variable} font-sans bg-cyber-bg text-white antialiased`}>
+        {GA_ID ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                // Disable automatic page_view; we send page_view on route changes via client component.
+                gtag('config', '${GA_ID}', { send_page_view: false });
+              `}
+            </Script>
+            <GoogleAnalytics gaId={GA_ID} />
+          </>
+        ) : null}
         {children}
       </body>
     </html>
