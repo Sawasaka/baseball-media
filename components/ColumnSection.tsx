@@ -310,25 +310,25 @@ export function ColumnSection() {
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {filteredArticles.slice(0, 3).map((article, index) => {
-                      const style = getArticleStyle(article);
-                      const colors = colorVariants[style.color] || colorVariants.pink;
-                      
-                      return (
-                        <motion.article
-                          key={article.id}
+                    const style = getArticleStyle(article);
+                    const colors = colorVariants[style.color] || colorVariants.pink;
+                    
+                    return (
+                      <motion.article
+                        key={article.id}
                           initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                          onClick={() => setSelectedArticle(article)}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        onClick={() => setSelectedArticle(article)}
                           className="group relative cursor-pointer bg-black border border-pink-500/30 hover:border-pink-500/60 transition-all duration-300"
                           style={{ boxShadow: '0 0 25px rgba(255,0,170,0.15)' }}
-                        >
+                      >
                           {/* Corner decorations */}
                           <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-pink-500" />
                           <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-pink-500" />
                           <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-pink-500" />
                           <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-pink-500" />
-                          
+
                           {/* Thumbnail */}
                           <div className="relative aspect-video overflow-hidden">
                             {article.thumbnail?.url ? (
@@ -341,8 +341,8 @@ export function ColumnSection() {
                                 <IoBaseball className="text-4xl text-pink-500/30" />
                               </div>
                             )}
-                          </div>
-                          
+                  </div>
+                  
                           {/* Content */}
                           <div className="p-4">
                             {/* Category badge - below image */}
@@ -353,10 +353,10 @@ export function ColumnSection() {
                               {article.category?.name || "コラム"}
                             </span>
                             <h3 className="text-sm sm:text-base font-bold text-white mb-4 line-clamp-2 group-hover:text-pink-300 transition-colors">
-                              {article.title}
-                            </h3>
-                            
-                            {/* Footer */}
+                          {article.title}
+                  </h3>
+                  
+                  {/* Footer */}
                             <div className="flex items-center justify-between pt-3 border-t border-pink-500/20">
                               {/* YouTube button */}
                               {article.youtubeUrl ? (
@@ -379,13 +379,13 @@ export function ColumnSection() {
                                 <span>記事を見る</span>
                                 <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
                               </div>
-                            </div>
-                          </div>
-                          
+                  </div>
+                </div>
+                
                           {/* Hover glow */}
                           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-[inset_0_0_30px_rgba(255,0,170,0.1)]" />
-                        </motion.article>
-                      );
+              </motion.article>
+            );
                     })}
                   </div>
                 )}
@@ -444,18 +444,18 @@ export function ColumnSection() {
                   <button 
                     onClick={() => selectedArticle.category?.id && handleGoToCategory(selectedArticle.category.id)}
                     className="px-2 py-1 text-xs font-mono font-bold border shrink-0 hover:bg-white/10 transition-colors cursor-pointer"
-                    style={{ 
+                      style={{ 
                       color: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA",
                       borderColor: colorVariants[getArticleStyle(selectedArticle).color]?.solidBg || "#FF00AA",
-                    }}
+                      }}
                     title="このカテゴリの記事一覧を見る"
                   >
                     {selectedArticle.category?.name || "コラム"}
                   </button>
                   <span className="text-white text-sm font-mono line-clamp-2">
                     {selectedArticle.title}
-                  </span>
-                </div>
+                      </span>
+                    </div>
                 
                 {/* Right: Action Buttons */}
                 <div className="flex items-center gap-2 shrink-0 ml-2">
@@ -483,7 +483,7 @@ export function ColumnSection() {
                     <IoOpenOutline size={20} />
                     <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-[10px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border border-white/20 z-30">
                       別タブで開く
-                    </span>
+                      </span>
                   </button>
                   {/* Close button */}
                   <button

@@ -356,7 +356,7 @@ function HomeContent() {
       
       {/* Navigation */}
       <Navbar />
-
+      
       <main className="relative z-10 pt-14 sm:pt-16 lg:pt-24 w-full overflow-x-hidden">
         {/* Hero Section */}
         <section className="w-full flex flex-col lg:min-h-[100vh] lg:justify-center relative pb-6 sm:pb-10 lg:pb-0 overflow-hidden">
@@ -411,12 +411,12 @@ function HomeContent() {
           {/* Hero Content */}
           <div className="w-full max-w-7xl mx-auto px-4 text-center relative z-20">
             {/* Mobile/Tablet サブチャンネル - クリックでiframeモーダル表示 */}
-            <motion.div
+          <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="lg:hidden mb-4 mt-4 px-2"
-            >
+          >
               {/* 上段3つ */}
               <div className="grid grid-cols-3 gap-1.5 mb-1.5">
                 {mobileSubChannels.slice(0, 3).map((channel) => {
@@ -493,8 +493,8 @@ function HomeContent() {
                     </button>
                   );
                 })}
-              </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
             {/* サブチャンネル iframeモーダル（PC表示と同じ） */}
             <AnimatePresence>
@@ -506,7 +506,7 @@ function HomeContent() {
                   className="lg:hidden fixed inset-0 z-[9998] flex items-start justify-center pt-16 px-3 pb-4 bg-black/90 backdrop-blur-md overflow-y-auto"
                   onClick={() => setSelectedSubChannel(null)}
                 >
-                  <motion.div
+          <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -517,7 +517,7 @@ function HomeContent() {
                       border: `3px solid ${selectedSubChannel.color}`,
                     }}
                     onClick={(e) => e.stopPropagation()}
-                  >
+          >
                     {/* Header */}
                     <div 
                       className="sticky top-0 z-10 flex items-center justify-between p-3 border-b-2 bg-black/95"
@@ -585,7 +585,7 @@ function HomeContent() {
                           <IoClose className="text-xl" />
                         </button>
                       </div>
-                    </div>
+            </div>
 
                     {/* Iframe */}
                     <div className="relative h-[70vh]">
@@ -607,7 +607,7 @@ function HomeContent() {
                                 />
                               );
                             })()}
-                          </motion.div>
+          </motion.div>
                           <p className="text-white/60 mb-4 text-center font-mono text-sm">
                             このサイトは埋め込み表示に<br/>対応していません
                           </p>
@@ -674,7 +674,7 @@ function HomeContent() {
             >
               <span 
                 className="block mt-1 sm:mt-2 mb-1 sm:mb-2 text-lg sm:text-2xl md:text-3xl font-bold tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-cyan-300"
-                style={{ 
+                style={{
                   textShadow: '0 0 30px rgba(0,240,255,0.5)',
                   WebkitBackgroundClip: 'text',
                 }}
