@@ -4252,6 +4252,93 @@ export const teams: Team[] = [
     catchcopy: '上野原市を拠点に活動。山梨県東部の硬式野球チーム。',
     representative: '青木 和昭',
   },
+  // ========================================
+  // ヤングリーグ 東関東支部
+  // ========================================
+  // 千葉県
+  {
+    id: 'young-chiba-shonan',
+    name: '千葉沼南ヤング',
+    prefecture: ['千葉県'],
+    area: '柏市',
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '1975年創設。千葉県柏市沼南地区を拠点に活動する伝統チーム。',
+  },
+  {
+    id: 'young-chiba-oamishirasato',
+    name: '大網白里ヤング',
+    prefecture: ['千葉県'],
+    area: '大網白里市',
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '千葉県大網白里市を拠点に活動するヤングリーグチーム。',
+  },
+  // 埼玉県
+  {
+    id: 'young-saitama-sp',
+    name: '埼玉SPヤング',
+    prefecture: ['埼玉県'],
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '2023年東関東支部新人戦優勝。全国大会出場の実力派チーム。',
+  },
+  {
+    id: 'young-saitama-kasukabe',
+    name: '春日部ヤング',
+    prefecture: ['埼玉県'],
+    area: '春日部市',
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '埼玉県春日部市・越谷市を中心に活動するヤングリーグチーム。',
+  },
+  {
+    id: 'young-saitama-honjo',
+    name: '本庄ヤングベースボールクラブ',
+    prefecture: ['埼玉県'],
+    area: '本庄市',
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '埼玉県本庄市を拠点に活動するヤングリーグチーム。',
+  },
+  // 茨城県
+  {
+    id: 'young-ibaraki-tsukuba',
+    name: 'つくばヤングベースボールクラブ',
+    prefecture: ['茨城県'],
+    area: 'つくば市',
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '茨城県つくば市を拠点に活動するヤングリーグチーム。',
+  },
+  {
+    id: 'young-ibaraki-toride',
+    name: '取手ヤング',
+    prefecture: ['茨城県'],
+    area: '取手市',
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '茨城県取手市を拠点に活動するヤングリーグチーム。',
+  },
+  {
+    id: 'young-ibaraki-mito-seiransha',
+    name: '水戸青藍舎ヤング',
+    prefecture: ['茨城県'],
+    area: '水戸市',
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '茨城県水戸市を拠点に活動するヤングリーグチーム。',
+  },
+  // 栃木県
+  {
+    id: 'young-tochigi-ybc',
+    name: '栃木ヤングベースボールクラブ',
+    prefecture: ['栃木県'],
+    area: '鹿沼市',
+    league: ['ヤング'],
+    branch: '東関東支部',
+    catchcopy: '栃木県鹿沼市を拠点に活動するヤングリーグチーム。',
+  },
 ];
 
 /**
