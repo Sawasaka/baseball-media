@@ -4263,7 +4263,8 @@ export const teams: Team[] = [
     area: '柏市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '1975年創設。千葉県柏市沼南地区を拠点に活動する伝統チーム。',
+    officialUrl: 'https://all-shonan.com/',
+    catchcopy: '1975年創団の伝統チーム。2023年・2024年連続全国大会出場。室内練習場完備で雨天でも練習可能。',
   },
   {
     id: 'young-chiba-oamishirasato',
@@ -4272,16 +4273,19 @@ export const teams: Team[] = [
     area: '大網白里市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '千葉県大網白里市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://oamishirasato.89dream.jp/',
+    catchcopy: '外房地域の野球人口増加を目指し、野球を通じて人として一人前になることを目標に心身共に成長できる環境を提供。',
   },
   // 埼玉県
   {
     id: 'young-saitama-sp',
     name: '埼玉SPヤング',
     prefecture: ['埼玉県'],
+    area: '越谷市・春日部市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '2023年東関東支部新人戦優勝。全国大会出場の実力派チーム。',
+    officialUrl: 'http://saitamasp89.com/',
+    catchcopy: '2005年創立。グランドチャンピオン大会初出場を達成。技術のみならず人としても成長させ、社会で活躍できる人材育成を目標に。',
   },
   {
     id: 'young-saitama-kasukabe',
@@ -4290,7 +4294,8 @@ export const teams: Team[] = [
     area: '春日部市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '埼玉県春日部市・越谷市を中心に活動するヤングリーグチーム。',
+    officialUrl: 'https://kasukabe2011.main.jp/',
+    catchcopy: '2011年結成。元プロ野球選手や大学・高校野球経験者が指導。勝利至上主義にとらわれず野球を楽しむことをモットーに。',
   },
   {
     id: 'young-saitama-honjo',
@@ -4299,7 +4304,8 @@ export const teams: Team[] = [
     area: '本庄市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '埼玉県本庄市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://honjyoybc.wixsite.com/honjyoybc-hp/',
+    catchcopy: '新人戦準優勝で春季全国大会出場決定。公認メディカルトレーナーを配置し選手の体のケアも万全。',
   },
   // 茨城県
   {
@@ -4309,7 +4315,8 @@ export const teams: Team[] = [
     area: 'つくば市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '茨城県つくば市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://tsukubayoungbc.sports.coocan.jp/',
+    catchcopy: '茨城県つくば市を拠点に活動するヤングリーグ東関東支部所属チーム。',
   },
   {
     id: 'young-ibaraki-toride',
@@ -4318,7 +4325,8 @@ export const teams: Team[] = [
     area: '取手市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '茨城県取手市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://toride-young.com/',
+    catchcopy: '2012年設立（旧取手ファイトクラブ）。自分を信じる・仲間を信じるをモットーに活動。',
   },
   {
     id: 'young-ibaraki-mito-seiransha',
@@ -4327,7 +4335,8 @@ export const teams: Team[] = [
     area: '水戸市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '茨城県水戸市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://www.netto.jp/seiransha/',
+    catchcopy: '2012年創設。茨城県水戸市を拠点に活動するヤングリーグ東関東支部所属チーム。',
   },
   // 栃木県
   {
@@ -4337,7 +4346,8 @@ export const teams: Team[] = [
     area: '鹿沼市',
     league: ['ヤング'],
     branch: '東関東支部',
-    catchcopy: '栃木県鹿沼市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://www.netto.jp/tochigiyoungofficial/',
+    catchcopy: '鹿沼市栃窪に専用グラウンドを有する。2023年春に再始動。宇都宮市・日光市からも多数在籍。',
   },
   // ========================================
   // ヤングリーグ 西関東支部
@@ -4347,10 +4357,11 @@ export const teams: Team[] = [
     id: 'young-kanagawa-yokohama-asahi',
     name: '横浜旭ヤングベースボールクラブ',
     prefecture: ['神奈川県'],
-    area: '横浜市旭区',
+    area: '横浜市泉区',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県横浜市旭区を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'http://www.yokohamaasahibc.or.jp/',
+    catchcopy: 'OBにプロ野球選手を輩出し創部52周年を迎える名門クラブ。野球の上手、下手は関係なく野球を好きな選手を歓迎します。',
   },
   {
     id: 'young-kanagawa-yokohama-totsuka',
@@ -4359,6 +4370,7 @@ export const teams: Team[] = [
     area: '横浜市戸塚区',
     league: ['ヤング'],
     branch: '西関東支部',
+    officialUrl: 'https://yat-youngpowers.jimdofree.com/',
     catchcopy: '神奈川県横浜市戸塚区を拠点に活動するヤングリーグチーム。',
   },
   {
@@ -4368,6 +4380,7 @@ export const teams: Team[] = [
     area: '小田原市',
     league: ['ヤング'],
     branch: '西関東支部',
+    officialUrl: 'https://seishopowerfuls.89dream.jp/',
     catchcopy: '神奈川県西湘地区（小田原・足柄方面）を拠点に活動するヤングリーグチーム。',
   },
   {
@@ -4377,7 +4390,8 @@ export const teams: Team[] = [
     area: '相模原市',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県相模原市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'http://sbc.kanagawa.jp/',
+    catchcopy: '甲子園を目指す野球少年の夢を実現。春季全国大会・選手権大会に多数出場し、ジャイアンツカップ出場の実績を持つ強豪チーム。',
   },
   {
     id: 'young-kanagawa-atsugi',
@@ -4386,7 +4400,8 @@ export const teams: Team[] = [
     area: '厚木市',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県厚木市を拠点に活動する中学生硬式野球クラブチーム。',
+    officialUrl: 'https://am1189.shiriagari.com/',
+    catchcopy: '厚木市を拠点とする中学生硬式野球クラブ。OBは慶應義塾など強豪校で多数活躍。横浜DeNAベイスターズ加藤選手も訪問した実績あり。',
   },
   {
     id: 'young-kanagawa-yokohama-samurai',
@@ -4395,7 +4410,8 @@ export const teams: Team[] = [
     area: '横浜市',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県横浜市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://55youngsamurai.web.fc2.com/',
+    catchcopy: 'ヤングリーグ西関東支部所属の中学硬式野球チーム。目標はその日の自分自身を超えること。',
   },
   {
     id: 'young-kanagawa-shonan-sluggers',
@@ -4404,16 +4420,18 @@ export const teams: Team[] = [
     area: '湘南地区',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県湘南地区を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'http://jinushi310.s2.weblife.me/',
+    catchcopy: '公立高校野球部での活躍を目指す新しい野球環境。定期的な計測で自己管理を学び、伸びしろのある選手を育成。',
   },
   {
     id: 'young-kanagawa-ocean-yokohama',
     name: 'オセアン横浜ヤング',
     prefecture: ['神奈川県'],
-    area: '横浜市',
+    area: '横浜市戸塚区',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県横浜市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://www.yan-oce.com/',
+    catchcopy: 'グランドチャンピオン大会優勝、ジャイアンツカップ出場の強豪。オセアングループが運営し「文武両道」を目標に青少年育成に取り組む。',
   },
   {
     id: 'young-kanagawa-roots',
@@ -4421,7 +4439,8 @@ export const teams: Team[] = [
     prefecture: ['神奈川県'],
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'http://www.youngrootsbc.com/',
+    catchcopy: 'ヤングリーグ西関東支部所属。2022年ベイスターズカップ出場権を獲得した実績を持つチーム。',
   },
   {
     id: 'young-kanagawa-keno-brex',
@@ -4430,7 +4449,8 @@ export const teams: Team[] = [
     area: '県央地区',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県県央地区（厚木・海老名・座間方面）を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://jin-sol.wixsite.com/youngbeats',
+    catchcopy: '選手送迎あり・月謝低額・お茶当番なしで親御さんの負担を軽減。野球をやりたい子どもたちのための環境を整備。',
   },
   {
     id: 'young-kanagawa-sagamihara-giants',
@@ -4439,16 +4459,18 @@ export const teams: Team[] = [
     area: '相模原市',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県相模原市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://sygiants2019.wixsite.com/website',
+    catchcopy: '2019年秋発足。野球と勉強の両立を重視し、自主性・積極性を育む指導で甲子園を目指す選手を育成。',
   },
   {
     id: 'young-kanagawa-yokohama-apex',
     name: '横浜ヤングApex',
     prefecture: ['神奈川県'],
-    area: '横浜市',
+    area: '横浜市鶴見区',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県横浜市を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://yokohama-youngapex.com/',
+    catchcopy: '2年連続春季全国大会出場。「嘘だろｗ」を「マジかよ！」に変える。技術・トレーニング・食事・勉強で人生の勝者を目指す。',
   },
   {
     id: 'young-kanagawa-kawasaki',
@@ -4457,7 +4479,8 @@ export const teams: Team[] = [
     area: '川崎市',
     league: ['ヤング'],
     branch: '西関東支部',
-    catchcopy: '神奈川県川崎市内を拠点に活動するヤングリーグチーム。',
+    officialUrl: 'https://kawasaki-young.studio.site/',
+    catchcopy: '全ては選手のために。お茶当番なし・チームドクター配置で選手と保護者が活動しやすい環境を実現。',
   },
   // 山梨県
   {

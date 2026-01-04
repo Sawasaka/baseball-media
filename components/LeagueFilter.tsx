@@ -89,7 +89,8 @@ export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
             className={`
-              relative px-3 sm:px-6 py-2 sm:py-3 font-mono text-xs sm:text-sm transition-all duration-300 border-2 overflow-hidden
+              relative px-3 sm:px-6 pt-2 sm:pt-3 font-mono text-xs sm:text-sm transition-all duration-300 border-2 overflow-hidden
+              ${league.tag ? 'pb-4 sm:pb-5' : 'pb-2 sm:pb-3'}
               ${isActive ? `bg-gradient-to-r ${style.gradient}` : 'bg-transparent'}
               ${style.border}
               ${style.text}
@@ -98,13 +99,6 @@ export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
               boxShadow: isActive ? style.shadow : 'none'
             }}
           >
-            {/* Region tag */}
-            {league.tag && (
-              <span className="absolute -top-2 -right-2 px-1.5 py-0.5 text-[8px] sm:text-[9px] font-bold bg-black/80 border border-white/30 text-white/80 z-20">
-                {league.tag}
-              </span>
-            )}
-            
             {/* Corner dots for active */}
             {isActive && (
               <>
@@ -118,7 +112,7 @@ export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
               </>
             )}
             
-            <span className="flex items-center gap-1.5 sm:gap-3 relative z-10">
+            <span className="flex items-center gap-1.5 sm:gap-2 relative z-10">
               <span className={`text-xs sm:text-sm ${style.iconColor} ${isActive ? 'animate-pulse' : ''} hidden sm:inline`}>
                 {league.icon}
               </span>
@@ -127,6 +121,12 @@ export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
                 {league.icon}
               </span>
             </span>
+            {/* Region tag - bottom of button */}
+            {league.tag && (
+              <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 text-[8px] sm:text-[9px] font-mono text-white/50 z-20">
+                {league.tag}
+              </span>
+            )}
           </motion.button>
         );
       })}

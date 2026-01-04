@@ -900,11 +900,14 @@ function HomeContent() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center py-24 border-2 border-red-500/30 bg-black/50"
+                className="text-center py-24 border-2 border-cyan-500/30 bg-black/50"
               >
-                <IoSearch className="text-5xl text-red-500/40 mx-auto mb-6 animate-pulse" />
-                <p className="text-white/50 font-mono text-lg">
-                  <span className="text-red-500">&gt;</span> ERROR: NO_DATA_FOUND<span className="animate-pulse">_</span>
+                <IoSearch className="text-5xl text-cyan-500/40 mx-auto mb-6" />
+                <p className="text-white/60 font-mono text-lg">
+                  該当するチームは現在登録されていません
+                </p>
+                <p className="text-white/40 font-mono text-sm mt-2">
+                  他のリーグや都道府県をお試しください
                 </p>
               </motion.div>
             )}
