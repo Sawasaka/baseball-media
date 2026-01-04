@@ -3,7 +3,7 @@
  * microCMS を使わず、TypeScript ファイルで直接管理する
  */
 
-export type LeagueCode = 'boys' | 'senior' | 'young';
+export type LeagueCode = 'boys' | 'senior' | 'young' | 'pony' | 'fresh' | 'independent';
 
 /**
  * Team 型定義
@@ -4481,7 +4481,15 @@ export function getAllTeams(): Team[] {
 
 // リーグでフィルタ（文字列 or リーグコード）
 export function getTeamsByLeague(league: string): Team[] {
-  const leagueName = league === 'boys' ? 'ボーイズ' : league === 'senior' ? 'シニア' : league === 'young' ? 'ヤング' : league;
+  const leagueMap: Record<string, string> = {
+    boys: 'ボーイズ',
+    senior: 'シニア',
+    young: 'ヤング',
+    pony: 'ポニー',
+    fresh: 'フレッシュ',
+    independent: '無所属',
+  };
+  const leagueName = leagueMap[league] || league;
   return teams.filter(team => team.league.includes(leagueName));
 }
 
@@ -4492,7 +4500,15 @@ export function getTeamsByPrefecture(prefecture: string): Team[] {
 
 // リーグ + 都道府県でフィルタ
 export function getTeamsByLeagueAndPrefecture(league: string, prefecture: string): Team[] {
-  const leagueName = league === 'boys' ? 'ボーイズ' : league === 'senior' ? 'シニア' : league === 'young' ? 'ヤング' : league;
+  const leagueMap: Record<string, string> = {
+    boys: 'ボーイズ',
+    senior: 'シニア',
+    young: 'ヤング',
+    pony: 'ポニー',
+    fresh: 'フレッシュ',
+    independent: '無所属',
+  };
+  const leagueName = leagueMap[league] || league;
   return teams.filter(team => team.league.includes(leagueName) && team.prefecture.includes(prefecture));
 }
 

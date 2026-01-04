@@ -12,6 +12,9 @@ const leagues = [
   { id: "boys", label: "ボーイズ", labelEn: "BOYS", icon: "◆" },
   { id: "senior", label: "シニア", labelEn: "SENIOR", icon: "◈" },
   { id: "young", label: "ヤング", labelEn: "YOUNG", icon: "◊" },
+  { id: "pony", label: "ポニー", labelEn: "PONY", icon: "◇" },
+  { id: "fresh", label: "フレッシュ", labelEn: "FRESH", icon: "◈" },
+  { id: "independent", label: "無所属", labelEn: "FREE", icon: "○" },
 ];
 
 const getLeagueStyle = (id: string, isActive: boolean) => {
@@ -43,6 +46,27 @@ const getLeagueStyle = (id: string, isActive: boolean) => {
       text: isActive ? 'text-white' : 'text-white/50 hover:text-white/80',
       iconColor: isActive ? 'text-white' : 'text-yellow-400/60',
       shadow: '0 0 30px rgba(255,255,0,0.5)'
+    },
+    pony: {
+      gradient: 'from-green-500 to-emerald-500',
+      border: isActive ? 'border-transparent' : 'border-green-400/30 hover:border-green-400/60',
+      text: isActive ? 'text-white' : 'text-white/50 hover:text-white/80',
+      iconColor: isActive ? 'text-white' : 'text-green-400/60',
+      shadow: '0 0 30px rgba(34,197,94,0.5)'
+    },
+    fresh: {
+      gradient: 'from-orange-500 to-rose-500',
+      border: isActive ? 'border-transparent' : 'border-orange-400/30 hover:border-orange-400/60',
+      text: isActive ? 'text-white' : 'text-white/50 hover:text-white/80',
+      iconColor: isActive ? 'text-white' : 'text-orange-400/60',
+      shadow: '0 0 30px rgba(249,115,22,0.5)'
+    },
+    independent: {
+      gradient: 'from-gray-500 to-slate-500',
+      border: isActive ? 'border-transparent' : 'border-gray-400/30 hover:border-gray-400/60',
+      text: isActive ? 'text-white' : 'text-white/50 hover:text-white/80',
+      iconColor: isActive ? 'text-white' : 'text-gray-400/60',
+      shadow: '0 0 30px rgba(148,163,184,0.5)'
     }
   };
   return styles[id as keyof typeof styles] || styles.all;
