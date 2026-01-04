@@ -8,13 +8,13 @@ interface Props {
 }
 
 const leagues = [
-  { id: "all", label: "すべて", labelEn: "ALL", icon: "◇" },
-  { id: "boys", label: "ボーイズ", labelEn: "BOYS", icon: "◆" },
-  { id: "senior", label: "シニア", labelEn: "SENIOR", icon: "◈" },
-  { id: "young", label: "ヤング", labelEn: "YOUNG", icon: "◊" },
-  { id: "pony", label: "ポニー", labelEn: "PONY", icon: "◇" },
-  { id: "fresh", label: "フレッシュ", labelEn: "FRESH", icon: "◈" },
-  { id: "independent", label: "無所属", labelEn: "FREE", icon: "○" },
+  { id: "all", label: "すべて", labelEn: "ALL", icon: "◇", tag: null },
+  { id: "boys", label: "ボーイズ", labelEn: "BOYS", icon: "◆", tag: "全国" },
+  { id: "senior", label: "シニア", labelEn: "SENIOR", icon: "◈", tag: "全国" },
+  { id: "young", label: "ヤング", labelEn: "YOUNG", icon: "◊", tag: "全国" },
+  { id: "pony", label: "ポニー", labelEn: "PONY", icon: "◇", tag: "関東" },
+  { id: "fresh", label: "フレッシュ", labelEn: "FRESH", icon: "◈", tag: "九州" },
+  { id: "independent", label: "無所属", labelEn: "FREE", icon: "○", tag: null },
 ];
 
 const getLeagueStyle = (id: string, isActive: boolean) => {
@@ -98,6 +98,13 @@ export const LeagueFilter = ({ currentLeague, onSelect }: Props) => {
               boxShadow: isActive ? style.shadow : 'none'
             }}
           >
+            {/* Region tag */}
+            {league.tag && (
+              <span className="absolute -top-2 -right-2 px-1.5 py-0.5 text-[8px] sm:text-[9px] font-bold bg-black/80 border border-white/30 text-white/80 z-20">
+                {league.tag}
+              </span>
+            )}
+            
             {/* Corner dots for active */}
             {isActive && (
               <>
