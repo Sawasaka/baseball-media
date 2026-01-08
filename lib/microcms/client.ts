@@ -159,18 +159,32 @@ export async function getCategories(): Promise<MicroCMSListResponse<Category>> {
   }
 }
 
-// カテゴリをスラッグで取得
-export async function getCategoryBySlug(slug: string): Promise<Category | null> {
+// カテゴリをスラッグまたはIDで取得
+export async function getCategoryBySlug(slugOrId: string): Promise<Category | null> {
   try {
+    // まずスラッグで検索
     const response = await client.get<MicroCMSListResponse<Category>>({
       endpoint: "categories",
       queries: {
-        filters: `slug[equals]${slug}`,
+        filters: `slug[equals]${slugOrId}`,
         limit: 1,
       },
     });
 
-    return response.contents[0] || null;
+    if (response.contents[0]) {
+      return response.contents[0];
+    }
+
+    // スラッグで見つからない場合はIDで取得を試みる
+    try {
+      const category = await client.get<Category>({
+        endpoint: "categories",
+        contentId: slugOrId,
+      });
+      return category;
+    } catch {
+      return null;
+    }
   } catch {
     return null;
   }
