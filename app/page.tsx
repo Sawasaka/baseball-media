@@ -222,27 +222,29 @@ function HomeContent() {
         const forceScrollToColumns = () => {
           const element = document.getElementById('columns');
           if (element) {
+            // スムーズスクロールを一時的に無効化
+            document.documentElement.style.scrollBehavior = 'auto';
+            
             const rect = element.getBoundingClientRect();
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const targetY = rect.top + scrollTop - 20; // 少し上にマージン
+            const targetY = rect.top + scrollTop - 20;
             
-            // 即座にスクロール
-            window.scrollTo({
-              top: targetY,
-              behavior: 'instant'
-            });
+            window.scrollTo(0, targetY);
             
-            setTimeout(() => setScrollToColumns(false), 500);
+            // スムーズスクロールを復元
+            setTimeout(() => {
+              document.documentElement.style.scrollBehavior = '';
+              setScrollToColumns(false);
+            }, 100);
           }
         };
         
-        // 複数回試行して確実にスクロール
-        requestAnimationFrame(() => {
-          forceScrollToColumns();
-          setTimeout(forceScrollToColumns, 50);
-          setTimeout(forceScrollToColumns, 200);
-          setTimeout(forceScrollToColumns, 500);
-        });
+        // Next.jsのスクロールリセット後に実行するため、より長い遅延
+        const timers = [0, 50, 100, 200, 300, 500, 800, 1000].map(delay => 
+          setTimeout(forceScrollToColumns, delay)
+        );
+        
+        return () => timers.forEach(timer => clearTimeout(timer));
       }
     }
   }, []);
