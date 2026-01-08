@@ -67,27 +67,41 @@ export async function getAllArticles(): Promise<Article[]> {
   return articles;
 }
 
-// 記事をスラッグで取得
-export async function getArticleBySlug(slug: string): Promise<Article | null> {
+// 記事をスラッグまたはIDで取得
+export async function getArticleBySlug(slugOrId: string): Promise<Article | null> {
   try {
-    const response = await client.get<MicroCMSListResponse<Article>>({
+    // まずスラッグで検索
+    const responseBySlug = await client.get<MicroCMSListResponse<Article>>({
       endpoint: "articles",
       queries: {
-        filters: `slug[equals]${slug}`,
+        filters: `slug[equals]${slugOrId}`,
         limit: 1,
       },
     });
 
-    return response.contents[0] || null;
+    if (responseBySlug.contents[0]) {
+      return responseBySlug.contents[0];
+    }
+
+    // スラッグで見つからない場合はIDで取得を試みる
+    try {
+      const article = await client.get<Article>({
+        endpoint: "articles",
+        contentId: slugOrId,
+      });
+      return article;
+    } catch {
+      return null;
+    }
   } catch {
     return null;
   }
 }
 
-// 全記事のスラッグを取得（静的生成用）
+// 全記事のスラッグまたはIDを取得（静的生成用）
 export async function getAllArticleSlugs(): Promise<string[]> {
   const articles = await getAllArticles();
-  return articles.map((article) => article.slug);
+  return articles.map((article) => article.slug || article.id);
 }
 
 // カテゴリ別の記事一覧を取得

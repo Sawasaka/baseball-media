@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   getArticleBySlug,
   getAllArticleSlugs,
+  getArticlesByCategory,
   BASE_URL,
 } from "@/lib/microcms";
 import type { Article } from "@/lib/microcms/types";
@@ -11,7 +12,8 @@ import {
   IoLogoYoutube, 
   IoBaseball,
   IoHome,
-  IoArrowBack
+  IoArrowBack,
+  IoArrowForward
 } from "react-icons/io5";
 import { BackButton } from "@/components/BackButton";
 
@@ -40,6 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     article.body.replace(/<[^>]*>/g, "").slice(0, 160) + "...";
 
   const ogImage = article.thumbnail?.url || article.ogImage?.url || `${BASE_URL}/og-default.png`;
+  const identifier = article.slug || article.id;
 
   return {
     title: `${article.title} | 中学硬式野球コラム`,
@@ -48,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: article.title,
       description,
       type: "article",
-      url: `${BASE_URL}/columns/${article.slug}`,
+      url: `${BASE_URL}/columns/${identifier}`,
       images: [
         {
           url: ogImage,
@@ -67,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [ogImage],
     },
     alternates: {
-      canonical: `${BASE_URL}/columns/${article.slug}`,
+      canonical: `${BASE_URL}/columns/${identifier}`,
     },
     robots: article.isDraft ? { index: false, follow: false } : undefined,
   };
@@ -75,6 +78,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // JSON-LD 構造化データを生成
 function generateJsonLd(article: Article) {
+  const identifier = article.slug || article.id;
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -89,7 +93,7 @@ function generateJsonLd(article: Article) {
       ? {
           "@type": "Person",
           name: article.author.name,
-          url: `${BASE_URL}/author/${article.author.slug}`,
+          url: `${BASE_URL}/author/${article.author.slug || article.author.id}`,
         }
       : {
           "@type": "Organization",
@@ -105,7 +109,7 @@ function generateJsonLd(article: Article) {
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${BASE_URL}/columns/${article.slug}`,
+      "@id": `${BASE_URL}/columns/${identifier}`,
     },
   };
 }
@@ -115,6 +119,15 @@ export default async function ColumnPage({ params }: Props) {
 
   if (!article) {
     notFound();
+  }
+
+  // 同じカテゴリの関連記事を取得（自分自身を除く、最大4件）
+  let relatedArticles: Article[] = [];
+  if (article.category?.id) {
+    const response = await getArticlesByCategory(article.category.id, { limit: 5 });
+    relatedArticles = response.contents
+      .filter((a) => a.id !== article.id)
+      .slice(0, 4);
   }
 
   const jsonLd = generateJsonLd(article);
@@ -268,6 +281,57 @@ export default async function ColumnPage({ params }: Props) {
               </div>
             </div>
           </div>
+
+          {/* 関連コラム セクション */}
+          {relatedArticles.length > 0 && (
+            <section className="container mx-auto px-4 py-12">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span className="text-pink-500">◈</span>
+                  <span>関連コラム</span>
+                  <span className="text-xs text-white/50 font-mono ml-2">
+                    # {article.category?.name}
+                  </span>
+                </h2>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {relatedArticles.map((related) => (
+                    <Link
+                      key={related.id}
+                      href={`/columns/${related.slug || related.id}`}
+                      className="group relative p-4 border border-pink-500/30 bg-black/50 hover:border-pink-500/60 hover:bg-pink-500/10 transition-all duration-300"
+                    >
+                      {/* Corner decorations */}
+                      <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-pink-500" />
+                      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-pink-500" />
+                      <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-pink-500" />
+                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-pink-500" />
+                      
+                      {/* Thumbnail */}
+                      {related.thumbnail?.url && (
+                        <div className="relative aspect-video mb-3 overflow-hidden border border-pink-500/20">
+                          <img
+                            src={`${related.thumbnail.url}?w=400&q=80`}
+                            alt={related.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                      )}
+                      
+                      <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2 mb-2">
+                        {related.title}
+                      </h3>
+                      
+                      <div className="flex items-center gap-2 text-pink-500 text-xs font-mono">
+                        <span>記事を読む</span>
+                        <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* Footer */}
           <footer className="container mx-auto px-4 py-12">

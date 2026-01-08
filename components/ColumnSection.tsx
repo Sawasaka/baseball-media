@@ -115,10 +115,11 @@ export function ColumnSection() {
     }
   }, [searchParams]);
 
-  // 記事URLを生成
+  // 記事URLを生成（slugがない場合はidを使用）
   const getArticleUrl = (article: Article) => {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    return `${baseUrl}/columns/${article.slug}`;
+    const identifier = article.slug || article.id;
+    return `${baseUrl}/columns/${identifier}`;
   };
 
   // URLをクリップボードにコピー
