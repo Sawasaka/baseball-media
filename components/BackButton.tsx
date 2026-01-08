@@ -11,12 +11,19 @@ export function BackButton() {
     const referrer = document.referrer;
     const currentOrigin = window.location.origin;
     
-    // トップページ（コラム一覧）から来た場合
     if (referrer && referrer.startsWith(currentOrigin)) {
-      const referrerPath = new URL(referrer).pathname;
+      const referrerUrl = new URL(referrer);
+      const referrerPath = referrerUrl.pathname;
+      
       // トップページから来た場合はコラムセクションへ
       if (referrerPath === "/" || referrerPath === "") {
         router.push("/#columns");
+        return;
+      }
+      
+      // カテゴリ一覧ページから来た場合はそのページへ戻る
+      if (referrerPath.startsWith("/category/")) {
+        router.push(referrerPath);
         return;
       }
     }
