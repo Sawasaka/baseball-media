@@ -115,6 +115,18 @@ export function ColumnSection() {
     }
   }, [searchParams]);
 
+  // モーダルが開いている時は背景のスクロールを無効化
+  useEffect(() => {
+    if (selectedArticle || showAllColumnsModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedArticle, showAllColumnsModal]);
+
   // 記事URLを生成（slugがない場合はidを使用）
   const getArticleUrl = (article: Article) => {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
