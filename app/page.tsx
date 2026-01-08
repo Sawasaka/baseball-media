@@ -193,6 +193,20 @@ function HomeContent() {
   const [iframeError, setIframeError] = useState(false);
   const typedText = useTypewriter("チームを探せ", 120);
 
+  // ブラウザのスクロール復元を無効化 & リフレッシュ時はトップへ
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // ブラウザのスクロール復元を無効化
+      window.history.scrollRestoration = 'manual';
+      
+      // scrollTo=columnsパラメータがない場合のみトップへスクロール
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!urlParams.get("scrollTo")) {
+        window.scrollTo(0, 0);
+      }
+    }
+  }, []);
+
   // 初回ロード時にURLパラメータから状態を復元
   useEffect(() => {
     const prefParam = searchParams.get("prefecture");
