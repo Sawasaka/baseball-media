@@ -209,50 +209,51 @@ function HomeContent() {
   // URLパラメータからスクロール先を確認（scrollTo=columns対応）
   // columnsへのスクロールかどうかを記録
   const [scrollToColumns, setScrollToColumns] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  
+  // useSearchParamsからscrollToパラメータを取得
+  const scrollToParam = searchParams.get("scrollTo");
   
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const scrollTo = urlParams.get("scrollTo");
+    if (scrollToParam === "columns" && !hasScrolled) {
+      setScrollToColumns(true);
+      setHasScrolled(true);
       
-      if (scrollTo === "columns") {
-        setScrollToColumns(true);
-        
-        // URLからscrollToパラメータを削除（履歴を残さない）
-        urlParams.delete("scrollTo");
-        const newUrl = urlParams.toString() ? `/?${urlParams.toString()}` : "/";
-        window.history.replaceState({}, '', newUrl);
-        
-        // 強制的にコラムセクションにスクロール
-        const forceScrollToColumns = () => {
-          const element = document.getElementById('columns');
-          if (element) {
-            // スムーズスクロールを一時的に無効化
-            document.documentElement.style.scrollBehavior = 'auto';
-            
-            const rect = element.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const targetY = rect.top + scrollTop - 20;
-            
-            window.scrollTo(0, targetY);
-            
-            // スムーズスクロールを復元
-            setTimeout(() => {
-              document.documentElement.style.scrollBehavior = '';
-              setScrollToColumns(false);
-            }, 100);
-          }
-        };
-        
-        // Next.jsのスクロールリセット後に実行するため、より長い遅延
-        const timers = [0, 50, 100, 200, 300, 500, 800, 1000, 1500].map(delay => 
-          setTimeout(forceScrollToColumns, delay)
-        );
-        
-        return () => timers.forEach(timer => clearTimeout(timer));
-      }
+      // URLからscrollToパラメータを削除（履歴を残さない）
+      const params = new URLSearchParams(window.location.search);
+      params.delete("scrollTo");
+      const newUrl = params.toString() ? `/?${params.toString()}` : "/";
+      window.history.replaceState({}, '', newUrl);
+      
+      // 強制的にコラムセクションにスクロール
+      const forceScrollToColumns = () => {
+        const element = document.getElementById('columns');
+        if (element) {
+          // スムーズスクロールを一時的に無効化
+          document.documentElement.style.scrollBehavior = 'auto';
+          
+          const rect = element.getBoundingClientRect();
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const targetY = rect.top + scrollTop - 20;
+          
+          window.scrollTo(0, targetY);
+          
+          // スムーズスクロールを復元
+          setTimeout(() => {
+            document.documentElement.style.scrollBehavior = '';
+            setScrollToColumns(false);
+          }, 100);
+        }
+      };
+      
+      // Next.jsのスクロールリセット後に実行するため、より長い遅延
+      const timers = [0, 50, 100, 200, 300, 500, 800, 1000, 1500, 2000].map(delay => 
+        setTimeout(forceScrollToColumns, delay)
+      );
+      
+      return () => timers.forEach(timer => clearTimeout(timer));
     }
-  }, []);
+  }, [scrollToParam, hasScrolled]);
 
   // フィルタ変更時にURLを更新（履歴は追加しない）
   // ただし#columnsへのスクロール中は更新しない
