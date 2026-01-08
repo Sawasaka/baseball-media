@@ -1,11 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { IoArrowBack } from "react-icons/io5";
 
 export function BackButton() {
-  const router = useRouter();
-
   const handleBack = () => {
     // リファラーを確認
     const referrer = document.referrer;
@@ -15,24 +12,24 @@ export function BackButton() {
       const referrerUrl = new URL(referrer);
       const referrerPath = referrerUrl.pathname;
       
-      // トップページから来た場合はコラムセクションへ
+      // トップページから来た場合はコラムセクションへスクロール
       if (referrerPath === "/" || referrerPath === "") {
-        router.push("/#columns");
+        window.location.href = "/#columns";
         return;
       }
       
       // カテゴリ一覧ページから来た場合はそのページへ戻る
       if (referrerPath.startsWith("/category/")) {
-        router.push(referrerPath);
+        window.location.href = referrerPath;
         return;
       }
     }
     
     // ブラウザ履歴があれば戻る、なければコラム一覧へ
     if (window.history.length > 1) {
-      router.back();
+      window.history.back();
     } else {
-      router.push("/#columns");
+      window.location.href = "/#columns";
     }
   };
 
