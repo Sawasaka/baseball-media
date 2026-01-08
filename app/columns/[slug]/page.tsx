@@ -5,6 +5,7 @@ import {
   getArticleBySlug,
   getAllArticleSlugs,
   getArticlesByCategory,
+  getArticles,
   BASE_URL,
 } from "@/lib/microcms";
 import type { Article } from "@/lib/microcms/types";
@@ -122,9 +123,21 @@ export default async function ColumnPage({ params }: Props) {
   }
 
   // 同じカテゴリの関連記事を取得（自分自身を除く、最大4件）
+  // カテゴリに他の記事がない場合は、全記事から最新を表示
   let relatedArticles: Article[] = [];
+  let isFromSameCategory = false;
+  
   if (article.category?.id) {
     const response = await getArticlesByCategory(article.category.id, { limit: 5 });
+    relatedArticles = response.contents
+      .filter((a) => a.id !== article.id)
+      .slice(0, 4);
+    isFromSameCategory = relatedArticles.length > 0;
+  }
+  
+  // 同じカテゴリに記事がない場合は、全記事から取得
+  if (relatedArticles.length === 0) {
+    const response = await getArticles({ limit: 5 });
     relatedArticles = response.contents
       .filter((a) => a.id !== article.id)
       .slice(0, 4);
@@ -288,10 +301,12 @@ export default async function ColumnPage({ params }: Props) {
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-3">
                   <span className="text-pink-500">◈</span>
-                  <span>関連コラム</span>
-                  <span className="text-xs text-white/50 font-mono ml-2">
-                    # {article.category?.name}
-                  </span>
+                  <span>{isFromSameCategory ? "関連コラム" : "その他のコラム"}</span>
+                  {isFromSameCategory && article.category?.name && (
+                    <span className="text-xs text-white/50 font-mono ml-2">
+                      # {article.category.name}
+                    </span>
+                  )}
                 </h2>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
