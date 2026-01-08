@@ -115,13 +115,17 @@ export function ColumnSection() {
     }
   }, [searchParams]);
 
-  // scrollTo=columnsパラメータがある場合、このセクションにスクロール
+  // scrollTo=columnsパラメータがある場合、このセクションにスクロール（初回のみ）
+  const [hasScrolledToColumns, setHasScrolledToColumns] = useState(false);
+  
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !hasScrolledToColumns) {
       const urlParams = new URLSearchParams(window.location.search);
       const scrollTo = urlParams.get("scrollTo");
       
       if (scrollTo === "columns") {
+        setHasScrolledToColumns(true);
+        
         // URLからパラメータを削除
         urlParams.delete("scrollTo");
         const newUrl = urlParams.toString() ? `/?${urlParams.toString()}` : "/";
@@ -147,7 +151,7 @@ export function ColumnSection() {
         return () => timers.forEach(timer => clearTimeout(timer));
       }
     }
-  }, []);
+  }, [hasScrolledToColumns]);
 
   // モーダルが開いている時は背景のスクロールを完全に無効化
   useEffect(() => {
