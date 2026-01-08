@@ -232,7 +232,7 @@ export default async function ColumnPage({ params }: Props) {
               {/* Category Badge - Clickable */}
               {article.category && (
                 <Link 
-                  href={`/?category=${article.category.id}#columns`}
+                  href={`/category/${article.category.id}`}
                   className="inline-block px-4 py-2 text-sm font-mono font-bold mb-4 border-2 border-pink-500 text-pink-500 bg-black/80 hover:bg-pink-500/20 transition-colors"
                   style={{ boxShadow: '0 0 15px rgba(255,0,170,0.4)' }}
                 >
