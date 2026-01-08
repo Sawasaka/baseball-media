@@ -16,6 +16,7 @@ import {
   IoArrowBack,
   IoArrowForward
 } from "react-icons/io5";
+import { BsPinAngleFill } from "react-icons/bs";
 import { BackButton } from "@/components/BackButton";
 
 interface Props {
@@ -124,22 +125,35 @@ export default async function ColumnPage({ params }: Props) {
 
   // 同じカテゴリの関連記事を取得（自分自身を除く、最大4件）
   // カテゴリに他の記事がない場合は、全記事から最新を表示
+  // ピラー記事を先頭にソート
   let relatedArticles: Article[] = [];
   let isFromSameCategory = false;
   
   if (article.category?.id) {
-    const response = await getArticlesByCategory(article.category.id, { limit: 5 });
+    const response = await getArticlesByCategory(article.category.id, { limit: 10 });
     relatedArticles = response.contents
       .filter((a) => a.id !== article.id)
+      .sort((a, b) => {
+        // ピラー記事を先頭に
+        if (a.isPillar && !b.isPillar) return -1;
+        if (!a.isPillar && b.isPillar) return 1;
+        return 0;
+      })
       .slice(0, 4);
     isFromSameCategory = relatedArticles.length > 0;
   }
   
   // 同じカテゴリに記事がない場合は、全記事から取得
   if (relatedArticles.length === 0) {
-    const response = await getArticles({ limit: 5 });
+    const response = await getArticles({ limit: 10 });
     relatedArticles = response.contents
       .filter((a) => a.id !== article.id)
+      .sort((a, b) => {
+        // ピラー記事を先頭に
+        if (a.isPillar && !b.isPillar) return -1;
+        if (!a.isPillar && b.isPillar) return 1;
+        return 0;
+      })
       .slice(0, 4);
   }
 
@@ -330,6 +344,21 @@ export default async function ColumnPage({ params }: Props) {
                             alt={related.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
+                          {/* ピラーコンテンツのピンマーク */}
+                          {related.isPillar && (
+                            <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-yellow-500 text-black text-[10px] font-bold font-mono">
+                              <BsPinAngleFill className="text-sm" />
+                              <span>PILLAR</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* ピラーコンテンツのピンマーク (サムネイルなし) */}
+                      {!related.thumbnail?.url && related.isPillar && (
+                        <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-yellow-500 text-black text-[10px] font-bold font-mono">
+                          <BsPinAngleFill className="text-sm" />
+                          <span>PILLAR</span>
                         </div>
                       )}
                       

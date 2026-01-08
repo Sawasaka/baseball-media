@@ -72,6 +72,8 @@ export interface Article extends MicroCMSBase {
   metaDescription?: string;
   // 公開状態（microCMS の draftKey で判定）
   isDraft?: boolean;
+  // ピラーコンテンツフラグ（カテゴリの中心となる記事）
+  isPillar?: boolean;
 }
 
 /**

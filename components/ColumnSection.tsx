@@ -188,10 +188,15 @@ export function ColumnSection() {
       ]
     : defaultCategoryTabs;
 
-  // フィルタリング
-  const filteredArticles = articles.filter(
-    (article) => selectedCategory === "all" || article.category?.id === selectedCategory
-  );
+  // フィルタリング & ピラー記事を先頭にソート
+  const filteredArticles = articles
+    .filter((article) => selectedCategory === "all" || article.category?.id === selectedCategory)
+    .sort((a, b) => {
+      // ピラー記事を先頭に
+      if (a.isPillar && !b.isPillar) return -1;
+      if (!a.isPillar && b.isPillar) return 1;
+      return 0;
+    });
 
   // 記事のスタイルを取得
   const getArticleStyle = (article: Article) => {
@@ -342,7 +347,14 @@ export function ColumnSection() {
                                 <IoBaseball className="text-4xl text-pink-500/30" />
                               </div>
                             )}
-                  </div>
+                            {/* ピラーコンテンツのピンマーク */}
+                            {article.isPillar && (
+                              <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-yellow-500 text-black text-[10px] font-bold font-mono">
+                                <BsPinAngleFill className="text-sm" />
+                                <span>PILLAR</span>
+                              </div>
+                            )}
+                          </div>
                   
                           {/* Content */}
                           <div className="p-4">
@@ -640,13 +652,23 @@ export function ColumnSection() {
                                 background: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)`,
                               }}
                             />
+                            {/* ピラーコンテンツのピンマーク */}
+                            {article.isPillar && (
+                              <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-yellow-500 text-black text-[10px] font-bold font-mono">
+                                <BsPinAngleFill className="text-sm" />
+                                <span>PILLAR</span>
+                              </div>
+                            )}
                           </div>
                         )}
 
-                        {/* Pinned Badge */}
-                        <div className="absolute top-2 right-2">
-                          <BsPinAngleFill className="text-red-500 text-sm" style={{ filter: 'drop-shadow(0 0 6px rgba(255,0,0,0.8))' }} />
-                        </div>
+                        {/* Pinned Badge (no thumbnail) */}
+                        {!article.thumbnail?.url && article.isPillar && (
+                          <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-yellow-500 text-black text-[10px] font-bold font-mono">
+                            <BsPinAngleFill className="text-sm" />
+                            <span>PILLAR</span>
+                          </div>
+                        )}
 
                         {/* Category & Icon */}
                         <div className="flex items-center gap-2 mb-3">
