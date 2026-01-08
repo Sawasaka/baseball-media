@@ -14,7 +14,9 @@ export function BackButton() {
       
       // トップページから来た場合はコラムセクションへスクロール
       if (referrerPath === "/" || referrerPath === "") {
-        window.location.href = "/#columns";
+        // sessionStorageにスクロール先を記録
+        sessionStorage.setItem("scrollTo", "columns");
+        window.location.href = "/";
         return;
       }
       
@@ -29,7 +31,8 @@ export function BackButton() {
     if (window.history.length > 1) {
       window.history.back();
     } else {
-      window.location.href = "/#columns";
+      sessionStorage.setItem("scrollTo", "columns");
+      window.location.href = "/";
     }
   };
 

@@ -206,22 +206,34 @@ function HomeContent() {
     setIsInitialized(true);
   }, [searchParams]);
 
-  // URLハッシュがある場合はスクロール（#columns対応）
+  // sessionStorageからスクロール先を確認（#columns対応）
   // columnsへのスクロールかどうかを記録
   const [scrollToColumns, setScrollToColumns] = useState(false);
   
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash === '#columns') {
-      setScrollToColumns(true);
-      // 少し遅延させてDOMが確実にレンダリングされてからスクロール
-      setTimeout(() => {
-        const element = document.getElementById('columns');
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+    if (typeof window !== 'undefined') {
+      const scrollTo = sessionStorage.getItem("scrollTo");
+      if (scrollTo === "columns") {
+        // sessionStorageをクリア
+        sessionStorage.removeItem("scrollTo");
+        setScrollToColumns(true);
+        
+        // ページ読み込み完了を待ってからスクロール
+        const scrollToElement = () => {
+          const element = document.getElementById('columns');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => setScrollToColumns(false), 500);
+          }
+        };
+        
+        // DOMレンダリング完了後にスクロール
+        if (document.readyState === 'complete') {
+          setTimeout(scrollToElement, 100);
+        } else {
+          window.addEventListener('load', () => setTimeout(scrollToElement, 100));
         }
-        // スクロール後にフラグをリセット
-        setTimeout(() => setScrollToColumns(false), 500);
-      }, 300);
+      }
     }
   }, []);
 
