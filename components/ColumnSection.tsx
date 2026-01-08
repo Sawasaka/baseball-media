@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -150,38 +150,19 @@ export function ColumnSection() {
     }
   }, [scrollToParam, hasScrolledToColumns]);
 
-  // モーダルが開いている時は背景のスクロールを完全に無効化
-  const scrollYRef = useRef(0);
-  
+  // モーダルが開いている時は背景のスクロールを無効化（位置は維持）
   useEffect(() => {
     if (selectedArticle || showAllColumnsModal) {
-      // 現在のスクロール位置を保存
-      scrollYRef.current = window.scrollY;
-      // スクロールを無効化
+      // html要素にoverflow:hiddenを設定（より確実）
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollYRef.current}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
     } else {
-      // スタイルをリセット
+      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
-      // スクロール位置を復元（同じ位置に戻る）
-      window.scrollTo(0, scrollYRef.current);
     }
     return () => {
+      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
     };
   }, [selectedArticle, showAllColumnsModal]);
 
