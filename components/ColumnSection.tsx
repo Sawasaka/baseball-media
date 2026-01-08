@@ -115,43 +115,40 @@ export function ColumnSection() {
     }
   }, [searchParams]);
 
-  // scrollTo=columnsパラメータがある場合、このセクションにスクロール（初回のみ）
+  // scrollTo=columnsパラメータがある場合、このセクションにスクロール
+  const scrollToParam = searchParams.get("scrollTo");
   const [hasScrolledToColumns, setHasScrolledToColumns] = useState(false);
   
   useEffect(() => {
-    if (typeof window !== 'undefined' && !hasScrolledToColumns) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const scrollTo = urlParams.get("scrollTo");
+    if (scrollToParam === "columns" && !hasScrolledToColumns) {
+      setHasScrolledToColumns(true);
       
-      if (scrollTo === "columns") {
-        setHasScrolledToColumns(true);
-        
-        // URLからパラメータを削除
-        urlParams.delete("scrollTo");
-        const newUrl = urlParams.toString() ? `/?${urlParams.toString()}` : "/";
-        window.history.replaceState({}, '', newUrl);
-        
-        // このセクション（id="columns"）にスクロール
-        const scrollToThis = () => {
-          const element = document.getElementById('columns');
-          if (element) {
-            // スムーズスクロールを無効化して即座にスクロール
-            document.documentElement.style.scrollBehavior = 'auto';
-            const rect = element.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            window.scrollTo(0, rect.top + scrollTop - 20);
-            document.documentElement.style.scrollBehavior = '';
-          }
-        };
-        
-        // 複数回試行（より長い遅延も含む）
-        const delays = [0, 50, 100, 200, 300, 500, 800, 1000, 1500, 2000];
-        const timers = delays.map(delay => setTimeout(scrollToThis, delay));
-        
-        return () => timers.forEach(timer => clearTimeout(timer));
-      }
+      // URLからパラメータを削除
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.delete("scrollTo");
+      const newUrl = urlParams.toString() ? `/?${urlParams.toString()}` : "/";
+      window.history.replaceState({}, '', newUrl);
+      
+      // このセクション（id="columns"）にスクロール
+      const scrollToThis = () => {
+        const element = document.getElementById('columns');
+        if (element) {
+          // スムーズスクロールを無効化して即座にスクロール
+          document.documentElement.style.scrollBehavior = 'auto';
+          const rect = element.getBoundingClientRect();
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          window.scrollTo(0, rect.top + scrollTop - 20);
+          document.documentElement.style.scrollBehavior = '';
+        }
+      };
+      
+      // 複数回試行（より長い遅延も含む）
+      const delays = [0, 50, 100, 200, 300, 500, 800, 1000, 1500, 2000];
+      const timers = delays.map(delay => setTimeout(scrollToThis, delay));
+      
+      return () => timers.forEach(timer => clearTimeout(timer));
     }
-  }, [hasScrolledToColumns]);
+  }, [scrollToParam, hasScrolledToColumns]);
 
   // モーダルが開いている時は背景のスクロールを無効化（スクロール位置は維持）
   useEffect(() => {
