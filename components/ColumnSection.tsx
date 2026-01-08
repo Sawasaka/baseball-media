@@ -131,16 +131,20 @@ export function ColumnSection() {
         const scrollToThis = () => {
           const element = document.getElementById('columns');
           if (element) {
-            element.scrollIntoView({ behavior: 'instant', block: 'start' });
+            // スムーズスクロールを無効化して即座にスクロール
+            document.documentElement.style.scrollBehavior = 'auto';
+            const rect = element.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            window.scrollTo(0, rect.top + scrollTop - 20);
+            document.documentElement.style.scrollBehavior = '';
           }
         };
         
-        // 複数回試行
-        scrollToThis();
-        setTimeout(scrollToThis, 100);
-        setTimeout(scrollToThis, 300);
-        setTimeout(scrollToThis, 500);
-        setTimeout(scrollToThis, 1000);
+        // 複数回試行（より長い遅延も含む）
+        const delays = [0, 50, 100, 200, 300, 500, 800, 1000, 1500, 2000];
+        const timers = delays.map(delay => setTimeout(scrollToThis, delay));
+        
+        return () => timers.forEach(timer => clearTimeout(timer));
       }
     }
   }, []);
