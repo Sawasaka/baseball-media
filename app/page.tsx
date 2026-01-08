@@ -219,7 +219,7 @@ function HomeContent() {
     params.set("league", league);
     if (branch !== "all") params.set("branch", branch);
 
-    const newUrl = `/?${params.toString()}#search`;
+    const newUrl = `/?${params.toString()}`;
     router.replace(newUrl, { scroll: false });
   }, [prefecture, league, branch, isInitialized, router]);
 
