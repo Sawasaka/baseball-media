@@ -542,11 +542,10 @@ export function ColumnSection() {
                   {/* Open in new tab button */}
                   <button
                     onClick={() => handleOpenInNewTab(selectedArticle)}
-                    className="px-3 py-2 text-white/70 hover:text-pink-400 transition-colors border border-white/30 hover:border-pink-400 bg-black/50 text-xs font-mono flex items-center gap-1"
+                    className="p-2 text-white/70 hover:text-pink-400 transition-colors border border-white/30 hover:border-pink-400 bg-black/50"
                     title="拡大する"
                   >
-                    <IoOpenOutline size={16} />
-                    <span>拡大する</span>
+                    <IoOpenOutline size={20} />
                   </button>
                   {/* Close button */}
                   <button
