@@ -207,22 +207,28 @@ function HomeContent() {
   }, [searchParams]);
 
   // URLハッシュがある場合はスクロール（#columns対応）
+  // columnsへのスクロールかどうかを記録
+  const [scrollToColumns, setScrollToColumns] = useState(false);
+  
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash) {
-      const hash = window.location.hash.substring(1);
+    if (typeof window !== 'undefined' && window.location.hash === '#columns') {
+      setScrollToColumns(true);
       // 少し遅延させてDOMが確実にレンダリングされてからスクロール
       setTimeout(() => {
-        const element = document.getElementById(hash);
+        const element = document.getElementById('columns');
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 100);
+        // スクロール後にフラグをリセット
+        setTimeout(() => setScrollToColumns(false), 500);
+      }, 300);
     }
   }, []);
 
   // フィルタ変更時にURLを更新（履歴は追加しない）
+  // ただし#columnsへのスクロール中は更新しない
   useEffect(() => {
-    if (!isInitialized) return;
+    if (!isInitialized || scrollToColumns) return;
     
     const params = new URLSearchParams();
     params.set("prefecture", prefecture);
@@ -231,7 +237,7 @@ function HomeContent() {
 
     const newUrl = `/?${params.toString()}#search`;
     router.replace(newUrl, { scroll: false });
-  }, [prefecture, league, branch, isInitialized, router]);
+  }, [prefecture, league, branch, isInitialized, router, scrollToColumns]);
 
   // 都道府県が変わったら支部をリセット
   const handlePrefectureChange = (newPrefecture: string) => {
