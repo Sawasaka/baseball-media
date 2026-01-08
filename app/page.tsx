@@ -206,59 +206,13 @@ function HomeContent() {
     setIsInitialized(true);
   }, [searchParams]);
 
-  // URLパラメータからスクロール先を確認（scrollTo=columns対応）
-  // columnsへのスクロールかどうかを記録
-  const [scrollToColumns, setScrollToColumns] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  
-  // useSearchParamsからscrollToパラメータを取得
-  const scrollToParam = searchParams.get("scrollTo");
-  
-  useEffect(() => {
-    if (scrollToParam === "columns" && !hasScrolled) {
-      setScrollToColumns(true);
-      setHasScrolled(true);
-      
-      // URLからscrollToパラメータを削除（履歴を残さない）
-      const params = new URLSearchParams(window.location.search);
-      params.delete("scrollTo");
-      const newUrl = params.toString() ? `/?${params.toString()}` : "/";
-      window.history.replaceState({}, '', newUrl);
-      
-      // 強制的にコラムセクションにスクロール
-      const forceScrollToColumns = () => {
-        const element = document.getElementById('columns');
-        if (element) {
-          // スムーズスクロールを一時的に無効化
-          document.documentElement.style.scrollBehavior = 'auto';
-          
-          const rect = element.getBoundingClientRect();
-          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          const targetY = rect.top + scrollTop - 20;
-          
-          window.scrollTo(0, targetY);
-          
-          // スムーズスクロールを復元
-          setTimeout(() => {
-            document.documentElement.style.scrollBehavior = '';
-            setScrollToColumns(false);
-          }, 100);
-        }
-      };
-      
-      // Next.jsのスクロールリセット後に実行するため、より長い遅延
-      const timers = [0, 50, 100, 200, 300, 500, 800, 1000, 1500, 2000].map(delay => 
-        setTimeout(forceScrollToColumns, delay)
-      );
-      
-      return () => timers.forEach(timer => clearTimeout(timer));
-    }
-  }, [scrollToParam, hasScrolled]);
-
   // フィルタ変更時にURLを更新（履歴は追加しない）
-  // ただし#columnsへのスクロール中は更新しない
   useEffect(() => {
-    if (!isInitialized || scrollToColumns) return;
+    if (!isInitialized) return;
+    
+    // scrollToパラメータがある場合はスキップ（ColumnSectionで処理）
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("scrollTo")) return;
     
     const params = new URLSearchParams();
     params.set("prefecture", prefecture);

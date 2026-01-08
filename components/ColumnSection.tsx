@@ -115,6 +115,36 @@ export function ColumnSection() {
     }
   }, [searchParams]);
 
+  // scrollTo=columnsパラメータがある場合、このセクションにスクロール
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const scrollTo = urlParams.get("scrollTo");
+      
+      if (scrollTo === "columns") {
+        // URLからパラメータを削除
+        urlParams.delete("scrollTo");
+        const newUrl = urlParams.toString() ? `/?${urlParams.toString()}` : "/";
+        window.history.replaceState({}, '', newUrl);
+        
+        // このセクション（id="columns"）にスクロール
+        const scrollToThis = () => {
+          const element = document.getElementById('columns');
+          if (element) {
+            element.scrollIntoView({ behavior: 'instant', block: 'start' });
+          }
+        };
+        
+        // 複数回試行
+        scrollToThis();
+        setTimeout(scrollToThis, 100);
+        setTimeout(scrollToThis, 300);
+        setTimeout(scrollToThis, 500);
+        setTimeout(scrollToThis, 1000);
+      }
+    }
+  }, []);
+
   // モーダルが開いている時は背景のスクロールを完全に無効化
   useEffect(() => {
     if (selectedArticle || showAllColumnsModal) {
