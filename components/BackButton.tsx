@@ -4,34 +4,8 @@ import { IoArrowBack } from "react-icons/io5";
 
 export function BackButton() {
   const handleBack = () => {
-    // リファラーを確認
-    const referrer = document.referrer;
-    const currentOrigin = window.location.origin;
-    
-    if (referrer && referrer.startsWith(currentOrigin)) {
-      const referrerUrl = new URL(referrer);
-      const referrerPath = referrerUrl.pathname;
-      
-      // トップページから来た場合はコラムセクションへスクロール
-      if (referrerPath === "/" || referrerPath === "") {
-        // URLパラメータでスクロール先を指定
-        window.location.href = "/?scrollTo=columns";
-        return;
-      }
-      
-      // カテゴリ一覧ページから来た場合はそのページへ戻る
-      if (referrerPath.startsWith("/category/")) {
-        window.location.href = referrerPath;
-        return;
-      }
-    }
-    
-    // ブラウザ履歴があれば戻る、なければコラム一覧へ
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = "/?scrollTo=columns";
-    }
+    // 常にコラムセクションへ戻る
+    window.location.href = "/?scrollTo=columns";
   };
 
   return (
