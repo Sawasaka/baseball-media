@@ -206,6 +206,20 @@ function HomeContent() {
     setIsInitialized(true);
   }, [searchParams]);
 
+  // URLハッシュがある場合はスクロール（#columns対応）
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      // 少し遅延させてDOMが確実にレンダリングされてからスクロール
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, []);
+
   // フィルタ変更時にURLを更新（履歴は追加しない）
   useEffect(() => {
     if (!isInitialized) return;
