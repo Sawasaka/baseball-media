@@ -18,7 +18,7 @@ import {
   IoRefresh,
   IoLogoYoutube,
   IoDocumentTextOutline,
-  IoCopyOutline,
+  IoLinkOutline,
   IoOpenOutline,
   IoCheckmarkCircle
 } from "react-icons/io5";
@@ -480,10 +480,10 @@ export function ColumnSection() {
                     {copied ? (
                       <IoCheckmarkCircle size={20} className="text-green-400" />
                     ) : (
-                      <IoCopyOutline size={20} />
+                      <IoLinkOutline size={20} />
                     )}
                     <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-[10px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border border-white/20 z-30">
-                      {copied ? 'コピー完了！' : 'URLコピー'}
+                      {copied ? 'コピー完了！' : 'リンクをコピー'}
                     </span>
                   </button>
                   {/* Open in new tab button */}
