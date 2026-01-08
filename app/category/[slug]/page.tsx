@@ -173,33 +173,27 @@ export default async function CategoryPage({ params }: Props) {
 
                 {/* サムネイル */}
                 {article.thumbnail?.url && (
-                  <div className="relative aspect-video overflow-hidden border-b border-pink-500/20">
+                  <div className="aspect-video overflow-hidden border-b border-pink-500/20">
                     <img
                       src={`${article.thumbnail.url}?w=600&q=80`}
                       alt={article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    {/* ピラーコンテンツのピンマーク */}
-                    {article.isPillar && (
-                      <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
-                        <BsPinAngleFill className="text-base" />
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* ピラーコンテンツのピンマーク（サムネイルなし） */}
-                {!article.thumbnail?.url && article.isPillar && (
-                  <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
-                    <BsPinAngleFill className="text-base" />
                   </div>
                 )}
 
                 <div className="p-4">
-                  {/* タイトル */}
-                  <h2 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2 mb-3">
-                    {article.title}
-                  </h2>
+                  {/* タイトル + ピンマーク */}
+                  <div className="flex items-start gap-2 mb-3">
+                    {article.isPillar && (
+                      <span className="text-yellow-400 flex-shrink-0 mt-0.5" title="ピラーコンテンツ">
+                        <BsPinAngleFill className="text-sm" />
+                      </span>
+                    )}
+                    <h2 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2">
+                      {article.title}
+                    </h2>
+                  </div>
 
                   {/* 読むリンク */}
                   <span className="flex items-center gap-1 text-pink-500 text-xs font-mono group-hover:text-pink-400">
