@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { IoHome, IoArrowBack, IoArrowForward } from "react-icons/io5";
 import {
   getCategoryBySlug,
   getAllCategorySlugs,
@@ -60,8 +61,8 @@ function generateBreadcrumbJsonLd(categoryName: string, categorySlug: string) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "記事一覧",
-        item: `${BASE_URL}/articles`,
+        name: "コラム一覧",
+        item: `${BASE_URL}/#columns`,
       },
       {
         "@type": "ListItem",
@@ -94,86 +95,119 @@ export default async function CategoryPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <div className="min-h-screen bg-black text-white">
-        {/* パンくずリスト */}
-        <nav className="container mx-auto px-4 py-4">
-          <ol className="flex items-center gap-2 text-sm text-white/60 font-mono">
-            <li>
-              <Link href="/" className="hover:text-cyan-400 transition-colors">
-                HOME
-              </Link>
-            </li>
-            <li className="text-white/30">/</li>
-            <li>
-              <Link
-                href="/articles"
-                className="hover:text-cyan-400 transition-colors"
+      <div className="min-h-screen bg-black text-white relative overflow-hidden">
+        {/* Background effects */}
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-pink-500/10 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-400/10 rounded-full blur-[120px]" />
+        </div>
+
+        {/* Navigation */}
+        <nav className="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-pink-500/30">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <Link 
+                href="/" 
+                className="flex items-center gap-2 text-white/70 hover:text-cyan-400 transition-colors font-mono text-sm"
               >
-                ARTICLES
+                <IoHome className="text-lg" />
+                <span>HOME</span>
               </Link>
-            </li>
-            <li className="text-white/30">/</li>
-            <li className="text-cyan-400">{category.name}</li>
-          </ol>
+              <Link 
+                href="/?scrollTo=columns" 
+                className="flex items-center gap-2 text-pink-500 hover:text-pink-400 transition-colors font-mono text-sm"
+              >
+                <IoArrowBack />
+                <span>コラム一覧へ</span>
+              </Link>
+            </div>
+          </div>
         </nav>
 
-        {/* ヘッダー */}
-        <header className="container mx-auto px-4 py-12">
-          <div className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 text-cyan-400 text-sm font-mono mb-6">
+        {/* Header */}
+        <header className="relative z-10 container mx-auto px-4 py-12">
+          {/* Category Badge */}
+          <div 
+            className="inline-block px-4 py-2 text-sm font-mono font-bold mb-6 border-2 border-pink-500 text-pink-500 bg-black/80"
+            style={{ boxShadow: '0 0 15px rgba(255,0,170,0.4)' }}
+          >
             CATEGORY
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          
+          <h1 
+            className="text-4xl md:text-5xl font-black text-white mb-4"
+            style={{ textShadow: '0 0 30px rgba(255,255,255,0.2)' }}
+          >
             {category.name}
           </h1>
+          
           {category.description && (
             <p className="text-white/60 max-w-2xl mb-4">
               {category.description}
             </p>
           )}
-          <p className="text-white/40 font-mono">全 {totalCount} 件の記事</p>
+          
+          <p className="text-pink-500/80 font-mono">
+            <span className="text-white/40">全</span> {totalCount} <span className="text-white/40">件の記事</span>
+          </p>
         </header>
 
         {/* 記事一覧 */}
-        <main className="container mx-auto px-4 pb-20">
+        <main className="relative z-10 container mx-auto px-4 pb-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {articles.map((article) => (
               <Link
                 key={article.id}
-                href={`/articles/${article.slug}`}
-                className="group block border border-white/20 bg-black/50 hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all duration-300"
+                href={`/columns/${article.slug || article.id}`}
+                className="group relative block border border-pink-500/30 bg-black/50 hover:border-pink-500/60 hover:bg-pink-500/10 transition-all duration-300"
               >
+                {/* Corner decorations */}
+                <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-pink-500" />
+                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-pink-500" />
+                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-pink-500" />
+                <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-pink-500" />
+
                 {/* サムネイル */}
-                {article.ogImage && (
-                  <div className="aspect-video overflow-hidden">
+                {article.thumbnail?.url && (
+                  <div className="aspect-video overflow-hidden border-b border-pink-500/20">
                     <img
-                      src={article.ogImage.url}
+                      src={`${article.thumbnail.url}?w=600&q=80`}
                       alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 )}
 
                 <div className="p-5">
                   {/* タイトル */}
-                  <h2 className="text-lg font-bold mb-2 group-hover:text-cyan-400 transition-colors line-clamp-2">
+                  <h2 className="text-lg font-bold mb-3 text-white group-hover:text-pink-300 transition-colors line-clamp-2">
                     {article.title}
                   </h2>
 
                   {/* 説明 */}
-                  <p className="text-white/50 text-sm line-clamp-2 mb-3">
+                  <p className="text-white/50 text-sm line-clamp-2 mb-4">
                     {article.metaDescription ||
                       article.body.replace(/<[^>]*>/g, "").slice(0, 100)}
                   </p>
 
-                  {/* 日付 */}
-                  {article.publishedAt && (
-                    <time
-                      dateTime={article.publishedAt}
-                      className="text-white/40 text-xs font-mono"
-                    >
-                      {new Date(article.publishedAt).toLocaleDateString("ja-JP")}
-                    </time>
-                  )}
+                  {/* フッター */}
+                  <div className="flex items-center justify-between">
+                    {/* 日付 */}
+                    {article.publishedAt && (
+                      <time
+                        dateTime={article.publishedAt}
+                        className="text-white/40 text-xs font-mono"
+                      >
+                        {new Date(article.publishedAt).toLocaleDateString("ja-JP")}
+                      </time>
+                    )}
+                    
+                    {/* 読むリンク */}
+                    <span className="flex items-center gap-1 text-pink-500 text-xs font-mono group-hover:text-pink-400">
+                      <span>記事を読む</span>
+                      <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}
@@ -188,8 +222,27 @@ export default async function CategoryPage({ params }: Props) {
             </div>
           )}
         </main>
+
+        {/* Footer Navigation */}
+        <footer className="relative z-10 container mx-auto px-4 pb-16">
+          <div className="flex justify-center gap-4">
+            <Link
+              href="/?scrollTo=columns"
+              className="flex items-center gap-2 px-6 py-3 border-2 border-pink-500/50 text-pink-500 font-mono hover:bg-pink-500/20 transition-colors"
+            >
+              <IoArrowBack />
+              <span>コラム一覧へ戻る</span>
+            </Link>
+            <Link
+              href="/#search"
+              className="flex items-center gap-2 px-6 py-3 border-2 border-cyan-400/50 text-cyan-400 font-mono hover:bg-cyan-400/20 transition-colors"
+            >
+              <span>チーム検索へ</span>
+              <IoArrowForward />
+            </Link>
+          </div>
+        </footer>
       </div>
     </>
   );
 }
-
