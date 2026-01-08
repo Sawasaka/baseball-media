@@ -347,23 +347,26 @@ export function ColumnSection() {
                                 <IoBaseball className="text-4xl text-pink-500/30" />
                               </div>
                             )}
-                            {/* ピラーコンテンツのピンマーク */}
-                            {article.isPillar && (
-                              <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
-                                <BsPinAngleFill className="text-base" />
-                              </div>
-                            )}
                           </div>
                   
                           {/* Content */}
                           <div className="p-4">
-                            {/* Category badge - below image */}
-                            <span 
-                              className="inline-block px-2 py-1 text-[10px] font-mono font-bold bg-black border mb-3"
-                              style={{ color: colors.solidBg, borderColor: colors.solidBg }}
-                            >
-                              {article.category?.name || "コラム"}
-                            </span>
+                            {/* Category badge & Pillar pin - below image */}
+                            <div className="flex items-center gap-2 mb-3">
+                              <span 
+                                className="inline-block px-2 py-1 text-[10px] font-mono font-bold bg-black border"
+                                style={{ color: colors.solidBg, borderColor: colors.solidBg }}
+                              >
+                                {article.category?.name || "コラム"}
+                              </span>
+                              {/* ピラーコンテンツのピンマーク */}
+                              {article.isPillar && (
+                                <span className="flex items-center gap-1 px-2 py-1 bg-yellow-500/20 border border-yellow-500 text-yellow-500 text-[10px] font-mono font-bold">
+                                  <BsPinAngleFill className="text-xs" />
+                                  <span>PILLAR</span>
+                                </span>
+                              )}
+                            </div>
                             <h3 className="text-sm sm:text-base font-bold text-white mb-4 line-clamp-2 group-hover:text-pink-300 transition-colors">
                           {article.title}
                   </h3>
@@ -651,28 +654,22 @@ export function ColumnSection() {
                                 background: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)`,
                               }}
                             />
-                            {/* ピラーコンテンツのピンマーク */}
-                            {article.isPillar && (
-                              <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
-                                <BsPinAngleFill className="text-base" />
-                              </div>
-                            )}
                           </div>
                         )}
 
-                        {/* Pinned Badge (no thumbnail) */}
-                        {!article.thumbnail?.url && article.isPillar && (
-                          <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
-                            <BsPinAngleFill className="text-base" />
-                          </div>
-                        )}
-
-                        {/* Category & Icon */}
-                        <div className="flex items-center gap-2 mb-3">
+                        {/* Category & Icon & Pillar */}
+                        <div className="flex items-center gap-2 mb-3 flex-wrap">
                           <span style={{ color: colors.solidBg }}>{style.icon}</span>
                           <span className="text-xs font-mono" style={{ color: colors.solidBg }}>
                             {article.category?.name || "未分類"}
                           </span>
+                          {/* ピラーコンテンツのピンマーク */}
+                          {article.isPillar && (
+                            <span className="flex items-center gap-1 px-1.5 py-0.5 bg-yellow-500/20 border border-yellow-500 text-yellow-500 text-[9px] font-mono font-bold">
+                              <BsPinAngleFill className="text-[10px]" />
+                              <span>PILLAR</span>
+                            </span>
+                          )}
                         </div>
 
                         {/* Title */}

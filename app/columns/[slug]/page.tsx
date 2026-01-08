@@ -344,25 +344,20 @@ export default async function ColumnPage({ params }: Props) {
                             alt={related.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
-                          {/* ピラーコンテンツのピンマーク */}
-                          {related.isPillar && (
-                            <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
-                              <BsPinAngleFill className="text-base" />
-                            </div>
-                          )}
                         </div>
                       )}
                       
-                      {/* ピラーコンテンツのピンマーク (サムネイルなし) */}
-                      {!related.thumbnail?.url && related.isPillar && (
-                        <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
-                          <BsPinAngleFill className="text-base" />
-                        </div>
-                      )}
-                      
-                      <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2 mb-2">
-                        {related.title}
-                      </h3>
+                      {/* ピラーコンテンツのピンマーク + タイトル */}
+                      <div className="flex items-start gap-2 mb-2">
+                        {related.isPillar && (
+                          <span className="shrink-0 flex items-center gap-1 px-1.5 py-0.5 bg-yellow-500/20 border border-yellow-500 text-yellow-500 text-[9px] font-mono font-bold mt-0.5">
+                            <BsPinAngleFill className="text-[10px]" />
+                          </span>
+                        )}
+                        <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2">
+                          {related.title}
+                        </h3>
+                      </div>
                       
                       <div className="flex items-center gap-2 text-pink-500 text-xs font-mono">
                         <span>記事を読む</span>
