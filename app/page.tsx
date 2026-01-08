@@ -221,7 +221,7 @@ function HomeContent() {
 
     const newUrl = `/?${params.toString()}#search`;
     router.replace(newUrl, { scroll: false });
-  }, [prefecture, league, branch, isInitialized, router, scrollToColumns]);
+  }, [prefecture, league, branch, isInitialized, router]);
 
   // 都道府県が変わったら支部をリセット
   const handlePrefectureChange = (newPrefecture: string) => {
