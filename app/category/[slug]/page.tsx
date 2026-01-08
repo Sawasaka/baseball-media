@@ -131,7 +131,7 @@ export default async function CategoryPage({ params }: Props) {
             className="inline-block px-4 py-2 text-sm font-mono font-bold mb-6 border-2 border-pink-500 text-pink-500 bg-black/80"
             style={{ boxShadow: '0 0 15px rgba(255,0,170,0.4)' }}
           >
-            CATEGORY
+            カテゴリ
           </div>
           
           <h1 
@@ -148,7 +148,7 @@ export default async function CategoryPage({ params }: Props) {
           )}
           
           <p className="text-pink-500/80 font-mono">
-            <span className="text-white/40">全</span> {totalCount} <span className="text-white/40">件の記事</span>
+            全 {totalCount} 件の記事
           </p>
         </header>
 
@@ -162,10 +162,10 @@ export default async function CategoryPage({ params }: Props) {
                 className="group relative block border border-pink-500/30 bg-black/50 hover:border-pink-500/60 hover:bg-pink-500/10 transition-all duration-300"
               >
                 {/* Corner decorations */}
-                <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-pink-500" />
-                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-pink-500" />
-                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-pink-500" />
-                <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-pink-500" />
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-pink-500" />
+                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-pink-500" />
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-pink-500" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-pink-500" />
 
                 {/* サムネイル */}
                 {article.thumbnail?.url && (
@@ -178,36 +178,17 @@ export default async function CategoryPage({ params }: Props) {
                   </div>
                 )}
 
-                <div className="p-5">
+                <div className="p-4">
                   {/* タイトル */}
-                  <h2 className="text-lg font-bold mb-3 text-white group-hover:text-pink-300 transition-colors line-clamp-2">
+                  <h2 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2 mb-3">
                     {article.title}
                   </h2>
 
-                  {/* 説明 */}
-                  <p className="text-white/50 text-sm line-clamp-2 mb-4">
-                    {article.metaDescription ||
-                      article.body.replace(/<[^>]*>/g, "").slice(0, 100)}
-                  </p>
-
-                  {/* フッター */}
-                  <div className="flex items-center justify-between">
-                    {/* 日付 */}
-                    {article.publishedAt && (
-                      <time
-                        dateTime={article.publishedAt}
-                        className="text-white/40 text-xs font-mono"
-                      >
-                        {new Date(article.publishedAt).toLocaleDateString("ja-JP")}
-                      </time>
-                    )}
-                    
-                    {/* 読むリンク */}
-                    <span className="flex items-center gap-1 text-pink-500 text-xs font-mono group-hover:text-pink-400">
-                      <span>記事を読む</span>
-                      <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </div>
+                  {/* 読むリンク */}
+                  <span className="flex items-center gap-1 text-pink-500 text-xs font-mono group-hover:text-pink-400">
+                    <span>記事を読む</span>
+                    <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
+                  </span>
                 </div>
               </Link>
             ))}
