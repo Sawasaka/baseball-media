@@ -350,8 +350,8 @@ export default async function ColumnPage({ params }: Props) {
                       {/* ピラーコンテンツのピンマーク + タイトル */}
                       <div className="flex items-start gap-2 mb-2">
                         {related.isPillar && (
-                          <span className="shrink-0 flex items-center gap-1 px-1.5 py-0.5 bg-yellow-500/20 border border-yellow-500 text-yellow-500 text-[9px] font-mono font-bold mt-0.5">
-                            <BsPinAngleFill className="text-[10px]" />
+                          <span className="shrink-0 p-1 bg-yellow-500 text-black mt-0.5">
+                            <BsPinAngleFill className="text-xs" />
                           </span>
                         )}
                         <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2">

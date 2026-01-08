@@ -361,9 +361,8 @@ export function ColumnSection() {
                               </span>
                               {/* ピラーコンテンツのピンマーク */}
                               {article.isPillar && (
-                                <span className="flex items-center gap-1 px-2 py-1 bg-yellow-500/20 border border-yellow-500 text-yellow-500 text-[10px] font-mono font-bold">
-                                  <BsPinAngleFill className="text-xs" />
-                                  <span>PILLAR</span>
+                                <span className="p-1 bg-yellow-500 text-black">
+                                  <BsPinAngleFill className="text-sm" />
                                 </span>
                               )}
                             </div>
@@ -665,9 +664,8 @@ export function ColumnSection() {
                           </span>
                           {/* ピラーコンテンツのピンマーク */}
                           {article.isPillar && (
-                            <span className="flex items-center gap-1 px-1.5 py-0.5 bg-yellow-500/20 border border-yellow-500 text-yellow-500 text-[9px] font-mono font-bold">
-                              <BsPinAngleFill className="text-[10px]" />
-                              <span>PILLAR</span>
+                            <span className="p-1 bg-yellow-500 text-black">
+                              <BsPinAngleFill className="text-sm" />
                             </span>
                           )}
                         </div>
