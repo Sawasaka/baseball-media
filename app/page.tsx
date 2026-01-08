@@ -206,17 +206,22 @@ function HomeContent() {
     setIsInitialized(true);
   }, [searchParams]);
 
-  // sessionStorageからスクロール先を確認（#columns対応）
+  // URLパラメータからスクロール先を確認（scrollTo=columns対応）
   // columnsへのスクロールかどうかを記録
   const [scrollToColumns, setScrollToColumns] = useState(false);
   
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const scrollTo = sessionStorage.getItem("scrollTo");
+      const urlParams = new URLSearchParams(window.location.search);
+      const scrollTo = urlParams.get("scrollTo");
+      
       if (scrollTo === "columns") {
-        // sessionStorageをクリア
-        sessionStorage.removeItem("scrollTo");
         setScrollToColumns(true);
+        
+        // URLからscrollToパラメータを削除（履歴を残さない）
+        urlParams.delete("scrollTo");
+        const newUrl = urlParams.toString() ? `/?${urlParams.toString()}` : "/";
+        window.history.replaceState({}, '', newUrl);
         
         // 強制的にコラムセクションにスクロール
         const forceScrollToColumns = () => {
@@ -240,7 +245,7 @@ function HomeContent() {
         };
         
         // Next.jsのスクロールリセット後に実行するため、より長い遅延
-        const timers = [0, 50, 100, 200, 300, 500, 800, 1000].map(delay => 
+        const timers = [0, 50, 100, 200, 300, 500, 800, 1000, 1500].map(delay => 
           setTimeout(forceScrollToColumns, delay)
         );
         
