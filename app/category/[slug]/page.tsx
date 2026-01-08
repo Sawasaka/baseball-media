@@ -183,23 +183,23 @@ export default async function CategoryPage({ params }: Props) {
                 )}
 
                 <div className="p-4">
-                  {/* タイトル + ピンマーク */}
-                  <div className="flex items-start gap-2 mb-3">
+                  {/* タイトル */}
+                  <h2 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2 mb-3">
+                    {article.title}
+                  </h2>
+
+                  {/* フッター: 記事を読む（左）+ ピンマーク（右） */}
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-1 text-pink-500 text-xs font-mono group-hover:text-pink-400">
+                      <span>記事を読む</span>
+                      <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
+                    </span>
                     {article.isPillar && (
-                      <span className="text-yellow-400 flex-shrink-0 mt-0.5" title="ピラーコンテンツ">
-                        <BsPinAngleFill className="text-sm" />
+                      <span className="text-yellow-400" title="ピラーコンテンツ">
+                        <BsPinAngleFill className="text-base" />
                       </span>
                     )}
-                    <h2 className="text-sm sm:text-base font-bold text-white group-hover:text-pink-300 transition-colors line-clamp-2">
-                      {article.title}
-                    </h2>
                   </div>
-
-                  {/* 読むリンク */}
-                  <span className="flex items-center gap-1 text-pink-500 text-xs font-mono group-hover:text-pink-400">
-                    <span>記事を読む</span>
-                    <IoArrowForward className="group-hover:translate-x-1 transition-transform" />
-                  </span>
                 </div>
               </Link>
             ))}
