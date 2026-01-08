@@ -349,9 +349,8 @@ export function ColumnSection() {
                             )}
                             {/* ピラーコンテンツのピンマーク */}
                             {article.isPillar && (
-                              <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-yellow-500 text-black text-[10px] font-bold font-mono">
-                                <BsPinAngleFill className="text-sm" />
-                                <span>PILLAR</span>
+                              <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
+                                <BsPinAngleFill className="text-base" />
                               </div>
                             )}
                           </div>
@@ -654,9 +653,8 @@ export function ColumnSection() {
                             />
                             {/* ピラーコンテンツのピンマーク */}
                             {article.isPillar && (
-                              <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-yellow-500 text-black text-[10px] font-bold font-mono">
-                                <BsPinAngleFill className="text-sm" />
-                                <span>PILLAR</span>
+                              <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
+                                <BsPinAngleFill className="text-base" />
                               </div>
                             )}
                           </div>
@@ -664,9 +662,8 @@ export function ColumnSection() {
 
                         {/* Pinned Badge (no thumbnail) */}
                         {!article.thumbnail?.url && article.isPillar && (
-                          <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-yellow-500 text-black text-[10px] font-bold font-mono">
-                            <BsPinAngleFill className="text-sm" />
-                            <span>PILLAR</span>
+                          <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
+                            <BsPinAngleFill className="text-base" />
                           </div>
                         )}
 
