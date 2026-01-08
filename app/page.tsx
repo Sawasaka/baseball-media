@@ -218,21 +218,31 @@ function HomeContent() {
         sessionStorage.removeItem("scrollTo");
         setScrollToColumns(true);
         
-        // ページ読み込み完了を待ってからスクロール
-        const scrollToElement = () => {
+        // 強制的にコラムセクションにスクロール
+        const forceScrollToColumns = () => {
           const element = document.getElementById('columns');
           if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            const rect = element.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const targetY = rect.top + scrollTop - 20; // 少し上にマージン
+            
+            // 即座にスクロール
+            window.scrollTo({
+              top: targetY,
+              behavior: 'instant'
+            });
+            
             setTimeout(() => setScrollToColumns(false), 500);
           }
         };
         
-        // DOMレンダリング完了後にスクロール
-        if (document.readyState === 'complete') {
-          setTimeout(scrollToElement, 100);
-        } else {
-          window.addEventListener('load', () => setTimeout(scrollToElement, 100));
-        }
+        // 複数回試行して確実にスクロール
+        requestAnimationFrame(() => {
+          forceScrollToColumns();
+          setTimeout(forceScrollToColumns, 50);
+          setTimeout(forceScrollToColumns, 200);
+          setTimeout(forceScrollToColumns, 500);
+        });
       }
     }
   }, []);
