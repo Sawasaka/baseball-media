@@ -186,7 +186,7 @@ export default async function ColumnPage({ params }: Props) {
                 <span>HOME</span>
               </Link>
               <Link 
-                href="/#columns" 
+                href="/?scrollTo=columns" 
                 className="flex items-center gap-2 text-pink-500 hover:text-pink-400 transition-colors font-mono text-sm"
               >
                 <IoArrowBack />
