@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { IoHome, IoArrowBack, IoArrowForward } from "react-icons/io5";
+import { BsPinAngleFill } from "react-icons/bs";
 import {
   getCategoryBySlug,
   getAllCategorySlugs,
@@ -81,10 +82,13 @@ export default async function CategoryPage({ params }: Props) {
     notFound();
   }
 
-  const { contents: articles, totalCount } = await getArticlesByCategory(
+  const { contents: articlesRaw, totalCount } = await getArticlesByCategory(
     category.id,
     { limit: 20 }
   );
+
+  // ピラー記事を先頭にソート
+  const articles = [...articlesRaw].sort((a, b) => (b.isPillar ? 1 : 0) - (a.isPillar ? 1 : 0));
 
   const breadcrumbJsonLd = generateBreadcrumbJsonLd(category.name, category.slug);
 
@@ -169,12 +173,25 @@ export default async function CategoryPage({ params }: Props) {
 
                 {/* サムネイル */}
                 {article.thumbnail?.url && (
-                  <div className="aspect-video overflow-hidden border-b border-pink-500/20">
+                  <div className="relative aspect-video overflow-hidden border-b border-pink-500/20">
                     <img
                       src={`${article.thumbnail.url}?w=600&q=80`}
                       alt={article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
+                    {/* ピラーコンテンツのピンマーク */}
+                    {article.isPillar && (
+                      <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
+                        <BsPinAngleFill className="text-base" />
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ピラーコンテンツのピンマーク（サムネイルなし） */}
+                {!article.thumbnail?.url && article.isPillar && (
+                  <div className="absolute top-2 right-2 p-1.5 bg-yellow-500 text-black">
+                    <BsPinAngleFill className="text-base" />
                   </div>
                 )}
 
