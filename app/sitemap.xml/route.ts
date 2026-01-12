@@ -53,7 +53,7 @@ export async function GET() {
 
   // 静的ページ
   urls.push(createUrlEntry(BASE_URL, now, "daily", 1.0));
-  urls.push(createUrlEntry(`${BASE_URL}/articles`, now, "daily", 0.9));
+  urls.push(createUrlEntry(`${BASE_URL}/?scrollTo=columns`, now, "daily", 0.9));
 
   // 都道府県×リーグのページ
   for (const pref of allPrefectures) {
@@ -87,7 +87,7 @@ export async function GET() {
       if (article.publishedAt) {
         urls.push(
           createUrlEntry(
-            `${BASE_URL}/articles/${article.slug}`,
+            `${BASE_URL}/columns/${article.slug || article.id}`,
             new Date(article.updatedAt).toISOString(),
             "weekly",
             0.8

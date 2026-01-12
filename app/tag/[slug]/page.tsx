@@ -58,8 +58,8 @@ function generateBreadcrumbJsonLd(tagName: string, tagSlug: string) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "記事一覧",
-        item: `${BASE_URL}/articles`,
+        name: "コラム一覧",
+        item: `${BASE_URL}/?scrollTo=columns`,
       },
       {
         "@type": "ListItem",
@@ -103,10 +103,10 @@ export default async function TagPage({ params }: Props) {
             <li className="text-white/30">/</li>
             <li>
               <Link
-                href="/articles"
+                href="/?scrollTo=columns"
                 className="hover:text-cyan-400 transition-colors"
               >
-                ARTICLES
+                コラム一覧
               </Link>
             </li>
             <li className="text-white/30">/</li>
@@ -132,7 +132,7 @@ export default async function TagPage({ params }: Props) {
             {articles.map((article) => (
               <Link
                 key={article.id}
-                href={`/articles/${article.slug}`}
+                href={`/columns/${article.slug || article.id}`}
                 className="group block border border-white/20 bg-black/50 hover:border-pink-500/50 hover:bg-pink-500/10 transition-all duration-300"
               >
                 {/* サムネイル */}

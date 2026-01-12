@@ -155,7 +155,7 @@ export default async function AuthorPage({ params }: Props) {
             {articles.map((article) => (
               <Link
                 key={article.id}
-                href={`/articles/${article.slug}`}
+                href={`/columns/${article.slug || article.id}`}
                 className="group block border border-white/20 bg-black/50 hover:border-yellow-400/50 hover:bg-yellow-400/10 transition-all duration-300"
               >
                 {/* サムネイル */}
