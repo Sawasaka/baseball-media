@@ -387,14 +387,23 @@ export function ColumnSection() {
                           <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-pink-500" />
 
                           {/* Thumbnail */}
-                          <div className="relative aspect-video overflow-hidden">
+                          <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-pink-500/10 to-black">
                             {article.thumbnail?.url ? (
-                              <div 
-                                className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
-                                style={{ backgroundImage: `url(${article.thumbnail.url}?w=400&q=80)` }}
+                              <img 
+                                src={`${article.thumbnail.url}?w=400&q=80`}
+                                alt={article.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                  target.parentElement?.classList.add('flex', 'items-center', 'justify-center');
+                                  const fallback = document.createElement('div');
+                                  fallback.innerHTML = '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="text-4xl text-pink-500/30" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M280.16 242.79l-26.11-26.12a32 32 0 00-45.14-.12L27.38 384.08c6.61 6.23 12.87 13.11 19.56 18.34l2.22 1.69a48.17 48.17 0 0052.19 4.37l68.42-38.13a32 32 0 0136.79 4.08l17.43 15.37a28.28 28.28 0 0023.37 7.11l178.33-27.79z"></path><ellipse cx="373.14" cy="219.33" rx="46.29" ry="46.29" transform="rotate(-45 373.14 219.338)"></ellipse><path d="M478.48 401L348.27 267.77a32 32 0 00-43.52-1.74l-51.6 45.09a16 16 0 01-18.82 1.24L181 277.57a32 32 0 00-43.09 3.44l-13.25 14.61a32 32 0 00-1.26 41.09l4.56 5.71L80 368.44l-.59.45-1.76 1.45a64 64 0 01-4.43 3.2l213.26 162.21a24 24 0 0029.29-1l15.38-12.8a48 48 0 0118.77-10.73l138-45.87a24 24 0 0014.49-14.56l1.43-4.49a24.62 24.62 0 00-25.36-31.3z"></path></svg>';
+                                  target.parentElement?.appendChild(fallback.firstChild!);
+                                }}
                               />
                             ) : (
-                              <div className="w-full h-full bg-gradient-to-br from-pink-500/10 to-black flex items-center justify-center">
+                              <div className="w-full h-full flex items-center justify-center">
                                 <IoBaseball className="text-4xl text-pink-500/30" />
                               </div>
                             )}
@@ -687,22 +696,29 @@ export function ColumnSection() {
                         }}
                       >
                         {/* Thumbnail Image */}
-                        {article.thumbnail?.url && (
-                          <div className="relative -mx-4 -mt-4 mb-3 overflow-hidden">
-                            <div 
-                              className="aspect-video w-full bg-cover bg-center"
-                              style={{ 
-                                backgroundImage: `url(${article.thumbnail.url}?w=400&q=80)`,
+                        <div className="relative -mx-4 -mt-4 mb-3 overflow-hidden aspect-video bg-gradient-to-br from-pink-500/10 to-black">
+                          {article.thumbnail?.url ? (
+                            <img 
+                              src={`${article.thumbnail.url}?w=400&q=80`}
+                              alt={article.title}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
                               }}
                             />
-                            <div 
-                              className="absolute inset-0"
-                              style={{
-                                background: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)`,
-                              }}
-                            />
-                          </div>
-                        )}
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <IoBaseball className="text-4xl text-pink-500/30" />
+                            </div>
+                          )}
+                          <div 
+                            className="absolute inset-0 pointer-events-none"
+                            style={{
+                              background: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)`,
+                            }}
+                          />
+                        </div>
 
                         {/* Category & Icon & Pillar */}
                         <div className="flex items-center gap-2 mb-3 flex-wrap">
