@@ -15,7 +15,7 @@ import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
 import type { Team } from "@/lib/microcms/types";
-import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps, IoOpenOutline, IoCalendar, IoCheckmarkCircle, IoCar, IoPeople, IoNotifications, IoSettings } from "react-icons/io5";
+import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps, IoOpenOutline, IoCalendar, IoCheckmarkCircle, IoCheckmark, IoCar, IoPeople, IoNotifications, IoSettings } from "react-icons/io5";
 import { AnimatePresence } from "framer-motion";
 
 // Import 3D scene dynamically
@@ -191,11 +191,45 @@ const TeamRakuSection = () => {
                     🎉 3ヶ月無料
                   </span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 mb-3">
                   <span className="text-white/30 line-through text-base">¥15,800</span>
                   <span className="text-pink-400 text-lg">→</span>
                   <span className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">¥9,800</span>
                   <span className="text-white/50 text-sm">/月</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/60 text-sm">
+                  <IoPeople className="text-purple-400" />
+                  <span>利用人数無制限</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Benefits */}
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-purple-300 text-sm font-bold">💎 有料登録特典</span>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 text-white/90">
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-emerald-500 to-green-400 flex items-center justify-center flex-shrink-0">
+                    <IoCheckmark className="text-white text-xs" />
+                  </div>
+                  <span className="text-sm">特集インタビュー</span>
+                  <span className="ml-auto px-2 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded text-emerald-300 text-xs font-bold">無料</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/90">
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-emerald-500 to-green-400 flex items-center justify-center flex-shrink-0">
+                    <IoCheckmark className="text-white text-xs" />
+                  </div>
+                  <span className="text-sm">特集ページ作成</span>
+                  <span className="ml-auto px-2 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded text-emerald-300 text-xs font-bold">無料</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/90">
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-emerald-500 to-green-400 flex items-center justify-center flex-shrink-0">
+                    <IoCheckmark className="text-white text-xs" />
+                  </div>
+                  <span className="text-sm">特別記事作成</span>
+                  <span className="ml-auto px-2 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded text-emerald-300 text-xs font-bold">無料</span>
                 </div>
               </div>
             </div>
