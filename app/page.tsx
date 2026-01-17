@@ -170,7 +170,7 @@ const TeamRakuSection = () => {
             <div className="flex flex-wrap gap-2 mb-8">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-white/80">
                 <IoBaseball className="text-emerald-400 text-base" />
-                無料で使える
+                無料で試せる
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-white/80">
                 <IoBaseball className="text-emerald-400 text-base" />
