@@ -1,8 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { IoLocationSharp, IoGlobeOutline, IoBaseball, IoFlash } from "react-icons/io5";
+import { IoLocationSharp, IoGlobeOutline, IoBaseball, IoFlash, IoFlag, IoStar, IoChatbubble } from "react-icons/io5";
 import type { Team as MicroCMSTeam } from "@/lib/microcms/types";
+import { FeedbackModal } from "./FeedbackModal";
+import { ReviewModal } from "./ReviewModal";
+import { ReviewFormModal } from "./ReviewFormModal";
+import { useTeamReviews } from "@/lib/supabase/hooks";
 
 // TeamCard用の型（microCMS の Team 型を拡張）
 // microCMS のセレクトフィールドは配列で返ってくる
@@ -76,12 +81,38 @@ const getLeagueStyles = (league: string) => {
 };
 
 export const TeamCard = ({ team }: { team: Team }) => {
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const leagueId = getLeagueId(team.league);
   const style = getLeagueStyles(leagueId);
   const prefectureName = team.prefecture?.[0] || '';
   const leagueName = team.league?.[0] || '';
+  
+  // クチコミデータ（Supabaseから取得）
+  const { averageRating, reviewCount, reviews, isLoading } = useTeamReviews(team.id);
 
   return (
+    <>
+      <FeedbackModal
+        isOpen={isFeedbackOpen}
+        onClose={() => setIsFeedbackOpen(false)}
+        teamId={team.id}
+        teamName={team.name}
+      />
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        teamId={team.id}
+        teamName={team.name}
+        onOpenReviewForm={() => setIsReviewFormOpen(true)}
+      />
+      <ReviewFormModal
+        isOpen={isReviewFormOpen}
+        onClose={() => setIsReviewFormOpen(false)}
+        teamId={team.id}
+        teamName={team.name}
+      />
     <motion.div
       whileHover={{ y: -12, scale: 1.03 }}
       transition={{ duration: 0.3 }}
@@ -137,8 +168,8 @@ export const TeamCard = ({ team }: { team: Team }) => {
             </div>
           </div>
           
-          {/* League & Branch badges - right corner */}
-          <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex flex-col items-end gap-0.5 sm:gap-1">
+          {/* League & Branch badges - left corner */}
+          <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex flex-col items-start gap-0.5 sm:gap-1">
             <span 
               className={`text-[8px] sm:text-[9px] font-mono font-bold px-1.5 sm:px-2 py-0.5 border ${style.borderColor}/50`}
               style={{ color: leagueId === 'boys' ? '#FF2A44' : leagueId === 'senior' ? '#00F0FF' : '#FACC15' }}
@@ -153,6 +184,25 @@ export const TeamCard = ({ team }: { team: Team }) => {
               </span>
             )}
           </div>
+          
+          {/* Review Rating Badge - right corner */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsReviewModalOpen(true);
+            }}
+            className="absolute top-2 sm:top-3 right-2 sm:right-3 flex items-center gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 bg-black/60 border border-yellow-400/40 hover:border-yellow-400 hover:bg-yellow-400/10 rounded transition-all duration-300 cursor-pointer"
+          >
+            <IoStar className="text-yellow-400 text-xs sm:text-sm" />
+            {averageRating !== null ? (
+              <>
+                <span className="text-yellow-400 text-[10px] sm:text-xs font-bold">{averageRating}</span>
+                <span className="text-yellow-400/70 text-[8px] sm:text-[10px]">({reviewCount})</span>
+              </>
+            ) : (
+              <span className="text-white/40 text-[8px] sm:text-[10px]">--</span>
+            )}
+          </button>
         </div>
 
         {/* Content */}
@@ -206,7 +256,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
           <div className="flex-1" />
 
           {/* Actions */}
-          <div className="flex items-center pt-3 sm:pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors mt-auto">
+          <div className="flex items-center justify-between pt-3 sm:pt-5 border-t-2 border-white/10 group-hover:border-white/20 transition-colors mt-auto">
             {team.officialurl ? (
               <a
                 href={team.officialurl}
@@ -224,9 +274,39 @@ export const TeamCard = ({ team }: { team: Team }) => {
                 <span>サイト準備中</span>
               </span>
             )}
+            
+            {/* Action Buttons */}
+            <div className="flex items-center gap-1">
+              {/* Review Post Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsReviewFormOpen(true);
+                }}
+                className="flex items-center gap-1 px-2 py-1 text-[10px] sm:text-xs text-yellow-400/70 hover:text-yellow-400 hover:bg-yellow-400/10 rounded transition-all duration-300"
+                title="クチコミ投稿"
+              >
+                <IoChatbubble className="text-xs sm:text-sm" />
+                <span>投稿</span>
+              </button>
+              
+              {/* Feedback Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsFeedbackOpen(true);
+                }}
+                className="flex items-center gap-1 px-2 py-1 text-[10px] sm:text-xs text-cyan-400/70 hover:text-cyan-400 hover:bg-cyan-400/10 rounded transition-all duration-300"
+                title="報告"
+              >
+                <IoFlag className="text-xs sm:text-sm" />
+                <span>報告</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </motion.div>
+    </>
   );
 };

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from 'next/link';
-import { IoBaseball, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoCloseOutline, IoRocket, IoGlobeOutline, IoChevronForward } from "react-icons/io5";
+import { IoBaseball, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoCloseOutline, IoRocket, IoGlobeOutline, IoChevronForward, IoMail } from "react-icons/io5";
 import { motion, AnimatePresence } from 'framer-motion';
 
 // サブチャンネルのデータ
@@ -156,30 +156,63 @@ export const Navbar = () => {
                 );
               })}
               
-              {/* CTA - 日程調整 */}
+              {/* チーム楽 */}
+              <motion.a
+                href="#team-raku"
+                className="relative px-2 lg:px-3 xl:px-4 py-1.5 lg:py-2 font-mono group overflow-hidden flex items-center justify-center gap-1 xl:gap-2 transition-all duration-300"
+                style={{ 
+                  background: 'linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05))',
+                  border: '2px solid rgba(168,85,247,0.6)',
+                  boxShadow: '0 0 15px rgba(168,85,247,0.3)',
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: '0 0 25px rgba(168,85,247,0.6)',
+                }}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <span 
+                  className="text-base xl:text-lg font-bold"
+                  style={{ 
+                    color: '#A855F7',
+                    filter: 'drop-shadow(0 0 8px #A855F7)',
+                  }}
+                >
+                  楽
+                </span>
+                <span 
+                  className="text-xs xl:text-sm font-bold"
+                  style={{ 
+                    color: '#A855F7',
+                    textShadow: '0 0 10px rgba(168,85,247,0.8)',
+                  }}
+                >
+                  チーム楽
+                </span>
+              </motion.a>
+
+              {/* CTA - お問い合わせ */}
               <a 
-                href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#contact"
                 className="ml-2 xl:ml-3 px-3 xl:px-5 py-1.5 xl:py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white text-xs xl:text-sm font-bold font-mono transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] flex items-center gap-1 xl:gap-2 relative overflow-hidden group"
               >
-                <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                日程調整
+                <IoMail className="text-sm" />
+                お問い合わせ
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </a>
             </div>
 
-            {/* Tablet/Mobile - 日程調整ボタン */}
+            {/* Tablet/Mobile - お問い合わせボタン */}
             <div className="lg:hidden flex items-center">
               <a 
-                href="https://app.spirinc.com/t/mwF8lqDhdKiI4FsASBYdU/as/xl7WljzbTyGE_VyluzJKk/confirm"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#contact"
                 className="px-2 py-1.5 sm:px-3 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[10px] sm:text-xs md:text-sm font-bold font-mono flex items-center"
                 style={{ boxShadow: '0 0 15px rgba(34,197,94,0.4)' }}
               >
-                <span className="sm:hidden">相談</span>
-                <span className="hidden sm:inline">日程調整</span>
+                <span className="sm:hidden">問合せ</span>
+                <span className="hidden sm:inline">お問い合わせ</span>
               </a>
             </div>
           </div>

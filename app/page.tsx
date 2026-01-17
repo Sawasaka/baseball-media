@@ -15,11 +15,390 @@ import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
 import type { Team } from "@/lib/microcms/types";
-import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps, IoOpenOutline } from "react-icons/io5";
+import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps, IoOpenOutline, IoCalendar, IoCheckmarkCircle, IoCar, IoPeople, IoNotifications, IoSettings } from "react-icons/io5";
 import { AnimatePresence } from "framer-motion";
 
 // Import 3D scene dynamically
 const Scene3D = dynamic(() => import("@/components/Scene3D"), { ssr: false });
+
+// チーム楽の機能データ
+const teamRakuFeatures = [
+  {
+    id: "schedule",
+    number: "01",
+    label: "予定管理",
+    icon: IoCalendar,
+    color: "#6366F1",
+    description: "いつ・どこで・何があるか一目で",
+    content: {
+      title: "練習予定",
+      items: [
+        { date: "1/18(土)", event: "練習", location: "第一グラウンド", time: "9:00〜12:00" },
+        { date: "1/19(日)", event: "練習試合", location: "○○球場", time: "13:00〜" },
+        { date: "1/25(土)", event: "練習", location: "第一グラウンド", time: "9:00〜12:00" },
+      ]
+    }
+  },
+  {
+    id: "duty",
+    number: "02",
+    label: "当番管理",
+    icon: IoCheckmarkCircle,
+    color: "#10B981",
+    description: "「誰がやる？」がすぐ決まる",
+    content: {
+      title: "今週の当番",
+      items: [
+        { role: "グラウンド整備", name: "田中さん", status: "確定" },
+        { role: "お茶当番", name: "鈴木さん", status: "確定" },
+        { role: "記録係", name: "未定", status: "募集中" },
+      ]
+    }
+  },
+  {
+    id: "carpool",
+    number: "03",
+    label: "配車管理",
+    icon: IoCar,
+    color: "#F97316",
+    description: "送迎調整の手間をゼロに",
+    content: {
+      title: "配車状況",
+      items: [
+        { driver: "山田さん", car: "プリウス", seats: "3名乗車OK", route: "駅前経由" },
+        { driver: "佐藤さん", car: "ノア", seats: "5名乗車OK", route: "直行" },
+      ]
+    }
+  },
+  {
+    id: "member",
+    number: "04",
+    label: "メンバー管理",
+    icon: IoPeople,
+    color: "#8B5CF6",
+    description: "連絡先も設定もまとめて管理",
+    content: {
+      title: "チームメンバー",
+      count: "24名登録中",
+      groups: ["選手: 18名", "コーチ: 3名", "保護者: 3名"]
+    }
+  },
+  {
+    id: "notification",
+    number: "05",
+    label: "通知機能",
+    icon: IoNotifications,
+    color: "#EF4444",
+    description: "大事な連絡を見逃さない",
+    content: {
+      title: "最新のお知らせ",
+      notifications: [
+        { type: "予定", message: "明日の練習は雨天中止です", time: "2時間前" },
+        { type: "当番", message: "記録係の募集があります", time: "1日前" },
+      ]
+    }
+  },
+];
+
+// チーム楽セクションコンポーネント
+const TeamRakuSection = () => {
+  const [activeFeature, setActiveFeature] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % teamRakuFeatures.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isHovered]);
+
+  const feature = teamRakuFeatures[activeFeature];
+  const Icon = feature.icon;
+
+  return (
+    <section id="team-raku" className="py-16 sm:py-28 px-3 sm:px-4 bg-gradient-to-b from-black/50 to-purple-950/20 relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="container mx-auto max-w-6xl relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12 sm:mb-16"
+        >
+          <span className="inline-block px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium mb-4">
+            チーム運営者の方へ
+          </span>
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
+            お当番管理を<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400" style={{ textShadow: '0 0 40px rgba(168,85,247,0.5)' }}>
+              もっと楽に。
+            </span>
+          </h2>
+          <p className="text-white/60 max-w-lg mx-auto text-sm sm:text-base">
+            予定管理、当番割り当て、配車手配をひとつのアプリで。<br />
+            チーム運営の悩みをスッキリ解決します。
+          </p>
+        </motion.div>
+
+        {/* Main Content */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left: Text Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="order-2 lg:order-1"
+          >
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
+                  <IoCheckmarkCircle className="text-green-400 text-sm" />
+                </div>
+                <span className="text-white/80">無料で使える</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
+                  <IoCheckmarkCircle className="text-green-400 text-sm" />
+                </div>
+                <span className="text-white/80">かんたん設定</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
+                  <IoCheckmarkCircle className="text-green-400 text-sm" />
+                </div>
+                <span className="text-white/80">直感的に使える</span>
+              </div>
+            </div>
+
+            {/* Pricing */}
+            <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-2xl p-6 mb-8">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="px-3 py-1 bg-yellow-500/20 border border-yellow-500/40 rounded-full text-yellow-300 text-xs font-bold animate-pulse">
+                  3ヶ月無料
+                </span>
+              </div>
+              <div className="flex items-baseline gap-3">
+                <span className="text-white/40 line-through text-lg">¥15,800</span>
+                <span className="text-3xl sm:text-4xl font-black text-white">¥9,800</span>
+                <span className="text-white/60">/月</span>
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <a
+              href="https://team-raku.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-lg rounded-xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] hover:scale-105"
+            >
+              無料で始める
+              <IoChevronForward className="group-hover:translate-x-1 transition-transform" />
+            </a>
+          </motion.div>
+
+          {/* Right: Interactive App Preview */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="order-1 lg:order-2"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <div className="bg-white rounded-3xl shadow-2xl shadow-purple-500/20 overflow-hidden max-w-md mx-auto">
+              {/* App Header */}
+              <div className="bg-gradient-to-r from-slate-50 to-slate-100 p-4 border-b border-slate-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                    楽
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-800">チーム楽</div>
+                    <div className="text-xs text-slate-500">お当番管理アプリ</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Feature Tabs */}
+              <div className="flex border-b border-slate-200">
+                {teamRakuFeatures.slice(0, 4).map((f, idx) => {
+                  const TabIcon = f.icon;
+                  return (
+                    <button
+                      key={f.id}
+                      onClick={() => setActiveFeature(idx)}
+                      className={`flex-1 py-3 px-2 flex flex-col items-center gap-1 transition-all duration-300 ${
+                        activeFeature === idx
+                          ? "bg-slate-50 border-b-2"
+                          : "text-slate-400 hover:bg-slate-50"
+                      }`}
+                      style={{
+                        borderColor: activeFeature === idx ? f.color : "transparent",
+                        color: activeFeature === idx ? f.color : undefined,
+                      }}
+                    >
+                      <TabIcon className="text-lg" />
+                      <span className="text-xs font-medium">{f.label.slice(0, 2)}</span>
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => setActiveFeature(4)}
+                  className={`flex-1 py-3 px-2 flex flex-col items-center gap-1 transition-all duration-300 ${
+                    activeFeature === 4
+                      ? "bg-slate-50 border-b-2"
+                      : "text-slate-400 hover:bg-slate-50"
+                  }`}
+                  style={{
+                    borderColor: activeFeature === 4 ? teamRakuFeatures[4].color : "transparent",
+                    color: activeFeature === 4 ? teamRakuFeatures[4].color : undefined,
+                  }}
+                >
+                  <IoSettings className="text-lg" />
+                  <span className="text-xs font-medium">設定</span>
+                </button>
+              </div>
+
+              {/* Feature Content */}
+              <div className="h-[280px] overflow-hidden relative">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={activeFeature}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="p-5 absolute inset-0"
+                  >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: `${feature.color}20` }}
+                    >
+                      <Icon className="text-xl" style={{ color: feature.color }} />
+                    </div>
+                    <div>
+                      <div className="font-bold text-slate-800">{feature.label}</div>
+                      <div className="text-xs text-slate-500">{feature.description}</div>
+                    </div>
+                  </div>
+
+                  {/* Dynamic Content based on feature */}
+                  {feature.id === "schedule" && (
+                    <div className="space-y-3">
+                      {feature.content.items.map((item, i) => (
+                        <div key={i} className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                          <div className="text-center">
+                            <div className="text-xs text-slate-500">{item.date}</div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-medium text-slate-700 text-sm">{item.event}</div>
+                            <div className="text-xs text-slate-500">{item.location} {item.time}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {feature.id === "duty" && (
+                    <div className="space-y-3">
+                      {feature.content.items.map((item, i) => (
+                        <div key={i} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                          <div>
+                            <div className="font-medium text-slate-700 text-sm">{item.role}</div>
+                            <div className="text-xs text-slate-500">{item.name}</div>
+                          </div>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            item.status === "確定" 
+                              ? "bg-green-100 text-green-600" 
+                              : "bg-yellow-100 text-yellow-600"
+                          }`}>
+                            {item.status}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {feature.id === "carpool" && (
+                    <div className="space-y-3">
+                      {feature.content.items.map((item, i) => (
+                        <div key={i} className="p-3 bg-slate-50 rounded-xl">
+                          <div className="flex items-center gap-2 mb-2">
+                            <IoCar className="text-orange-500" />
+                            <span className="font-medium text-slate-700 text-sm">{item.driver}</span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs text-slate-500">
+                            <span>{item.car}</span>
+                            <span className="px-2 py-1 bg-blue-100 text-blue-600 rounded-full">{item.seats}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {feature.id === "member" && (
+                    <div>
+                      <div className="text-center mb-4">
+                        <div className="text-3xl font-bold text-slate-800">{feature.content.count}</div>
+                      </div>
+                      <div className="space-y-2">
+                        {feature.content.groups.map((group, i) => (
+                          <div key={i} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <span className="text-sm text-slate-600">{group}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {feature.id === "notification" && (
+                    <div className="space-y-3">
+                      {feature.content.notifications.map((notif, i) => (
+                        <div key={i} className="p-3 bg-slate-50 rounded-xl">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="px-2 py-0.5 bg-purple-100 text-purple-600 rounded text-xs font-medium">
+                              {notif.type}
+                            </span>
+                            <span className="text-xs text-slate-400">{notif.time}</span>
+                          </div>
+                          <div className="text-sm text-slate-700">{notif.message}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Feature Indicator Dots */}
+              <div className="flex justify-center gap-2 pb-4">
+                {teamRakuFeatures.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveFeature(idx)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      activeFeature === idx
+                        ? "w-6 bg-purple-500"
+                        : "bg-slate-300 hover:bg-slate-400"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // サブチャンネルのデータ（モバイル表示用）
 const mobileSubChannels = [
@@ -62,6 +441,15 @@ const mobileSubChannels = [
     icon: IoBriefcase,
     color: "#22C55E",
     shadowColor: "34,197,94",
+  },
+  {
+    id: "team-raku",
+    label: "チーム楽",
+    url: "#team-raku",
+    icon: IoApps,
+    color: "#A855F7",
+    shadowColor: "168,85,247",
+    isInternalLink: true,
   },
 ];
 
@@ -439,7 +827,36 @@ function HomeContent() {
               <div className="grid grid-cols-3 gap-1.5 mb-1.5">
                 {mobileSubChannels.slice(0, 3).map((channel) => {
                   const Icon = channel.icon;
-                  return (
+                  const isInternal = 'isInternalLink' in channel && channel.isInternalLink;
+                  return isInternal ? (
+                    <a
+                      key={channel.id}
+                      href={channel.url}
+                      className="flex items-center justify-center gap-1 py-2 font-mono transition-all duration-300 active:scale-95 rounded"
+                      style={{
+                        background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.2), rgba(${channel.shadowColor},0.05))`,
+                        border: `1.5px solid ${channel.color}`,
+                        boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
+                      }}
+                    >
+                      <Icon 
+                        size={14} 
+                        style={{ 
+                          color: channel.color,
+                          filter: `drop-shadow(0 0 4px ${channel.color})`,
+                        }} 
+                      />
+                      <span 
+                        className="text-[10px] font-bold whitespace-nowrap"
+                        style={{ 
+                          color: channel.color,
+                          textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
+                        }}
+                      >
+                        {channel.label}
+                      </span>
+                    </a>
+                  ) : (
                     <button
                       key={channel.id}
                       onClick={() => {
@@ -473,11 +890,40 @@ function HomeContent() {
                   );
                 })}
               </div>
-              {/* 下段2つ - 中央配置 */}
-              <div className="flex justify-center gap-1.5">
-                {mobileSubChannels.slice(3, 5).map((channel) => {
+              {/* 下段3つ */}
+              <div className="grid grid-cols-3 gap-1.5">
+                {mobileSubChannels.slice(3, 6).map((channel) => {
                   const Icon = channel.icon;
-                  return (
+                  const isInternal = 'isInternalLink' in channel && channel.isInternalLink;
+                  return isInternal ? (
+                    <a
+                      key={channel.id}
+                      href={channel.url}
+                      className="flex items-center justify-center gap-1 py-2 font-mono transition-all duration-300 active:scale-95 rounded"
+                      style={{
+                        background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.2), rgba(${channel.shadowColor},0.05))`,
+                        border: `1.5px solid ${channel.color}`,
+                        boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
+                      }}
+                    >
+                      <Icon 
+                        size={14} 
+                        style={{ 
+                          color: channel.color,
+                          filter: `drop-shadow(0 0 4px ${channel.color})`,
+                        }} 
+                      />
+                      <span 
+                        className="text-[10px] font-bold whitespace-nowrap"
+                        style={{ 
+                          color: channel.color,
+                          textShadow: `0 0 6px rgba(${channel.shadowColor},0.5)`,
+                        }}
+                      >
+                        {channel.label}
+                      </span>
+                    </a>
+                  ) : (
                     <button
                       key={channel.id}
                       onClick={() => {
@@ -489,7 +935,6 @@ function HomeContent() {
                         background: `linear-gradient(135deg, rgba(${channel.shadowColor},0.2), rgba(${channel.shadowColor},0.05))`,
                         border: `1.5px solid ${channel.color}`,
                         boxShadow: `0 0 10px rgba(${channel.shadowColor},0.3)`,
-                        width: 'calc((100% - 0.375rem) / 3)',
                       }}
                     >
                       <Icon 
@@ -511,7 +956,7 @@ function HomeContent() {
                     </button>
                   );
                 })}
-            </div>
+              </div>
           </motion.div>
 
             {/* サブチャンネル iframeモーダル（PC表示と同じ） */}
@@ -961,6 +1406,9 @@ function HomeContent() {
             <SubServiceTabs />
           </div>
         </section>
+
+        {/* チーム楽 Promotion Section */}
+        <TeamRakuSection />
 
         {/* Column Section */}
         <ColumnSection />
