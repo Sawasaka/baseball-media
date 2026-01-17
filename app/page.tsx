@@ -132,7 +132,7 @@ const TeamRakuSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12 sm:mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium mb-4">
+          <span className="inline-block px-5 py-2.5 bg-purple-500/30 border-2 border-purple-400/60 rounded-full text-white text-sm font-bold mb-4 shadow-[0_0_20px_rgba(168,85,247,0.4)]">
             チーム運営者の方へ
           </span>
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 sm:mb-6">
@@ -156,38 +156,47 @@ const TeamRakuSection = () => {
             viewport={{ once: true }}
             className="order-2 lg:order-1"
           >
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <IoCheckmarkCircle className="text-green-400 text-sm" />
-                </div>
-                <span className="text-white/80">無料で使える</span>
+            {/* Service Name */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-purple-500/30">
+                楽
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <IoCheckmarkCircle className="text-green-400 text-sm" />
-                </div>
-                <span className="text-white/80">かんたん設定</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <IoCheckmarkCircle className="text-green-400 text-sm" />
-                </div>
-                <span className="text-white/80">直感的に使える</span>
+              <div>
+                <h3 className="text-2xl font-black text-white">チーム楽</h3>
+                <p className="text-purple-300 text-sm">お当番管理アプリ</p>
               </div>
             </div>
 
+            <div className="flex flex-wrap gap-2 mb-8">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-white/80">
+                <IoBaseball className="text-emerald-400 text-base" />
+                無料で使える
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-white/80">
+                <IoBaseball className="text-emerald-400 text-base" />
+                かんたん設定
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-white/80">
+                <IoBaseball className="text-emerald-400 text-base" />
+                直感的に使える
+              </span>
+            </div>
+
             {/* Pricing */}
-            <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-2xl p-6 mb-8">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="px-3 py-1 bg-yellow-500/20 border border-yellow-500/40 rounded-full text-yellow-300 text-xs font-bold animate-pulse">
-                  3ヶ月無料
-                </span>
-              </div>
-              <div className="flex items-baseline gap-3">
-                <span className="text-white/40 line-through text-lg">¥15,800</span>
-                <span className="text-3xl sm:text-4xl font-black text-white">¥9,800</span>
-                <span className="text-white/60">/月</span>
+            <div className="relative bg-gradient-to-br from-purple-900/40 to-purple-800/20 backdrop-blur-md border border-purple-500/20 rounded-2xl p-6 mb-8 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-pink-500/10" />
+              <div className="relative">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="px-3 py-1.5 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 rounded-full text-yellow-300 text-xs font-bold">
+                    🎉 3ヶ月無料
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-white/30 line-through text-base">¥15,800</span>
+                  <span className="text-pink-400 text-lg">→</span>
+                  <span className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">¥9,800</span>
+                  <span className="text-white/50 text-sm">/月</span>
+                </div>
               </div>
             </div>
 
@@ -291,9 +300,9 @@ const TeamRakuSection = () => {
                   </div>
 
                   {/* Dynamic Content based on feature */}
-                  {feature.id === "schedule" && (
+                  {feature.id === "schedule" && feature.content.items && (
                     <div className="space-y-3">
-                      {feature.content.items.map((item, i) => (
+                      {(feature.content.items as Array<{date: string; event: string; location: string; time: string}>).map((item, i) => (
                         <div key={i} className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
                           <div className="text-center">
                             <div className="text-xs text-slate-500">{item.date}</div>
@@ -307,9 +316,9 @@ const TeamRakuSection = () => {
                     </div>
                   )}
 
-                  {feature.id === "duty" && (
+                  {feature.id === "duty" && feature.content.items && (
                     <div className="space-y-3">
-                      {feature.content.items.map((item, i) => (
+                      {(feature.content.items as Array<{role: string; name: string; status: string}>).map((item, i) => (
                         <div key={i} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
                           <div>
                             <div className="font-medium text-slate-700 text-sm">{item.role}</div>
@@ -327,9 +336,9 @@ const TeamRakuSection = () => {
                     </div>
                   )}
 
-                  {feature.id === "carpool" && (
+                  {feature.id === "carpool" && feature.content.items && (
                     <div className="space-y-3">
-                      {feature.content.items.map((item, i) => (
+                      {(feature.content.items as Array<{driver: string; car: string; seats: string}>).map((item, i) => (
                         <div key={i} className="p-3 bg-slate-50 rounded-xl">
                           <div className="flex items-center gap-2 mb-2">
                             <IoCar className="text-orange-500" />
@@ -344,7 +353,7 @@ const TeamRakuSection = () => {
                     </div>
                   )}
 
-                  {feature.id === "member" && (
+                  {feature.id === "member" && feature.content.groups && (
                     <div>
                       <div className="text-center mb-4">
                         <div className="text-3xl font-bold text-slate-800">{feature.content.count}</div>
@@ -359,7 +368,7 @@ const TeamRakuSection = () => {
                     </div>
                   )}
 
-                  {feature.id === "notification" && (
+                  {feature.id === "notification" && feature.content.notifications && (
                     <div className="space-y-3">
                       {feature.content.notifications.map((notif, i) => (
                         <div key={i} className="p-3 bg-slate-50 rounded-xl">
