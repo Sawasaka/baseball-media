@@ -6977,6 +6977,8 @@ export const teams: Team[] = [
     area: '川崎市麻生区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: 'チームスローガンは「常に全力・常に笑顔・常に感謝」。',
+    officialurl: 'https://www.instagram.com/asaoboys_official/',
     representative: '関谷 俊郎',
   },
   {
@@ -6986,6 +6988,8 @@ export const teams: Team[] = [
     area: '横浜市都筑区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: '元プロ野球選手・前田幸長が会長。3学年100名以上が在籍し複数チーム編成で全員が試合出場可能。10名超の元プロ・名門校出身スタッフが指導。複数回の全国大会出場実績。',
+    officialurl: 'https://sportsbond-prod.com/contents/tsuzukichuo-boys/welcome/',
     representative: '長谷部 淳',
   },
   {
@@ -6995,6 +6999,8 @@ export const teams: Team[] = [
     area: '川崎市宮前区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: '都筑ジャイアンツグループの兄弟チーム。2021年日本少年野球神奈川夏季大会準優勝。元プロ野球選手・前田幸長会長率いる組織でラプソード導入の本格指導。',
+    officialurl: 'https://sportsbond-prod.com/category/contents/tsuzukichuo-boys/',
     representative: '美濃部 健太郎',
   },
   {
@@ -7004,6 +7010,8 @@ export const teams: Team[] = [
     area: '横浜市青葉区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: '2025年本庄市長杯神奈川支部予選優勝、第3回日本少年野球神奈川大会優勝。元中日・谷繁元信氏の名を冠した「青葉カップ・谷繁杯」を主催。',
+    officialurl: 'https://www.biz-park.net/aoba-boys/',
     representative: '村井 義治',
   },
   {
@@ -7013,6 +7021,8 @@ export const teams: Team[] = [
     area: '横浜市旭区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: '横浜市旭区を拠点に活動する中学生硬式野球チーム。社会人チームも併設。選手募集中。',
+    officialurl: 'https://yokohamachuo-club.wixsite.com/asahichuo',
     representative: '渡邉 龍也',
   },
   {
@@ -7022,6 +7032,8 @@ export const teams: Team[] = [
     area: '横浜市泉区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: 'プロ野球選手輩出の名門。2025年DeNA指名・島田舜也、2024年オリックス指名・山中稜真を輩出。2024年春季神奈川県支部大会・長野交流大会・綾瀬シーレックス大会優勝。',
+    officialurl: 'https://www.netto.jp/yokohamaizumichuo-boys/',
     representative: '羽太 健一',
   },
   {
@@ -7031,6 +7043,8 @@ export const teams: Team[] = [
     area: '横浜市港南区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: '2022年にボーイズリーグ正式加盟の新設チーム。2023年第48回関東大会予選準優勝。戸塚区・金沢区のグラウンドで活動。随時練習体験OK。',
+    officialurl: 'https://ykounanboys2022.89dream.jp/',
     representative: '杉山 雅哉',
   },
   {
@@ -7040,6 +7054,8 @@ export const teams: Team[] = [
     area: '横浜市中区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: 'チームスローガンは「素直に、明るく、謙虚に」。2022年横浜市長旗争奪神奈川大会初優勝。JUNIOR ALL JAPAN 2019選出。1〜3年生計42名在籍。',
+    officialurl: 'https://www.nakaboys.com/',
     representative: '中野 克彦',
   },
   {
@@ -7049,15 +7065,19 @@ export const teams: Team[] = [
     area: '横浜市',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: 'モットーは「挨拶・感謝・努力」。1球でも多くボールに触れ、全員野球を心がけ指導。全力プレーでがむしゃらに一生懸命頑張る選手を育成。',
+    officialurl: 'https://www.netto.jp/yokobo/',
     representative: '中村 浩一',
   },
   {
     id: 'boys-kanagawa-yokohama-midori',
     name: '横浜緑ボーイズ',
     prefecture: ['神奈川県'],
-    area: '横浜市緑区',
+    area: '横浜市旭区若葉台',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: 'スローガンは「夢への一歩」文武両道。野球と学習塾を合わせたクラブチーム。2024年中日ドラゴンズ3位指名・森駿太を輩出。2025年リスト杯・東日本選抜予選・1年生大会で優勝の三冠。',
+    officialurl: 'https://yokohama-midori-boys.com/',
     representative: '金子 真吾',
   },
   {
@@ -7067,6 +7087,8 @@ export const teams: Team[] = [
     area: '横須賀市',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: 'モットーは「人生無近道」。礼儀と感謝を重んじ、技術力・精神力・知識の向上を目指す。選手個人の能力に応じた指導で高校野球で活躍できる人材を育成。学業優先で野球と勉学の両立を支援。',
+    officialurl: 'https://yokohamabay-boys.jimdosite.com/',
     representative: '岸 昭重',
   },
   {
@@ -7076,6 +7098,8 @@ export const teams: Team[] = [
     area: '横浜市南区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: '「礼儀・感謝・仲間・全国制覇」を指針に活動。2025年春季神奈川県支部大会優勝。2022年ジャイアンツカップ神奈川代表。横浜南ボーイズカップを主催。平日練習あり。',
+    officialurl: 'http://yokohamaminamiboys.com/',
     representative: '三浦 寿徳',
   },
   {
@@ -7085,15 +7109,19 @@ export const teams: Team[] = [
     area: '横浜市南区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: '横浜南ボーイズの兄弟チーム。同じ組織・指導体制のもと活動。2022年選手権大会神奈川予選準優勝。横浜南ボーイズカップにも参加。',
+    officialurl: 'http://yokohamaminamiboys.com/result/chuou.html',
     representative: '中村 正寿',
   },
   {
     id: 'boys-kanagawa-yokohama-yamate',
     name: '横浜山手ボーイズ',
     prefecture: ['神奈川県'],
-    area: '横浜市中区',
+    area: '横浜市・海老名市',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: 'スローガンは「学びながら鍛えよう」。5教科の勉強と野球を行う文武両道チーム。英検対策に特化し、準1級合格者も輩出。横浜塾・海老名塾の2教室と専用グラウンド完備。',
+    officialurl: 'https://www.yokohama-yamate-boys.com/',
     representative: '小宮 諒也',
   },
   {
@@ -7103,6 +7131,8 @@ export const teams: Team[] = [
     area: '横浜市港北区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: 'スローガンは「めざせ頂点 夢を掴め」。「強豪校で競争できる人づくり」を最も重視。礼儀・学業との両立・仲間を大切に・凡事徹底・他人への敬意を指導方針に掲げる。',
+    officialurl: 'https://www.facebook.com/yokohama.kohoku.boys/',
     representative: '橋本 光弘',
   },
   {
@@ -7112,6 +7142,8 @@ export const teams: Team[] = [
     area: '横浜市瀬谷区',
     league: ['ボーイズ'],
     branch: '神奈川県支部',
+    catchcopy: '1996年創部。プロ野球選手6人輩出の名門。2024年三浦瑞樹が中日ドラゴンズ育成契約。横浜DeNAベイスターズ旗争奪少年野球大会を主催。甲子園出場OB多数。',
+    officialurl: 'https://seyaboys.jp/',
   },
 ];
 
