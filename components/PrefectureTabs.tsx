@@ -113,7 +113,7 @@ const prefecturesByRegion: Record<Region, { id: string; label: string; labelEn: 
 
 export const PrefectureTabs = ({ currentPrefecture, onSelect, teamCounts = {} }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [region, setRegion] = useState<Region>("kansai");
+  const [region, setRegion] = useState<Region>("kanto");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const prefectures = prefecturesByRegion[region];

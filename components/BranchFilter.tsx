@@ -4,12 +4,28 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoChevronDown, IoLocationSharp } from "react-icons/io5";
 
+interface BranchItem {
+  id: string;
+  name: string;
+  count: number;
+  league?: string;
+}
+
 interface Props {
   currentBranch: string;
   currentPrefecture: string;
-  branches: { id: string; name: string; count: number }[];
+  branches: BranchItem[];
   onSelect: (branch: string) => void;
 }
+
+// リーグ情報の定義
+const leagueInfo: Record<string, { name: string; color: string; marker: string }> = {
+  'ボーイズ': { name: 'ボーイズ', color: 'text-red-500', marker: '◆' },
+  'シニア': { name: 'シニア', color: 'text-cyan-400', marker: '◆' },
+  'ヤング': { name: 'ヤング', color: 'text-yellow-400', marker: '◆' },
+  'ポニー': { name: 'ポニー', color: 'text-green-400', marker: '◆' },
+  'フレッシュ': { name: 'フレッシュ', color: 'text-purple-400', marker: '◆' },
+};
 
 export const BranchFilter = ({ currentBranch, currentPrefecture, branches, onSelect }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -148,36 +164,86 @@ export const BranchFilter = ({ currentBranch, currentPrefecture, branches, onSel
                 {/* Separator */}
                 <div className="h-[1px] bg-gradient-to-r from-transparent via-pink-500/30 to-transparent" />
 
-                {/* Branch options */}
-                {branches.map((branch, index) => (
-                  <motion.button
-                    key={branch.id}
-                    onClick={() => {
-                      onSelect(branch.id);
-                      setIsOpen(false);
-                    }}
-                    whileHover={{ x: 5 }}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.03 }}
-                    className={`
-                      w-full px-4 sm:px-6 py-3 text-left font-mono text-sm transition-all duration-200
-                      flex items-center justify-between
-                      ${currentBranch === branch.id 
-                        ? 'bg-gradient-to-r from-pink-500/20 to-cyan-400/10 text-white border-l-4 border-pink-500' 
-                        : 'text-white/60 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
-                      }
-                    `}
-                  >
-                    <span className="flex items-center gap-2">
-                      <span className={currentBranch === branch.id ? 'text-pink-500' : 'text-white/30'}>▸</span>
-                      {branch.name}
-                    </span>
-                    <span className="text-[10px] sm:text-xs text-white/40 bg-white/10 px-2 py-0.5 rounded">
-                      {branch.count}
-                    </span>
-                  </motion.button>
-                ))}
+                {/* Branch options grouped by league */}
+                {(() => {
+                  // リーグごとにグループ化
+                  const groupedBranches = branches.reduce((acc, branch) => {
+                    const league = branch.league || '無所属';
+                    if (!acc[league]) {
+                      acc[league] = [];
+                    }
+                    acc[league].push(branch);
+                    return acc;
+                  }, {} as Record<string, BranchItem[]>);
+
+                  // リーグの順序を定義
+                  const leagueOrder = ['ボーイズ', 'シニア', 'ヤング', 'ポニー', 'フレッシュ', '無所属'];
+                  const sortedLeagues = Object.keys(groupedBranches).sort((a, b) => {
+                    const aIndex = leagueOrder.indexOf(a);
+                    const bIndex = leagueOrder.indexOf(b);
+                    return (aIndex === -1 ? 99 : aIndex) - (bIndex === -1 ? 99 : bIndex);
+                  });
+
+                  let itemIndex = 0;
+
+                  return sortedLeagues.map((league) => {
+                    const leagueData = leagueInfo[league] || { name: league, color: 'text-white/60', marker: '○' };
+                    const leagueBranches = groupedBranches[league];
+                    
+                    return (
+                      <div key={league}>
+                        {/* League Header */}
+                        <div className={`px-4 sm:px-6 py-2 bg-black/60 border-l-4 ${
+                          league === 'ボーイズ' ? 'border-red-500' :
+                          league === 'シニア' ? 'border-cyan-400' :
+                          league === 'ヤング' ? 'border-yellow-400' :
+                          league === 'ポニー' ? 'border-green-400' :
+                          league === 'フレッシュ' ? 'border-purple-400' :
+                          'border-white/30'
+                        }`}>
+                          <span className={`text-xs font-bold font-mono flex items-center gap-2 ${leagueData.color}`}>
+                            <span>{leagueData.marker}</span>
+                            【{leagueData.name}】
+                          </span>
+                        </div>
+                        
+                        {/* Branches in this league */}
+                        {leagueBranches.map((branch) => {
+                          const currentIndex = itemIndex++;
+                          return (
+                            <motion.button
+                              key={branch.id}
+                              onClick={() => {
+                                onSelect(branch.id);
+                                setIsOpen(false);
+                              }}
+                              whileHover={{ x: 5 }}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: currentIndex * 0.03 }}
+                              className={`
+                                w-full px-4 sm:px-6 pl-8 sm:pl-10 py-2.5 text-left font-mono text-sm transition-all duration-200
+                                flex items-center justify-between
+                                ${currentBranch === branch.id 
+                                  ? 'bg-gradient-to-r from-pink-500/20 to-cyan-400/10 text-white border-l-4 border-pink-500' 
+                                  : 'text-white/60 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                }
+                              `}
+                            >
+                              <span className="flex items-center gap-2">
+                                <span className={currentBranch === branch.id ? 'text-pink-500' : 'text-white/30'}>▸</span>
+                                {branch.name}
+                              </span>
+                              <span className="text-[10px] sm:text-xs text-white/40 bg-white/10 px-2 py-0.5 rounded">
+                                {branch.count}
+                              </span>
+                            </motion.button>
+                          );
+                        })}
+                      </div>
+                    );
+                  });
+                })()}
               </div>
             </motion.div>
           )}

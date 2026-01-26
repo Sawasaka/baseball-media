@@ -15,7 +15,8 @@ import { ColumnSection } from "@/components/ColumnSection";
 import { ContactForm } from "@/components/ContactForm";
 import { SupervisorSection } from "@/components/SupervisorSection";
 import type { Team } from "@/lib/microcms/types";
-import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps, IoOpenOutline, IoCalendar, IoCheckmarkCircle, IoCheckmark, IoCar, IoPeople, IoNotifications, IoSettings } from "react-icons/io5";
+import { IoChevronDown, IoChevronForward, IoSearch, IoBaseball, IoTerminal, IoFlash, IoRocket, IoSparkles, IoLanguage, IoCode, IoTrophy, IoBriefcase, IoClose, IoApps, IoOpenOutline, IoCalendar, IoCheckmarkCircle, IoCheckmark, IoCar, IoPeople, IoNotifications, IoSettings, IoEye, IoDocument, IoNewspaper, IoPerson, IoLocationSharp, IoGlobeOutline, IoStar, IoChatbubble, IoFlag } from "react-icons/io5";
+import Image from "next/image";
 import { AnimatePresence } from "framer-motion";
 
 // Import 3D scene dynamically
@@ -614,7 +615,7 @@ function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  const [prefecture, setPrefecture] = useState("大阪府");
+  const [prefecture, setPrefecture] = useState("東京都");
   const [league, setLeague] = useState("boys");
   const [branch, setBranch] = useState("all");
   const [teams, setTeams] = useState<Team[]>([]);
@@ -622,6 +623,7 @@ function HomeContent() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [selectedSubChannel, setSelectedSubChannel] = useState<typeof mobileSubChannels[0] | null>(null);
   const [iframeError, setIframeError] = useState(false);
+  const [showFeaturePreview, setShowFeaturePreview] = useState(false);
   const typedText = useTypewriter("チームを探せ", 120);
 
   // ブラウザのスクロール復元を無効化 & リフレッシュ時はトップへ
@@ -705,6 +707,9 @@ function HomeContent() {
     if (leagueName === 'ボーイズ') return 'boys';
     if (leagueName === 'シニア') return 'senior';
     if (leagueName === 'ヤング') return 'young';
+    if (leagueName === 'ポニー') return 'pony';
+    if (leagueName === 'フレッシュ') return 'fresh';
+    if (leagueName === '無所属') return 'independent';
     return 'boys';
   };
 
@@ -738,13 +743,15 @@ function HomeContent() {
     return counts;
   })();
 
-  // 現在の都道府県・リーグに対応する支部一覧を計算
+  // 現在の都道府県・リーグに対応する支部一覧を計算（リーグ情報付き）
   const availableBranches = (() => {
-    const branchMap = new Map<string, { name: string; count: number }>();
+    // 支部 + リーグの組み合わせでユニークキーを作成
+    const branchMap = new Map<string, { name: string; count: number; league: string }>();
     
     teams.forEach(team => {
       const teamPrefecture = team.prefecture?.[0] || '';
       const teamLeagueId = getLeagueIdFromName(team.league?.[0] || '');
+      const teamLeagueName = team.league?.[0] || '';
       const teamBranch = team.branch || '';
       
       // 都道府県とリーグでフィルタ（「全国」の場合はotherPrefecturesでフィルタ）
@@ -753,24 +760,33 @@ function HomeContent() {
         : teamPrefecture === prefecture;
       
       if (prefectureMatch && (league === "all" || teamLeagueId === league) && teamBranch) {
-        const existing = branchMap.get(teamBranch);
+        // 支部名とリーグ名の組み合わせでユニークキーを作成
+        const uniqueKey = `${teamBranch}_${teamLeagueName}`;
+        const existing = branchMap.get(uniqueKey);
         if (existing) {
           existing.count++;
         } else {
-          branchMap.set(teamBranch, { name: teamBranch, count: 1 });
+          branchMap.set(uniqueKey, { name: teamBranch, count: 1, league: teamLeagueName });
         }
       }
     });
 
+    // リーグ順にソートしてから支部名でソート
+    const leagueOrder: Record<string, number> = { 'ボーイズ': 1, 'シニア': 2, 'ヤング': 3, 'ポニー': 4, 'フレッシュ': 5 };
     return Array.from(branchMap.entries())
-      .map(([id, data]) => ({ id, name: data.name, count: data.count }))
-      .sort((a, b) => a.name.localeCompare(b.name, 'ja'));
+      .map(([id, data]) => ({ id, name: data.name, count: data.count, league: data.league }))
+      .sort((a, b) => {
+        const leagueCompare = (leagueOrder[a.league] || 99) - (leagueOrder[b.league] || 99);
+        if (leagueCompare !== 0) return leagueCompare;
+        return a.name.localeCompare(b.name, 'ja');
+      });
   })();
 
   const filteredTeams = teams
     .filter((team) => {
       const teamPrefecture = team.prefecture?.[0] || '';
       const teamLeagueId = getLeagueIdFromName(team.league?.[0] || '');
+      const teamLeagueName = team.league?.[0] || '';
       const teamBranch = team.branch || '';
       
       // 「全国」が選択された場合は関西・関東以外の全都道府県を表示
@@ -778,7 +794,13 @@ function HomeContent() {
         ? otherPrefectures.includes(teamPrefecture)
         : teamPrefecture === prefecture;
       const leagueMatch = league === "all" || teamLeagueId === league;
-      const branchMatch = branch === "all" || teamBranch === branch;
+      
+      // 支部のマッチング：branch IDは「支部名_リーグ名」の形式
+      let branchMatch = true;
+      if (branch !== "all") {
+        const [selectedBranchName, selectedLeagueName] = branch.split('_');
+        branchMatch = teamBranch === selectedBranchName && teamLeagueName === selectedLeagueName;
+      }
       
       return prefectureMatch && leagueMatch && branchMatch;
     })
@@ -1378,7 +1400,7 @@ function HomeContent() {
               </div>
               <span className="text-xs sm:text-sm text-cyan-400 font-mono px-3 sm:px-4 py-1.5 sm:py-2 border border-cyan-400/30 bg-cyan-400/5">
                 {prefecture}/{league === 'boys' ? 'ボーイズ' : league === 'senior' ? 'シニア' : league === 'young' ? 'ヤング' : '全て'}
-                {branch !== 'all' && <span className="text-pink-500">/{branch}</span>}
+                {branch !== 'all' && <span className="text-pink-500">/{branch.split('_')[0]}</span>}
                 {branch === 'all' && availableBranches.length === 1 && <span className="text-pink-500">/{availableBranches[0].name}</span>}
               </span>
             </div>
@@ -1490,8 +1512,11 @@ function HomeContent() {
             
             {/* Free Interview CTA */}
             <div>
-              <h4 className="text-sm sm:text-base font-bold text-yellow-400 mb-4 sm:mb-6 font-mono text-center sm:text-left">// 無料インタビュー</h4>
-              <div className="p-3 sm:p-4 border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-500/10 to-pink-500/10 relative overflow-hidden group hover:border-cyan-400 transition-all duration-300">
+              <h4 className="text-sm sm:text-base font-bold text-yellow-400 mb-4 sm:mb-6 font-mono text-center sm:text-left">// 無料で特集記事を作成します</h4>
+              <div 
+                onClick={() => setShowFeaturePreview(true)}
+                className="p-3 sm:p-4 border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-500/10 to-pink-500/10 relative overflow-hidden group hover:border-cyan-400 transition-all duration-300 cursor-pointer"
+              >
                 {/* Glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
@@ -1501,27 +1526,32 @@ function HomeContent() {
                 
                 <div className="relative z-10 text-center sm:text-left">
                   <p className="text-white text-xs sm:text-sm font-bold mb-2">
-                    📣 チーム特集インタビュー
+                    📣 チーム特集記事
                   </p>
                   <p className="text-white/60 text-[10px] sm:text-xs mb-3 sm:mb-4 leading-relaxed">
-                    中学硬式野球チームの魅力を<br className="hidden sm:block" />
-                    <span className="text-cyan-400 font-bold">無料</span>で記事にしてお届けします！
+                    フォームに入力するだけ！<br className="hidden sm:block" />
+                    <span className="text-cyan-400 font-bold">無料</span>で特集記事を作成します
                   </p>
-                  <a 
-                    href="#contact-name"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const el = document.getElementById('contact-name');
-                      if (el) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        setTimeout(() => el.focus(), 500);
-                      }
-                    }}
-                    className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-cyan-500 to-pink-500 text-white text-[10px] sm:text-xs font-bold hover:from-cyan-400 hover:to-pink-400 transition-all duration-300 group/btn cursor-pointer"
-                  >
-                    <span>お気軽にご依頼ください</span>
-                    <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowFeaturePreview(true);
+                      }}
+                      className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border-2 border-cyan-400/50 text-cyan-400 text-[10px] sm:text-xs font-bold hover:bg-cyan-400/20 transition-all duration-300"
+                    >
+                      <IoEye className="text-sm" />
+                      <span>イメージを見る</span>
+                    </button>
+                    <a 
+                      href="/team-feature-request"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-cyan-500 to-pink-500 text-white text-[10px] sm:text-xs font-bold hover:from-cyan-400 hover:to-pink-400 transition-all duration-300 group/btn"
+                    >
+                      <span>フォームに入力する</span>
+                      <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                     </a>
+                  </div>
                 </div>
             </div>
             
@@ -1565,6 +1595,259 @@ function HomeContent() {
         </div>
       </footer>
     </div>
+      {/* Feature Preview Modal */}
+      <AnimatePresence>
+        {showFeaturePreview && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowFeaturePreview(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-2xl w-full max-h-[85vh] bg-gradient-to-br from-gray-900 to-black border-2 border-cyan-500/50 overflow-hidden flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header - Fixed */}
+              <div className="p-4 sm:p-6 border-b border-cyan-500/20 flex-shrink-0">
+                {/* Close button */}
+                <button
+                  onClick={() => setShowFeaturePreview(false)}
+                  className="absolute top-4 right-4 p-2 text-white/60 hover:text-white transition-colors z-10"
+                >
+                  <IoClose className="text-2xl" />
+                </button>
+                
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400" />
+                
+                <h3 className="text-xl sm:text-2xl font-black text-white mb-1 text-center">
+                  特集記事<span className="text-cyan-400">イメージ</span>
+                </h3>
+                <p className="text-white/50 text-xs sm:text-sm text-center font-mono">
+                  このような形式で無料作成されます
+                </p>
+              </div>
+              
+              {/* Scrollable Content */}
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-8">
+                
+                {/* Preview 1: Team Card */}
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-cyan-400 text-sm font-bold">01</span>
+                    <h4 className="text-white font-bold text-sm">チームカード</h4>
+                    <span className="text-white/40 text-xs">（検索結果に表示）</span>
+                  </div>
+                  
+                  {/* Card Preview */}
+                  <div className="border-2 border-red-500/30 bg-black/80 overflow-hidden max-w-sm mx-auto">
+                    {/* Card Header with Background */}
+                    <div className="h-28 relative overflow-hidden">
+                      <Image
+                        src="/sample-bg.png"
+                        alt="チーム背景"
+                        fill
+                        className="object-cover opacity-70"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                      
+                      
+                      {/* Feature Badge */}
+                      <div className="absolute top-2 left-2">
+                        <span className="text-[9px] font-mono font-bold px-2 py-0.5 border border-yellow-400 text-yellow-400 bg-yellow-400/20" style={{ textShadow: '0 0 8px rgba(250,204,21,0.5)' }}>
+                          ✦ 特集記事
+                        </span>
+                      </div>
+                      
+                      {/* Rating Badge */}
+                      <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 bg-black/60 border border-yellow-400/40 rounded">
+                        <IoStar className="text-yellow-400 text-xs" />
+                        <span className="text-yellow-400 text-[10px] font-bold">4.5</span>
+                      </div>
+                      
+                    </div>
+                    
+                    {/* Card Content */}
+                    <div className="p-4">
+                      {/* Region + Director */}
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[10px] font-mono px-2 py-0.5 border border-red-500/40 bg-red-500/15 text-white/80">
+                          <IoLocationSharp className="inline mr-0.5 text-red-500" />東京都
+                        </span>
+                        <div className="flex items-center gap-1.5 ml-auto">
+                          <div className="w-6 h-6 rounded-full border border-white/40 overflow-hidden flex-shrink-0">
+                            <Image
+                              src="/sample-director.png"
+                              alt="監督"
+                              width={24}
+                              height={24}
+                              className="object-cover w-full h-full"
+                            />
+                          </div>
+                          <p className="text-white/70 text-[10px]">「本気の選手を待っている！」</p>
+                        </div>
+                      </div>
+                      
+                      {/* Team Name */}
+                      <h5 className="text-lg font-bold text-white mb-2">〇〇ポニー</h5>
+                      
+                      <div className="w-8 h-[2px] bg-red-500 mb-3" />
+                      <p className="text-white/50 text-xs mb-3 line-clamp-2">
+                        関東屈指の強豪チーム。全国大会常連の実力派。
+                      </p>
+                      
+                      {/* Footer */}
+                      <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs text-cyan-400 flex items-center gap-1">
+                            <IoGlobeOutline className="text-sm" /> 公式サイト
+                          </span>
+                          <span className="text-xs text-yellow-400 flex items-center gap-1 font-bold" style={{ textShadow: '0 0 8px rgba(250,204,21,0.5)' }}>
+                            <IoNewspaper className="text-sm" /> 特集記事
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span className="text-[10px] text-yellow-400/70 flex items-center gap-0.5 px-1.5 py-1">
+                            <IoChatbubble className="text-xs" /> 投稿
+                          </span>
+                          <span className="text-[10px] text-cyan-400/70 flex items-center gap-0.5 px-1.5 py-1">
+                            <IoFlag className="text-xs" /> 報告
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Divider */}
+                <div className="flex items-center gap-4">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                  <IoChevronDown className="text-white/30" />
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                </div>
+                
+                {/* Preview 2: Feature Article Modal */}
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-pink-500 text-sm font-bold">02</span>
+                    <h4 className="text-white font-bold text-sm">特集記事モーダル</h4>
+                    <span className="text-white/40 text-xs">（「特集記事」クリックで表示）</span>
+                  </div>
+                  
+                  {/* Modal Preview */}
+                  <div className="border-2 border-cyan-500/30 bg-gray-900 overflow-hidden">
+                    {/* Hero */}
+                    <div className="h-48 relative overflow-hidden">
+                      <Image
+                        src="/sample-bg.png"
+                        alt="特集背景"
+                        fill
+                        className="object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-4">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="px-2 py-0.5 bg-yellow-400/90 text-black text-[10px] font-bold">✦ 特集記事</span>
+                        </div>
+                        <h5 className="text-xl font-black text-white">東京城南ボーイズ</h5>
+                        <p className="text-white/60 text-[10px]">東京都・大田区</p>
+                      </div>
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="p-4 space-y-4">
+                      {/* Director Section */}
+                      <div className="flex items-start gap-3 p-3 bg-gradient-to-r from-cyan-500/10 to-pink-500/10 border border-cyan-500/20">
+                        <div className="w-14 h-14 rounded-full border-2 border-white/30 flex-shrink-0 overflow-hidden">
+                          <Image
+                            src="/sample-director.png"
+                            alt="監督"
+                            width={56}
+                            height={56}
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-xs text-cyan-400 font-bold mb-1">監督：田中 一郎</p>
+                          <p className="text-white text-xs leading-relaxed">「本気で野球に取り組む選手を待っています。技術だけでなく、人として成長できる環境がここにあります。」</p>
+                        </div>
+                      </div>
+                      
+                      {/* Team Description */}
+                      <div>
+                        <p className="text-[10px] text-cyan-400 font-bold mb-2 flex items-center gap-1">
+                          <IoDocument className="text-xs" /> チーム紹介
+                        </p>
+                        <p className="text-white/70 text-xs leading-relaxed">
+                          2005年創設。「文武両道」をモットーに、野球技術だけでなく学業との両立を重視しています。少数精鋭のチーム編成で、選手一人ひとりに目が届く丁寧な指導が特徴です。
+                        </p>
+                      </div>
+                      
+                      {/* Practice Info */}
+                      <div>
+                        <p className="text-[10px] text-green-400 font-bold mb-2 flex items-center gap-1">
+                          <IoCalendar className="text-xs" /> 練習情報
+                        </p>
+                        <p className="text-white/70 text-xs leading-relaxed">
+                          毎週土日 9:00〜17:00 / 大田区民グラウンド<br />
+                          平日自主練習（火・木 17:00〜19:00）
+                        </p>
+                      </div>
+                      
+                      {/* Achievements */}
+                      <div>
+                        <p className="text-[10px] text-yellow-400 font-bold mb-2 flex items-center gap-1">
+                          <IoTrophy className="text-xs" /> 実績・OB進学先
+                        </p>
+                        <p className="text-white/70 text-xs leading-relaxed">
+                          2024年 関東大会準優勝 / 2023年 東京都大会ベスト4<br />
+                          OB進学先：横浜高校、東海大相模、日大三高、帝京高校など
+                        </p>
+                      </div>
+                      
+                      {/* Feature Article */}
+                      <div className="pt-3 border-t border-white/10">
+                        <p className="text-[10px] text-pink-400 font-bold mb-2 flex items-center gap-1">
+                          <IoNewspaper className="text-xs" /> 特集記事
+                        </p>
+                        <div className="text-white/70 text-xs leading-relaxed space-y-2">
+                          <p>
+                            東京城南ボーイズは、2005年に「野球を通じて人間力を育てる」という理念のもと設立されました。
+                          </p>
+                          <p>
+                            創設以来、技術指導だけでなく礼儀や感謝の心を大切にした指導を続けています。田中監督は「野球がうまくなることはもちろん大事ですが、それ以上に人として成長してほしい」と語ります。
+                          </p>
+                          <p>
+                            卒団生の多くが強豪高校へ進学し、甲子園出場を果たした選手も輩出。「ここで学んだことが高校野球で活きた」という声を多くいただいています。
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Footer - Fixed */}
+              <div className="p-4 sm:p-6 border-t border-cyan-500/20 flex-shrink-0">
+                {/* Corner accent */}
+                <div className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-pink-500" />
+                
+                <a
+                  href="/team-feature-request"
+                  className="block w-full py-3 sm:py-4 text-center bg-gradient-to-r from-cyan-500 to-pink-500 text-white font-bold text-sm sm:text-base hover:from-cyan-400 hover:to-pink-400 transition-all duration-300"
+                >
+                  無料で特集記事を依頼する →
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

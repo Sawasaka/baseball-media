@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
 【ROOKIE SMART お問い合わせ】
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-■ お名前
+■ 担当者
 ${name}
 
 ■ メールアドレス

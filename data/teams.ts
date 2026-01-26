@@ -7299,6 +7299,81 @@ export const teams: Team[] = [
     catchcopy: '大和市南部を拠点に活動する中学硬式野球チーム。地域の少年たちに硬式野球の魅力を伝える。',
     officialurl: 'https://www.ikz.jp/hp/y-matesboys/',
   },
+
+  // ========================================
+  // ポニーリーグ 東ブロック
+  // ========================================
+  // 千葉県
+  {
+    id: 'pony-chiba-jaguars',
+    name: '千葉ジャガーズポニー',
+    prefecture: ['千葉県'],
+    area: '千葉市',
+    league: ['ポニー'],
+    branch: '東ブロック',
+    officialurl: 'https://www.chibapony.org/index.html',
+    catchcopy: '第48回全国中学校軟式野球選手権大会優勝。2025年U-13日本代表としてワールドシリーズ（サンディエゴ）優勝の実績。',
+  },
+  {
+    id: 'pony-matsudo-ponys',
+    name: '松戸ポニー',
+    prefecture: ['千葉県'],
+    area: '松戸市',
+    league: ['ポニー'],
+    branch: '東ブロック',
+    officialurl: 'https://matsudoponys.89dream.jp/',
+    catchcopy: 'OB金田選手が独立リーグ入団。PONY関東選抜チームメンバー輩出。体験練習随時受付中。',
+  },
+  {
+    id: 'pony-katori-piglets',
+    name: '香取ポニー',
+    prefecture: ['千葉県'],
+    area: '香取市',
+    league: ['ポニー'],
+    branch: '東ブロック',
+    officialurl: 'https://katorisinior.com/wp/katoripony/',
+    catchcopy: '香取ベースボールアカデミー所属。香取市長杯争奪少年野球大会を主催。体験会随時実施中。',
+  },
+  {
+    id: 'pony-bousyuu',
+    name: '房州ポニーベースボールクラブ',
+    prefecture: ['千葉県'],
+    area: '夷隅郡大多喜町',
+    league: ['ポニー'],
+    branch: '東ブロック',
+    officialurl: 'https://www.bousyuu-pony.com/',
+    catchcopy: 'チームスローガンは「克己心」。第51回全日本選手権大会ベスト8。藤平選手が敢闘賞受賞の実績。',
+  },
+  {
+    id: 'pony-kitachiba',
+    name: '北千葉ポニー',
+    prefecture: ['千葉県'],
+    area: '千葉市若葉区',
+    league: ['ポニー'],
+    branch: '東ブロック',
+    officialurl: 'https://kitachiba-pony.boy.jp/wp/',
+    catchcopy: '西鉄ライオンズ大下弘氏が創立。約30年の歴史。全選手に試合出場機会を提供。体験随時受付中。',
+  },
+  {
+    id: 'pony-ichihara',
+    name: '市原ポニーベースボールクラブ',
+    prefecture: ['千葉県'],
+    area: '市原市',
+    league: ['ポニー'],
+    branch: '東ブロック',
+    officialurl: 'http://ichihara-pony.com/',
+    catchcopy: '関東連盟春季大会2年連続優勝。全日本選抜大会優勝。多数のワールドシリーズ日本代表選手を輩出する強豪チーム。',
+  },
+  {
+    id: 'pony-ichikawa-minami',
+    name: '市川南ポニー',
+    prefecture: ['千葉県'],
+    area: '市川市',
+    league: ['ポニー'],
+    branch: '東ブロック',
+    officialurl: 'https://sites.google.com/view/ichikawa-minami-pony/',
+    catchcopy: '2021年発足。選手の出場機会を重視し、一人ひとりの成長に寄り添う指導。トライアル入団制度あり。',
+  },
 ];
 
 /**

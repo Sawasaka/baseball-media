@@ -70,7 +70,7 @@ export function ContactForm() {
     const newErrors: FormErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "お名前を入力してください";
+      newErrors.name = "担当者名を入力してください";
     }
 
     if (!formData.email.trim()) {
@@ -262,7 +262,7 @@ export function ContactForm() {
                 <div className="mb-6">
                   <label className="flex items-center gap-2 text-sm font-mono text-white/70 mb-2">
                     <IoPerson className="text-green-400" />
-                    お名前 <span className="text-red-500">*</span>
+                    担当者 <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"

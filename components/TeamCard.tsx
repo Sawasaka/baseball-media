@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { IoLocationSharp, IoGlobeOutline, IoBaseball, IoFlash, IoFlag, IoStar, IoChatbubble } from "react-icons/io5";
+import Image from "next/image";
+import { IoLocationSharp, IoGlobeOutline, IoBaseball, IoFlash, IoFlag, IoStar, IoChatbubble, IoNewspaper, IoPerson } from "react-icons/io5";
 import type { Team as MicroCMSTeam } from "@/lib/microcms/types";
 import { FeedbackModal } from "./FeedbackModal";
 import { ReviewModal } from "./ReviewModal";
 import { ReviewFormModal } from "./ReviewFormModal";
-import { useTeamReviews } from "@/lib/supabase/hooks";
+import { FeatureArticleModal } from "./FeatureArticleModal";
+import { useTeamReviews, useTeamFeature } from "@/lib/supabase/hooks";
 
 // TeamCard用の型（microCMS の Team 型を拡張）
 // microCMS のセレクトフィールドは配列で返ってくる
@@ -84,6 +86,7 @@ export const TeamCard = ({ team }: { team: Team }) => {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
+  const [isFeatureModalOpen, setIsFeatureModalOpen] = useState(false);
   const leagueId = getLeagueId(team.league);
   const style = getLeagueStyles(leagueId);
   const prefectureName = team.prefecture?.[0] || '';
@@ -91,6 +94,9 @@ export const TeamCard = ({ team }: { team: Team }) => {
   
   // クチコミデータ（Supabaseから取得）
   const { averageRating, reviewCount, reviews, isLoading } = useTeamReviews(team.id);
+  
+  // 特集記事データ（Supabaseから取得）
+  const { feature, hasFeature } = useTeamFeature(team.id, team.name);
 
   return (
     <>
@@ -113,6 +119,14 @@ export const TeamCard = ({ team }: { team: Team }) => {
         teamId={team.id}
         teamName={team.name}
       />
+      {feature && (
+        <FeatureArticleModal
+          isOpen={isFeatureModalOpen}
+          onClose={() => setIsFeatureModalOpen(false)}
+          feature={feature}
+          teamName={team.name}
+        />
+      )}
     <motion.div
       whileHover={{ y: -12, scale: 1.03 }}
       transition={{ duration: 0.3 }}
@@ -151,39 +165,48 @@ export const TeamCard = ({ team }: { team: Team }) => {
         
         {/* Header area */}
         <div className="h-28 sm:h-32 relative bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden">
-          {/* Background grid */}
-          <div 
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
-              backgroundSize: '25px 25px',
-              color: leagueId === 'boys' ? '#FF2A44' : leagueId === 'senior' ? '#00F0FF' : '#FFFF00'
-            }}
-          />
+          {/* Background Image or Grid */}
+          {feature?.background_image_url ? (
+            <>
+              <Image
+                src={feature.background_image_url}
+                alt={`${team.name}の背景`}
+                fill
+                className="object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+                unoptimized
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+            </>
+          ) : (
+            <div 
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
+                backgroundSize: '25px 25px',
+                color: leagueId === 'boys' ? '#FF2A44' : leagueId === 'senior' ? '#00F0FF' : '#FFFF00'
+              }}
+            />
+          )}
           
-          {/* League icon */}
+          {/* League icon or Director icon */}
           <div className="relative z-10 flex flex-col items-center">
-            <div className="relative">
-              <IoBaseball className={`text-4xl sm:text-5xl ${style.textColor} opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500`} />
-            </div>
-          </div>
-          
-          {/* League & Branch badges - left corner */}
-          <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex flex-col items-start gap-0.5 sm:gap-1">
-            <span 
-              className={`text-[8px] sm:text-[9px] font-mono font-bold px-1.5 sm:px-2 py-0.5 border ${style.borderColor}/50`}
-              style={{ color: leagueId === 'boys' ? '#FF2A44' : leagueId === 'senior' ? '#00F0FF' : '#FACC15' }}
-            >
-              {leagueName || (leagueId === 'boys' ? 'ボーイズ' : leagueId === 'senior' ? 'シニア' : 'ヤング')}
-            </span>
-            {team.branch && (
-              <span 
-                className="text-[8px] sm:text-[9px] font-mono px-1.5 sm:px-2 py-0.5 border border-white/30 bg-white/10 text-white/80"
-              >
-                {team.branch}
-              </span>
+            {feature?.director_icon_url ? (
+              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-white/30 group-hover:border-cyan-400/50 transition-all duration-500">
+                <Image
+                  src={feature.director_icon_url}
+                  alt={feature.director_name || "監督"}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+            ) : (
+              <div className="relative">
+                <IoBaseball className={`text-4xl sm:text-5xl ${style.textColor} opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500`} />
+              </div>
             )}
           </div>
+          
           
           {/* Review Rating Badge - right corner */}
           <button
@@ -237,6 +260,23 @@ export const TeamCard = ({ team }: { team: Team }) => {
               {team.catchcopy || "チーム情報準備中"}
             </p>
           </div>
+          
+          {/* Director Message */}
+          {feature?.director_message && (
+            <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-gradient-to-r from-cyan-500/10 to-pink-500/10 border border-cyan-500/20">
+              <div className="flex items-start gap-2">
+                <IoPerson className="text-cyan-400 text-sm flex-shrink-0 mt-0.5" />
+                <div className="min-w-0">
+                  {feature.director_name && (
+                    <p className="text-[10px] text-cyan-400 font-bold mb-0.5">{feature.director_name}</p>
+                  )}
+                  <p className="text-white/70 text-[10px] sm:text-xs leading-relaxed line-clamp-2">
+                    「{feature.director_message}」
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Feature Tags */}
           {(team.feature1 || team.feature2 || team.feature3) && (
@@ -277,6 +317,21 @@ export const TeamCard = ({ team }: { team: Team }) => {
             
             {/* Action Buttons */}
             <div className="flex items-center gap-1">
+              {/* Feature Article Button - only show if feature exists */}
+              {hasFeature && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsFeatureModalOpen(true);
+                  }}
+                  className="flex items-center gap-1 px-2 py-1 text-[10px] sm:text-xs text-pink-400/70 hover:text-pink-400 hover:bg-pink-400/10 rounded transition-all duration-300"
+                  title="特集記事"
+                >
+                  <IoNewspaper className="text-xs sm:text-sm" />
+                  <span>特集</span>
+                </button>
+              )}
+              
               {/* Review Post Button */}
               <button
                 onClick={(e) => {
